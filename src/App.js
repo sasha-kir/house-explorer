@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import Navigation from './components/navigation/Navigation';
+
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <p>Hello World!</p>
-        </header>
+        <Navigation /> 
+        {/* 
+        <LandingBody />
+
+        <SearchBar />
+        <Map />
+        <HouseInfoBlock />
+        <PhotoBlock />
+
+        <History />
+        */}
       </div>
     );
   }
