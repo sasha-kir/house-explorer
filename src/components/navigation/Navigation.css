@@ -2,10 +2,12 @@ nav {
     position: fixed;
     top: 0;
     width: 100%;
+    /* box-shadow: 0 5px 6px -6px black; */
 }
 
 .main-nav {
-    background-color: #5cdb95;
+    /* background-color: #F3F5E7; */
+    background-color: #ABC6FD;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -13,13 +15,26 @@ nav {
     margin: 0;
 }
 
-img {
-    height: 80px;
-    width: auto;
-    padding: 0 40px 10px 30px;
+@media only screen and (max-width: 700px) {
+    .main-nav {
+        font-size: 1em;
+        padding: 0;
+    }
 }
 
-a {
+#logo {
+    height: 80px;
+    width: auto;
+    padding: 10px 40px 10px 30px;
+}
+
+#sign-up {
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+nav a {
   font-variant: small-caps;
   /* float: left; */
   display: inline-block;
@@ -33,29 +48,39 @@ a {
   z-index: 1;
 }
 
-a.active:before, a:before {
+nav a.active:before, 
+nav a:before {
     content: "";
     display: inline-block;
     position: absolute;
     width: 100%;
-    height: 3px;
+    height: 2px;
     bottom: 0;
     left: 0;
     background: #000;
-    border-radius: 5px;
 }
 
-a:before {
+nav a:before {
     visibility: hidden;
     transform: scaleX(0);
-    transition: .25s linear;
+    transition: .2s linear;
 }
 
-a.active:before, a:hover:before {
+nav a.active:before, 
+nav a:hover:before {
   visibility: visible;
   transform: scaleX(1);
 }
 
+#sign-up:hover {
+    color: white;
+    background-color: #000;
+    transition: .25s ease-in;
+}
+
+#sign-up:hover:before {
+    visibility: hidden;
+}
 /* a:hover {
   background-color: #ddd;
 } */
