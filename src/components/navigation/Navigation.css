@@ -28,12 +28,12 @@ nav {
     padding: 10px 40px 10px 30px;
 }
 
-#sign-up {
+#sign-up-btn {
     border: 2px solid #000;
     border-radius: 5px;
     padding: 10px;
 }
-
+  
 nav a {
   font-variant: small-caps;
   /* float: left; */
@@ -72,13 +72,13 @@ nav a:hover:before {
   transform: scaleX(1);
 }
 
-#sign-up:hover {
+#sign-up-btn:hover {
     color: white;
     background-color: #000;
     transition: .25s ease-in;
 }
 
-#sign-up:hover:before {
+#sign-up-btn:hover:before {
     visibility: hidden;
 }
 /* a:hover {
@@ -89,3 +89,38 @@ nav a:hover:before {
   /* float: right; */
   margin-left: auto;
 }
+
+.arrow {
+    display: inline-block;
+    background: #000;
+    height: 2px;
+    width: 25px;
+    margin: 0px 20px 5px -5px;
+    position: relative;
+    border-radius: 5px;
+    visibility: hidden;
+    opacity: 0;
+  }
+  .arrow:before, .arrow:after {
+    content: "";
+    background: #000;
+    position: absolute;
+    height: 2px;
+    width: 10px;
+  }
+  .arrow:before {
+    right: -2px;
+    bottom: -2px;
+    transform: rotate(-30deg);
+  }
+  .arrow:after {
+    right: -2px;
+    top: -2px;
+    transform: rotate(30deg);
+  }
+
+  #log-in-link:hover ~ .arrow {
+      visibility: visible;
+      opacity: 1;
+      transition: all 0.2s ease-in;
+  }

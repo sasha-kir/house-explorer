@@ -11,8 +11,9 @@ const Navigation = () => {
                 <a href="/">about</a>
                 <a href="/">contact</a>
                 <div className="right-nav">
-                    <a href="/">log in</a>
-                    <a id="sign-up" href="/">sign up</a>
+                    <a id="sign-up-btn" href="/">sign up</a>
+                    <a id="log-in-link" href="/">log in</a>
+                    <div className="arrow"></div>
                 </div>
             </div>
         </nav>
