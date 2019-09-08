@@ -1,0 +1,36 @@
+.about-wrapper {
+    margin-top: 100px;
+    background-color: #ABC6FD;
+    display: grid;
+    grid-template-rows: 1fr 5fr;
+    justify-content: center;
+}
+
+.about-wrapper p {
+    color: #383A49;
+    font-size: 2em;
+    text-align: center;
+    align-self: end;
+    font-variant: small-caps;
+    letter-spacing: .1em;
+}
+
+.about-wrapper .image-wrapper {
+    align-self: start;
+    max-height: 500px;
+}
+
+.about-wrapper img {
+    height: 500px;
+    width: auto;
+}
+
+.about-wrapper .image-credit {
+    color: rgba(243, 245, 231, 0.8);
+    margin-right: 35px;
+}
+
+.image-credit a {
+    text-decoration: none;
+    color: inherit;
+}
