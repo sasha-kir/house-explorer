@@ -15,12 +15,12 @@ nav {
     margin: 0;
 }
 
-@media only screen and (max-width: 700px) {
+/* @media only screen and (max-width: 700px) {
     .main-nav {
         font-size: 1em;
         padding: 0;
     }
-}
+} */
 
 #logo {
     height: 80px;
@@ -29,17 +29,16 @@ nav {
 }
 
 #sign-up-btn {
-    border: 2px solid #000;
+    border: 2px solid #383A49;
     border-radius: 5px;
     padding: 10px;
 }
   
 nav a {
   font-variant: small-caps;
-  /* float: left; */
   display: inline-block;
   position: relative;
-  color: #000;
+  color: #383A49;
   margin: 20px;
   padding-bottom: 10px;
   letter-spacing: .1em;
@@ -57,7 +56,7 @@ nav a:before {
     height: 2px;
     bottom: 0;
     left: 0;
-    background: #000;
+    background: #383A49;
 }
 
 nav a:before {
@@ -73,37 +72,33 @@ nav a:hover:before {
 }
 
 #sign-up-btn:hover {
-    color: white;
-    background-color: #000;
+    color: #F3F5E7;
+    background-color: #383A49;
     transition: .25s ease-in;
 }
 
 #sign-up-btn:hover:before {
     visibility: hidden;
 }
-/* a:hover {
-  background-color: #ddd;
-} */
 
 .right-nav {
-  /* float: right; */
   margin-left: auto;
 }
 
 .arrow {
     display: inline-block;
-    background: #000;
+    background: #383A49;
     height: 2px;
-    width: 25px;
+    width: 20px;
     margin: 0px 20px 5px -5px;
     position: relative;
-    border-radius: 5px;
     visibility: hidden;
     opacity: 0;
   }
+
   .arrow:before, .arrow:after {
     content: "";
-    background: #000;
+    background: #383A49;
     position: absolute;
     height: 2px;
     width: 10px;
