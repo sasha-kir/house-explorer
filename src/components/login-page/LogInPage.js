@@ -14,10 +14,12 @@ class LogInPage extends Component {
     }
 
     render() {
+        const { onRouteChange } = this.props;
         return (
             <div className="login-main-div">
                 <div className="login-wrapper">
-                    <img className="logo-image" alt="logo" src={logo} />
+                    <img className="logo-image" onClick={() => onRouteChange("home")}
+                         alt="logo" src={logo} />
                     <div className="login-form">
                         <input className="form-element" 
                                onFocus={this.hidePlaceholder} 
