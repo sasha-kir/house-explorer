@@ -1,0 +1,83 @@
+.login-main-div {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-color: #ABC6FD;
+     /* http://www.heropatterns.com/ */
+    background-image: url("data:image/svg+xml,%3Csvg \
+    width='42' height='44' viewBox='0 0 42 44' \
+    xmlns='http://www.w3.org/2000/svg'%3E%3Cg \
+    id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg \
+    id='brick-wall' fill='%23f3f5e7' \
+    fill-opacity='0.33'%3E%3Cpath d='M0 0h42v44H0V0zm1 \
+    1h40v20H1V1zM0 23h20v20H0V23zm22 \
+    0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.login-wrapper {
+    background-color: #ABC6FD;
+    margin-top: -50px;
+    align-self: center;
+    height: 420px;
+    width: 450px;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    box-shadow: 0 0 10px rgba( 255, 255, 255, 0.5 );
+    /* border: 2px solid #383A49; */
+}
+
+.logo-image {
+    justify-self: center;
+    align-self: end;
+    height: 100px;
+    width: auto;
+    padding-top: 30px;
+}
+
+.login-form {
+    display: grid;
+    padding: 50px;
+    row-gap: 10px;
+    font-size: 30px;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.form-element {
+    background: transparent;
+    padding-left: 10px;
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: #383A49;
+    max-height: 40px;
+    min-height: 40px;
+    font-size: 20px;
+}
+
+.form-element::placeholder {
+    color: rgba(56, 58, 73, 0.3);
+}
+
+.form-element, 
+.form-button {
+    color: #383A49;
+}
+
+.form-button {
+    background-color: transparent;
+    font-variant: small-caps;
+    letter-spacing: .1em;
+    border: 3px solid #383A49;
+    border-radius: 5px;
+    justify-self: stretch;
+    padding: 5px 10px;
+    margin-top: 10px;
+    font-size: 25px;
+    max-height: 50px;
+    min-height: 50px;
+}
+
+.form-button:hover {
+    color: #F3F5E7;
+    background-color: #383A49;
+    transition: .25s ease-in;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import './HomePage.css';
-import cover from './cover.png';
+import cover from '../../images/cover.png';
 
 const HomePage = () => {
     return(

@@ -3,19 +3,23 @@ import './LandingPage.css';
 
 import Navigation from '../navigation/Navigation';
 import HomePage from '../home-page/HomePage';
-import Footer from '../footer/Footer';
 import AboutPage from '../about-page/AboutPage';
 
 class LandingPage extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             route: "home"
         };
     }
 
     handleRouteChange = (nextLocation) => {
-        this.setState({ route: nextLocation });
+        const landingLocations = ["home", "about"];
+        if (landingLocations.includes(nextLocation)) {
+            this.setState({ route: nextLocation });
+        } else {
+            this.props.onRouteChange(nextLocation);
+        }
     }
 
     routeSwitcher = () => {
@@ -34,7 +38,6 @@ class LandingPage extends Component {
             <div className="body">
                 <Navigation currentPage={this.state.route} onRouteChange={this.handleRouteChange} />
                 {this.routeSwitcher()}
-                <Footer />
             </div>
         );
     }

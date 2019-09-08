@@ -1,7 +1,7 @@
 import React from 'react';
 import './AboutPage.css';
 
-import placeholder from '../landing-page/under-construction.png';
+import placeholder from '../../images/under-construction.png';
 
 const AboutPage = () => {
     return (
