@@ -7,12 +7,12 @@ const PlaceholderPage = () => {
     return (
         <div className="placeholder-main-div">
             <p>page under construction</p>
-            <div className="image-wrapper">
+            <div className="placeholder-image-wrapper">
                 <img alt="placeholder" src={placeholder} />
-                <span className="image-credit">&copy; &nbsp;
-                    <a href="https://icons8.com/ouch/illustration/abstract-location-access" 
+                <span className="placeholder-image-credit">&copy; &nbsp;
+                    <a href="https://icons8.com/ouch/illustration/marginalia-page-under-construction" 
                         rel="noopener noreferrer" target="_blank">Icons 8</a>
-            </span>
+                </span>
             </div>
         </div>
     );

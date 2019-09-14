@@ -17,8 +17,10 @@
     letter-spacing: .1em;
 }
 
-.placeholder-main-div .image-wrapper,
-.not-found-main-div .image-wrapper {
+.placeholder-image-wrapper,
+.not-found-image-wrapper {
+    display: grid;
+    grid-template-rows: 16fr 1fr;
     align-self: start;
     max-height: 500px;
 }
@@ -29,14 +31,19 @@
     width: auto;
 }
 
-.placeholder-main-div .image-credit,
-.not-found-main-div .image-credit {
+.placeholder-image-credit,
+.not-found-image-credit {
     color: rgba(243, 245, 231, 0.8);
+    margin-right: 35px;
+    font-size: 1em;
+    justify-self: end;
+    align-self: start;
+    margin-top: -80px;
     margin-right: 35px;
 }
 
-.placeholder-main-div .image-credit a,
-.not-found-main-div .image-credit a {
+.placeholder-image-credit a,
+.not-found-image-credit a {
     text-decoration: none;
     color: inherit;
 }
