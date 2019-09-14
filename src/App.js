@@ -7,6 +7,7 @@ import Navigation from './components/navigation/Navigation';
 import HomePage from './components/home-page/HomePage';
 import PlaceholderPage from './components/placeholder-page/PlaceholderPage';
 import LogInPage from './components/login-page/LogInPage';
+import RegisterPage from './components/register-page/RegisterPage';
 import NotFoundPage from './components/404-page/NotFoundPage';
 
 
@@ -23,6 +24,7 @@ class App extends Component {
             <Route path="/cities" component={PlaceholderPage} />
             <Route path="/about" component={PlaceholderPage} />
             <Route path="/login" component={LogInPage} />
+            <Route path="/register" component={RegisterPage} />
             <Route component={NotFoundPage} />
           </Switch>
         </Router>
