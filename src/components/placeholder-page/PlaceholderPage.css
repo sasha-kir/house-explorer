@@ -1,4 +1,5 @@
-.placeholder-main-div {
+.placeholder-main-div,
+.not-found-main-div {
     margin-top: 100px;
     background-color: #ABC6FD;
     display: grid;
@@ -6,7 +7,8 @@
     justify-content: center;
 }
 
-.placeholder-main-div p {
+.placeholder-main-div p,
+.not-found-main-div p {
     color: #383A49;
     font-size: 2em;
     text-align: center;
@@ -15,22 +17,26 @@
     letter-spacing: .1em;
 }
 
-.placeholder-main-div .image-wrapper {
+.placeholder-main-div .image-wrapper,
+.not-found-main-div .image-wrapper {
     align-self: start;
     max-height: 500px;
 }
 
-.placeholder-main-div img {
+.placeholder-main-div img,
+.not-found-main-div img {
     height: 500px;
     width: auto;
 }
 
-.placeholder-main-div .image-credit {
+.placeholder-main-div .image-credit,
+.not-found-main-div .image-credit {
     color: rgba(243, 245, 231, 0.8);
     margin-right: 35px;
 }
 
-.placeholder-main-div .image-credit a {
+.placeholder-main-div .image-credit a,
+.not-found-main-div .image-credit a {
     text-decoration: none;
     color: inherit;
 }

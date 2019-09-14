@@ -5,7 +5,7 @@ import logo from '../../images/logo.svg';
 
 class Navigation extends Component {
 
-    onLogoClick = () => {
+    handleLogoClick = () => {
         this.props.history.push("/");
     }
 
@@ -14,7 +14,7 @@ class Navigation extends Component {
             <nav>
                 <div className="main-nav">
                     <img id="logo" alt="logo" src={logo} 
-                         onClick={this.onLogoClick} />
+                         onClick={this.handleLogoClick} />
                     <NavLink to="/cities">
                         cities
                     </NavLink>

@@ -2,7 +2,12 @@ import React from 'react';
 import './HomePage.css';
 import cover from '../../images/cover.png';
 
-const HomePage = () => {
+const HomePage = ({ history }) => {
+    
+    const handleIntroBtnClick = () => {
+        history.push("/register");
+    }
+
     return(
         <div className="home-main-div">
             <div></div>
@@ -13,7 +18,9 @@ const HomePage = () => {
                     Lorem ipsum odor amet, consectetuer adipiscing elit. 
                     Scelerisque mus neque class dolor. Adipiscing placerat tempor.
                 </p>
-                <button className="intro-btn">get started</button>
+                <button className="intro-btn" onClick={handleIntroBtnClick}>
+                    get started
+                </button>
             </div>
             <div className="image-wrapper">
                 <img className="cover-image" alt="houses with a map pin over them" src={cover} />
