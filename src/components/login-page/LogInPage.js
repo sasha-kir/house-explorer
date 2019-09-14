@@ -12,7 +12,6 @@ class LogInPage extends Component {
     }
 
     render() {
-        //const { onRouteChange } = this.props;
         return (
             <div className="login-main-div">
                 <div className="login-wrapper">

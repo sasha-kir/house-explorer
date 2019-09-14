@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
+
 import './App.css';
 
 import Navigation from './components/navigation/Navigation';
@@ -8,38 +10,22 @@ import LogInPage from './components/login-page/LogInPage';
 
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      route: "home"
-    };
-  }
-
-  handleRouteChange = (nextLocation) => {
-    this.setState({ route: nextLocation });
-  }
-
-  routeSwitcher = () => {
-    switch(this.state.route) {
-      case "home":
-        return (<HomePage />);
-      case "cities":
-        return (<PlaceholderPage />);
-      case "about":
-        return (<PlaceholderPage />);
-      case "login":
-        return (<LogInPage onRouteChange={this.handleRouteChange} />);
-      default:
-        return (<HomePage />);
-    };
-  }
 
   render() {
     return (
       <div className="body">
-        <Navigation currentPage={this.state.route} onRouteChange={this.handleRouteChange} />
-        {this.routeSwitcher()}
-        {/*<Footer />
+        <Router>
+          <Navigation />
+          
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/cities" component={PlaceholderPage} />
+            <Route path="/about" component={PlaceholderPage} />
+            <Route path="/login" component={LogInPage} />
+          </Switch>
+        </Router>
+        {/*
+        <Footer />
         
 
         <SearchBar />

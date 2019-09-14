@@ -34,7 +34,7 @@ nav {
     padding: 10px;
 }
   
-nav span {
+nav a {
   font-variant: small-caps;
   display: inline-block;
   position: relative;
@@ -47,8 +47,8 @@ nav span {
   z-index: 1;
 }
 
-nav span.active:before,
-nav span:before {
+nav a.active:before,
+nav a:before {
     content: "";
     display: inline-block;
     position: absolute;
@@ -59,25 +59,27 @@ nav span:before {
     background: #383A49;
 }
 
-nav span:before {
+nav a:before {
     visibility: hidden;
     transform: scaleX(0);
     transition: .2s linear;
 }
 
-nav span:hover:before,
-nav span.active:before {
+nav a:hover:before,
+nav a.active:before {
   visibility: visible;
   transform: scaleX(1);
 }
 
-#sign-up-btn:hover {
+#sign-up-btn:hover,
+#sign-up-btn.active {
     color: #F3F5E7;
     background-color: #383A49;
     transition: .25s ease-in;
 }
 
-#sign-up-btn:hover:before {
+#sign-up-btn:hover:before,
+#sign-up-btn.active:before {
     visibility: hidden;
 }
 
