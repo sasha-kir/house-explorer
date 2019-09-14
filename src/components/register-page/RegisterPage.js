@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from "react-helmet";
 
 import './RegisterPage.css';
 
@@ -16,6 +17,9 @@ class RegisterPage extends Component {
     render() {
         return (
             <div className="register-main-div">
+                <Helmet>
+                    <title>Sign Up | House Explorer</title>
+                </Helmet>
                 <div className="register-wrapper">
                     <div className="register-form">
                         <h2 className="form-header">sign up</h2>

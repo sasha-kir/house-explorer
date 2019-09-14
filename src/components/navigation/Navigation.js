@@ -17,7 +17,7 @@ class Navigation extends Component {
                         history
                     </NavLink>
                     <NavLink to="/profile">
-                        username
+                        profile
                     </NavLink>
                     <NavLink to="/#" className="login-link">
                         log out

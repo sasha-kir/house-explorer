@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from "react-helmet";
 import './LogInPage.css';
 
 class LogInPage extends Component {
@@ -15,6 +16,9 @@ class LogInPage extends Component {
     render() {
         return (
             <div className="login-main-div">
+                <Helmet>
+                    <title>Log In | House Explorer</title>
+                </Helmet>
                 <div className="login-wrapper">
                     <div className="login-form">
                         <h2 className="form-header">log in</h2> 
