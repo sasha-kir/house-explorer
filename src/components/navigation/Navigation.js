@@ -9,13 +9,44 @@ class Navigation extends Component {
         this.props.history.push("/");
     }
 
+    contentSwitcher = () => {
+        if (this.props.loggedIn) {
+            return (
+                <div className="right-nav">
+                    <NavLink to="/history">
+                        history
+                    </NavLink>
+                    <NavLink to="/profile">
+                        username
+                    </NavLink>
+                    <NavLink to="/#" className="login-link">
+                        log out
+                    </NavLink>
+                    <div className="arrow"></div>
+                </div>
+            );
+        } else {
+            return (
+                <div className="right-nav">
+                    <NavLink to="/register" id="sign-up-btn">
+                        sign up
+                    </NavLink>
+                    <NavLink to="/login" className="login-link">
+                        log in
+                    </NavLink>
+                    <div className="arrow"></div>
+                </div>
+            );
+        }
+    }
+
     render() {
         return (
             <nav>
                 <div className="main-nav">
-                    <img id="logo" alt="logo" src={logo} 
+                    <img className="logo" alt="logo" src={logo} 
                          onClick={this.handleLogoClick} />
-                     <NavLink to="/explore">
+                    <NavLink to="/explore">
                         explore
                     </NavLink>
                     <NavLink to="/cities">
@@ -24,15 +55,7 @@ class Navigation extends Component {
                     <NavLink to="/about">
                         about
                     </NavLink>
-                    <div className="right-nav">
-                        <NavLink to="/register" id="sign-up-btn">
-                            sign up
-                        </NavLink>
-                        <NavLink to="/login" id="login-link">
-                            log in
-                        </NavLink>
-                        <div className="arrow"></div>
-                    </div>
+                    {this.contentSwitcher()}
                 </div>
             </nav>
         );

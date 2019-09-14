@@ -4,18 +4,3 @@
 .register-wrapper {
     height: 510px;
 }
-
-.text-for-existing-user {
-    margin-top: 15px;
-    font-size: 16px;
-    text-align: center;
-    color: #383A49;
-}
-
-.text-for-existing-user a {
-    color: #383A49;
-}
-
-.text-for-existing-user a:hover {
-    color: #000;
-}

@@ -32,7 +32,7 @@ class RegisterPage extends Component {
                                onBlur={(e) => this.showPlaceholder(e, "password")}
                                placeholder="password" type="password" />
                         <button className="form-button">get started</button>
-                        <p className="text-for-existing-user">
+                        <p className="link-to-other-form">
                             Already have an account? &nbsp;
                             <Link to="/login">Login</Link>
                         </p>

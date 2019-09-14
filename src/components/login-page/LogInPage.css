@@ -17,9 +17,9 @@
 
 .login-wrapper,
 .register-wrapper {
-    background-color: #ABC6FD;
+    background-color: rgba( 255, 255, 255, 0.5 );
     align-self: center;
-    height: 410px;
+    height: 430px;
     width: 450px;
     display: grid;
     grid-template-rows: 1fr 2fr;
@@ -84,4 +84,19 @@
     color: #F3F5E7;
     background-color: #383A49;
     transition: .25s ease-in;
+}
+
+.link-to-other-form {
+    margin-top: 15px;
+    font-size: 16px;
+    text-align: center;
+    color: #383A49;
+}
+
+.link-to-other-form a {
+    color: #383A49;
+}
+
+.link-to-other-form a:hover {
+    color: #000;
 }

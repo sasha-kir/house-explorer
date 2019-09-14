@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './LogInPage.css';
 
 class LogInPage extends Component {
@@ -26,6 +27,10 @@ class LogInPage extends Component {
                                onBlur={(e) => this.showPlaceholder(e, "password")}
                                placeholder="password" type="password" />
                         <button className="form-button">submit</button>
+                        <p className="link-to-other-form">
+                            Don't have an account? &nbsp;
+                            <Link to="/register">Sign up</Link>
+                        </p>
                     </div>
                 </div>
             </div>

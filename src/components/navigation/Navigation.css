@@ -22,7 +22,7 @@ nav {
     }
 } */
 
-#logo {
+.logo {
     height: 80px;
     width: auto;
     padding: 10px 40px 10px 30px;
@@ -116,8 +116,8 @@ nav a.active:before {
     transform: rotate(30deg);
   }
 
-  #login-link:hover ~ .arrow,
-  #login-link.active ~ .arrow {
+  .login-link:hover ~ .arrow,
+  .login-link.active ~ .arrow {
       visibility: visible;
       opacity: 1;
       transition: all 0.2s ease-in;

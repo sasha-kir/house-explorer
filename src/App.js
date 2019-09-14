@@ -16,7 +16,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      loggedIn: true
+      loggedIn: false
     }
   }
 
@@ -25,7 +25,7 @@ class App extends Component {
     return (
       <div className="body">
         <Router>
-          <Navigation />
+          <Navigation loggedIn={loggedIn} />
           
           <Switch>
             <Route exact path="/" component={PublicHomePage} />
@@ -35,9 +35,21 @@ class App extends Component {
             <Route path="/register" component={RegisterPage} />
             <Route path="/explore" render={() => (
               loggedIn
-                ? (<ExplorePage />) 
+                ? (<ExplorePage />)
                 : (<Redirect to="/login" />)
-              )} 
+              )}
+            />
+            <Route path="/profile" render={() => (
+              loggedIn
+                ? (<PlaceholderPage />)
+                : (<Redirect to="/login" />)
+              )}
+            />
+            <Route path="/history" render={() => (
+              loggedIn
+                ? (<PlaceholderPage />)
+                : (<Redirect to="/login" />)
+              )}
             />
             <Route component={NotFoundPage} />
           </Switch>
