@@ -15,6 +15,9 @@ class Navigation extends Component {
                 <div className="main-nav">
                     <img id="logo" alt="logo" src={logo} 
                          onClick={this.handleLogoClick} />
+                     <NavLink to="/explore">
+                        explore
+                    </NavLink>
                     <NavLink to="/cities">
                         cities
                     </NavLink>
