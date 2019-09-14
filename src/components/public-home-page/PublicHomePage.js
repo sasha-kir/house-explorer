@@ -1,15 +1,15 @@
 import React from 'react';
-import './HomePage.css';
+import './PublicHomePage.css';
 import cover from '../../images/cover.png';
 
-const HomePage = ({ history }) => {
+const PublicHomePage = ({ history }) => {
     
     const handleIntroBtnClick = () => {
         history.push("/register");
     }
 
     return(
-        <div className="home-main-div">
+        <div className="public-home-main-div">
             <div></div>
             <div></div>
             <div className="intro-wrapper">
@@ -22,9 +22,9 @@ const HomePage = ({ history }) => {
                     get started
                 </button>
             </div>
-            <div className="image-wrapper">
-                <img className="cover-image" alt="houses with a map pin over them" src={cover} />
-                <p className="image-credit">&copy; &nbsp;
+            <div className="cover-image-wrapper">
+                <img className="cover-image" alt="abstract location illustration" src={cover} />
+                <p className="cover-image-credit">&copy; &nbsp;
                     <a href="https://icons8.com/ouch/illustration/abstract-location-access" 
                        rel="noopener noreferrer" target="_blank">Icons 8</a> 
                 </p>
@@ -33,4 +33,4 @@ const HomePage = ({ history }) => {
     );
 }
 
-export default HomePage;
+export default PublicHomePage;

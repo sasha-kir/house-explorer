@@ -1,4 +1,4 @@
-.home-main-div {
+.public-home-main-div {
     background-color: #ABC6FD;
     margin-top: 100px;
     display: grid;
@@ -6,7 +6,7 @@
     grid-template-columns: 1fr 1fr;
 }
 
-.image-wrapper {
+.cover-image-wrapper {
     display: grid;
     grid-template-rows: 16fr 1fr;
 }
@@ -19,7 +19,7 @@
     /* clip-path: polygon(10% 17%, 90% 12%, 91% 85%, 70% 86%, 22% 80%, 9% 59%); */
 }
 
-.image-credit {
+.cover-image-credit {
     font-size: 1em;
     color: rgba(243, 245, 231, 0.8);
     justify-self: end;
@@ -28,7 +28,7 @@
     margin-right: 110px;
 }
 
-.image-credit a {
+.cover-image-credit a {
     text-decoration: none;
     color: inherit;
 }
