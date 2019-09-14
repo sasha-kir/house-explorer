@@ -114,7 +114,8 @@ nav span.active:before {
     transform: rotate(30deg);
   }
 
-  #log-in-link:hover ~ .arrow {
+  #login-link:hover ~ .arrow,
+  #login-link.active ~ .arrow {
       visibility: visible;
       opacity: 1;
       transition: all 0.2s ease-in;

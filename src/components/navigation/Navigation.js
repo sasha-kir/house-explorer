@@ -8,16 +8,17 @@ class Navigation extends Component {
         return (
             <nav>
                 <div className="main-nav">
-                    <img id="logo" alt="logo" src={logo} />
-                    <span className={currentPage === "home" ? "active" : ""}
-                          onClick={() => onRouteChange("home")}>home</span>
+                    <img id="logo" alt="logo" src={logo} 
+                         onClick={() => onRouteChange("home")} />
+                    <span className={currentPage === "cities" ? "active" : ""}
+                          onClick={() => onRouteChange("cities")}>cities</span>
                     <span className={currentPage === "about" ? "active" : ""}
                           onClick={() => onRouteChange("about")}>about</span>
                     <div className="right-nav">
                         <span id="sign-up-btn">
                             sign up
                         </span>
-                        <span id="log-in-link" 
+                        <span id="login-link" className={currentPage === "login" ? "active" : ""}
                               onClick={() => onRouteChange("login")}>
                             log in
                         </span>

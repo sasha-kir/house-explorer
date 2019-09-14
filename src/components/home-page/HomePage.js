@@ -4,7 +4,7 @@ import cover from '../../images/cover.png';
 
 const HomePage = () => {
     return(
-        <div className="cover">
+        <div className="home-main-div">
             <div></div>
             <div></div>
             <div className="intro-wrapper">

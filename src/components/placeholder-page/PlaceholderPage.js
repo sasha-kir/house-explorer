@@ -1,11 +1,11 @@
 import React from 'react';
-import './AboutPage.css';
+import './PlaceholderPage.css';
 
 import placeholder from '../../images/under-construction.png';
 
-const AboutPage = () => {
+const PlaceholderPage = () => {
     return (
-        <div className="about-wrapper">
+        <div className="placeholder-main-div">
             <p>page under construction</p>
             <div className="image-wrapper">
                 <img alt="placeholder" src={placeholder} />
@@ -18,4 +18,4 @@ const AboutPage = () => {
     );
 }
 
-export default AboutPage;
+export default PlaceholderPage;

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import LandingPage from './components/landing-page/LandingPage'
+import Navigation from './components/navigation/Navigation';
+import HomePage from './components/home-page/HomePage';
+import PlaceholderPage from './components/placeholder-page/PlaceholderPage';
 import LogInPage from './components/login-page/LogInPage';
-import Footer from './components/footer/Footer';
+
 
 class App extends Component {
   constructor() {
@@ -19,21 +21,26 @@ class App extends Component {
 
   routeSwitcher = () => {
     switch(this.state.route) {
-      case "login": {
+      case "home":
+        return (<HomePage />);
+      case "cities":
+        return (<PlaceholderPage />);
+      case "about":
+        return (<PlaceholderPage />);
+      case "login":
         return (<LogInPage onRouteChange={this.handleRouteChange} />);
-      }
-      default: {
-        return (<LandingPage onRouteChange={this.handleRouteChange} />);
-      }
+      default:
+        return (<HomePage />);
     };
   }
 
   render() {
     return (
-      <div className="App">
+      <div className="body">
+        <Navigation currentPage={this.state.route} onRouteChange={this.handleRouteChange} />
         {this.routeSwitcher()}
-        <Footer />
-        {/*
+        {/*<Footer />
+        
 
         <SearchBar />
         <Map />

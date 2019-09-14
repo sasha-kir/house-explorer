@@ -16,9 +16,8 @@
 
 .login-wrapper {
     background-color: #ABC6FD;
-    margin-top: -50px;
     align-self: center;
-    height: 420px;
+    height: 410px;
     width: 450px;
     display: grid;
     grid-template-rows: 1fr 2fr;
@@ -26,25 +25,34 @@
     /* border: 2px solid #383A49; */
 }
 
-.logo-image {
+/* .logo-image {
     justify-self: center;
     align-self: end;
     height: 100px;
     width: auto;
     padding-top: 30px;
-}
+} */
 
 .login-form {
     display: grid;
     padding: 50px;
     row-gap: 10px;
     font-size: 30px;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+.form-header {
+    font-size: 45px;
+    font-variant: small-caps;
+    margin: 0 0 20px 0;
+    letter-spacing: .1em;
+    text-align: center;
 }
 
 .form-element {
     background: transparent;
     padding-left: 10px;
+    align-self: center;
     outline: 0;
     border-width: 0 0 2px;
     border-color: #383A49;
@@ -69,8 +77,9 @@
     border: 3px solid #383A49;
     border-radius: 5px;
     justify-self: stretch;
+    align-self: end;
     padding: 5px 10px;
-    margin-top: 10px;
+    margin-top: 20px;
     font-size: 25px;
     max-height: 50px;
     min-height: 50px;

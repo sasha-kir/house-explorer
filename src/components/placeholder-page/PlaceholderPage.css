@@ -1,4 +1,4 @@
-.about-wrapper {
+.placeholder-main-div {
     margin-top: 100px;
     background-color: #ABC6FD;
     display: grid;
@@ -6,7 +6,7 @@
     justify-content: center;
 }
 
-.about-wrapper p {
+.placeholder-main-div p {
     color: #383A49;
     font-size: 2em;
     text-align: center;
@@ -15,22 +15,22 @@
     letter-spacing: .1em;
 }
 
-.about-wrapper .image-wrapper {
+.placeholder-main-div .image-wrapper {
     align-self: start;
     max-height: 500px;
 }
 
-.about-wrapper img {
+.placeholder-main-div img {
     height: 500px;
     width: auto;
 }
 
-.about-wrapper .image-credit {
+.placeholder-main-div .image-credit {
     color: rgba(243, 245, 231, 0.8);
     margin-right: 35px;
 }
 
-.image-credit a {
+.placeholder-main-div .image-credit a {
     text-decoration: none;
     color: inherit;
 }

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './LogInPage.css';
 
-import logo from '../../images/logo.svg';
-
 class LogInPage extends Component {
 
     hidePlaceholder = (event) => {
@@ -14,13 +12,12 @@ class LogInPage extends Component {
     }
 
     render() {
-        const { onRouteChange } = this.props;
+        //const { onRouteChange } = this.props;
         return (
             <div className="login-main-div">
                 <div className="login-wrapper">
-                    <img className="logo-image" onClick={() => onRouteChange("home")}
-                         alt="logo" src={logo} />
                     <div className="login-form">
+                        <h2 className="form-header">log in</h2> 
                         <input className="form-element" 
                                onFocus={this.hidePlaceholder} 
                                onBlur={(e) => this.showPlaceholder(e, "username")}
@@ -29,7 +26,7 @@ class LogInPage extends Component {
                                onFocus={this.hidePlaceholder}
                                onBlur={(e) => this.showPlaceholder(e, "password")}
                                placeholder="password" type="password" />
-                        <button className="form-button">login</button>
+                        <button className="form-button">submit</button>
                     </div>
                 </div>
             </div>
