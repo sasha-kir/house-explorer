@@ -16,8 +16,18 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      loggedIn: true
+      loggedIn: false
     }
+  }
+
+  handleLogin = () => {
+    console.log("app saw you log in");
+    this.setState({ loggedIn: true });
+  }
+
+  handleRegistration = () => {
+    console.log("app saw you register");
+    this.setState({ loggedIn: true });
   }
 
   render() {
@@ -31,8 +41,10 @@ class App extends Component {
             <Route exact path="/" component={PublicHomePage} />
             <Route path="/cities" component={PlaceholderPage} />
             <Route path="/about" component={PlaceholderPage} />
-            <Route path="/login" component={LogInPage} />
-            <Route path="/register" component={RegisterPage} />
+            <Route path="/login" 
+                   render={() => <LogInPage handleLogin={this.handleLogin} />} />
+            <Route path="/register" 
+                   render={() => <RegisterPage handleRegistration={this.handleRegistration} />} />
             <Route path="/explore" render={() => (
               loggedIn
                 ? (<ExplorePage />)
