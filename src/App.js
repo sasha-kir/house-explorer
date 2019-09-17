@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom'
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
+import ProtectedRoute from './components/protected-route/ProtectedRoute';
 
 import './App.css';
 
@@ -16,6 +17,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      //loggedIn: localStorage.loggedIn || false
       loggedIn: false
     }
   }
@@ -23,11 +25,13 @@ class App extends Component {
   handleLogin = () => {
     console.log("app saw you log in");
     this.setState({ loggedIn: true });
+    //localStorage.setItem("loggedIn", true);
   }
 
   handleRegistration = () => {
     console.log("app saw you register");
     this.setState({ loggedIn: true });
+    //localStorage.setItem("loggedIn", true);
   }
 
   render() {
@@ -45,24 +49,9 @@ class App extends Component {
                    render={() => <LogInPage handleLogin={this.handleLogin} />} />
             <Route path="/register" 
                    render={() => <RegisterPage handleRegistration={this.handleRegistration} />} />
-            <Route path="/explore" render={() => (
-              loggedIn
-                ? (<ExplorePage />)
-                : (<Redirect to="/login" />)
-              )}
-            />
-            <Route path="/profile" render={() => (
-              loggedIn
-                ? (<PlaceholderPage />)
-                : (<Redirect to="/login" />)
-              )}
-            />
-            <Route path="/history" render={() => (
-              loggedIn
-                ? (<PlaceholderPage />)
-                : (<Redirect to="/login" />)
-              )}
-            />
+            <ProtectedRoute path="/explore" auth={loggedIn} component={ExplorePage} />
+            <ProtectedRoute path="/profile" auth={loggedIn} component={PlaceholderPage} />
+            <ProtectedRoute path="/history" auth={loggedIn} component={PlaceholderPage} />
             <Route component={NotFoundPage} />
           </Switch>
         </Router>

@@ -9,7 +9,17 @@ class Navigation extends Component {
         this.props.history.push("/");
     }
 
-    contentSwitcher = () => {
+    leftContentSwitcher = () => {
+        if (this.props.loggedIn) {
+            return (
+                <NavLink to="/explore">
+                    explore
+                </NavLink>
+            )
+        }
+    }
+
+    rightContentSwitcher = () => {
         if (this.props.loggedIn) {
             return (
                 <div className="right-nav">
@@ -46,16 +56,14 @@ class Navigation extends Component {
                 <div className="main-nav">
                     <img className="logo" alt="logo" src={logo} 
                          onClick={this.handleLogoClick} />
-                    <NavLink to="/explore">
-                        explore
-                    </NavLink>
+                    {this.leftContentSwitcher()}
                     <NavLink to="/cities">
                         cities
                     </NavLink>
                     <NavLink to="/about">
                         about
                     </NavLink>
-                    {this.contentSwitcher()}
+                    {this.rightContentSwitcher()}
                 </div>
             </nav>
         );
