@@ -17,21 +17,26 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      //loggedIn: localStorage.loggedIn || false
-      loggedIn: false
+      loggedIn: localStorage.loggedIn || false
     }
+  }
+  
+  handleLogOut = () => {
+    console.log("you're logged out");
+    this.setState({ loggedIn: false });
+    localStorage.setItem("loggedIn", false);
   }
 
   handleLogin = () => {
     console.log("app saw you log in");
     this.setState({ loggedIn: true });
-    //localStorage.setItem("loggedIn", true);
+    localStorage.setItem("loggedIn", true);
   }
 
   handleRegistration = () => {
     console.log("app saw you register");
     this.setState({ loggedIn: true });
-    //localStorage.setItem("loggedIn", true);
+    localStorage.setItem("loggedIn", true);
   }
 
   render() {
@@ -39,19 +44,19 @@ class App extends Component {
     return (
       <div className="body">
         <Router>
-          <Navigation loggedIn={loggedIn} />
+          <Navigation loggedIn={loggedIn} handleLogOut={this.handleLogOut} />
           
           <Switch>
             <Route exact path="/" component={PublicHomePage} />
-            <Route path="/cities" component={PlaceholderPage} />
-            <Route path="/about" component={PlaceholderPage} />
-            <Route path="/login" 
+            <Route exact path="/cities" component={PlaceholderPage} />
+            <Route exact path="/about" component={PlaceholderPage} />
+            <Route exact path="/login" 
                    render={() => <LogInPage handleLogin={this.handleLogin} />} />
             <Route path="/register" 
                    render={() => <RegisterPage handleRegistration={this.handleRegistration} />} />
-            <ProtectedRoute path="/explore" auth={loggedIn} component={ExplorePage} />
-            <ProtectedRoute path="/profile" auth={loggedIn} component={PlaceholderPage} />
-            <ProtectedRoute path="/history" auth={loggedIn} component={PlaceholderPage} />
+            <ProtectedRoute exact path="/explore" auth={loggedIn} component={ExplorePage} />
+            <ProtectedRoute exact path="/profile" auth={loggedIn} component={PlaceholderPage} />
+            <ProtectedRoute exact path="/history" auth={loggedIn} component={PlaceholderPage} />
             <Route component={NotFoundPage} />
           </Switch>
         </Router>

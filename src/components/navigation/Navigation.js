@@ -29,7 +29,8 @@ class Navigation extends Component {
                     <NavLink to="/profile">
                         profile
                     </NavLink>
-                    <NavLink to="/#" className="login-link">
+                    <NavLink to="/#" className="login-link"
+                             onClick={this.props.handleLogOut}>
                         log out
                     </NavLink>
                     <div className="arrow"></div>
