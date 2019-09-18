@@ -2,12 +2,14 @@ import React from 'react';
 import './PublicHomePage.sass';
 import cover from '../../images/cover.png';
 
-const PublicHomePage = ({ history }) => {
+const PublicHomePage = ({ loggedIn, history }) => {
     
     const handleIntroBtnClick = () => {
-        history.push("/register");
+        loggedIn 
+            ? history.push("/explore") 
+            : history.push("/register");
     }
-
+    
     return(
         <div className="public-home-main-div">
             <div></div>

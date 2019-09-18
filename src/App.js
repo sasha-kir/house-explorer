@@ -47,7 +47,8 @@ class App extends Component {
           <Navigation loggedIn={loggedIn} handleLogOut={this.handleLogOut} />
           
           <Switch>
-            <Route exact path="/" component={PublicHomePage} />
+            <Route exact path="/" 
+                   render={(routeProps) => <PublicHomePage {...routeProps} loggedIn={loggedIn} />} />
             <Route exact path="/cities" component={PlaceholderPage} />
             <Route exact path="/about" component={PlaceholderPage} />
             <Route exact path="/login" 
