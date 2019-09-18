@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import FormTemplate from '../form-template/FormTemplate';
-import './RegisterPage.css';
+import './RegisterPage.sass';
 
 const RegisterPage = ({ hidePlaceholder, showPlaceholder, handleUsername, 
                         handleEmail, handlePassword, handleEnterKey, handleSubmit }) => {

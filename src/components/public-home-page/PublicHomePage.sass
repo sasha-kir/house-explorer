@@ -1,0 +1,64 @@
+@import '../../_config.sass'
+
+.public-home-main-div
+    @extend %page-template
+    grid-template-rows: 1fr 7fr
+    grid-template-columns: 1fr 1fr
+
+.cover-image-wrapper
+    display: grid
+    grid-template-rows: 16fr 1fr
+
+.cover-image
+    height: 500px
+    width: auto
+    justify-self: center
+    margin-top: 10px
+    /* clip-path: polygon(10% 17%, 90% 12%, 91% 85%, 70% 86%, 22% 80%, 9% 59%) */
+
+.cover-image-credit
+    @extend %image-credit
+    margin-top: -70px
+    margin-right: 110px
+
+    a
+        text-decoration: none
+        color: inherit
+
+.intro-wrapper
+    color: $primaryDarkColor
+    /* margin: 0 10px */
+    margin-top: -80px
+    justify-self: end
+    align-self: start
+    display: grid
+    grid-template-rows: 4fr 3fr 1fr
+    max-height: 500px
+
+.intro-heading
+    font-size: 5em
+    font-weight: bold
+    letter-spacing: .1em
+    text-align: center
+    margin-bottom: 0px
+    padding: 0 70px
+
+.intro-text
+    font-size: 2em
+    margin-left: 70px
+    align-self: start
+
+.intro-btn
+    @extend %small-caps-text
+    background-color: transparent
+    font-size: 1.5em
+    border: 4px solid $primaryDarkColor
+    padding: 5px 30px
+    border-radius: 5px
+    justify-self: center
+    height: 60px
+
+    &:hover
+        color: $primaryLightColor
+        background-color: $primaryDarkColor
+        transition: .25s ease-in

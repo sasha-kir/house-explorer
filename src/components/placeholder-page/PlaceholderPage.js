@@ -1,5 +1,5 @@
 import React from 'react';
-import './PlaceholderPage.css';
+import './PlaceholderPage.sass';
 
 import placeholder from '../../images/under-construction.png';
 

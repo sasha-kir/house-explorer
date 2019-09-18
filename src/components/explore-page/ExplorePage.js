@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from "react-helmet";
-import './ExplorePage.css';
+import './ExplorePage.sass';
 
 
 const ExplorePage = () => {
@@ -13,5 +13,12 @@ const ExplorePage = () => {
         </div>
     );
 }
+
+/*
+    <SearchBar />
+    <Map />
+    <HouseInfoBlock />
+    <PhotoBlock />
+*/
 
 export default ExplorePage;

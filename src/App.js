@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import ProtectedRoute from './components/protected-route/ProtectedRoute';
 
-import './App.css';
+import './App.sass';
 
 import Navigation from './components/navigation/Navigation';
 import PublicHomePage from './components/public-home-page/PublicHomePage';
@@ -17,26 +17,26 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      loggedIn: localStorage.loggedIn || false
+      loggedIn: Boolean(+localStorage.loggedIn) || false
     }
   }
   
   handleLogOut = () => {
     console.log("you're logged out");
     this.setState({ loggedIn: false });
-    localStorage.setItem("loggedIn", false);
+    localStorage.setItem("loggedIn", 0);
   }
 
   handleLogin = () => {
     console.log("app saw you log in");
     this.setState({ loggedIn: true });
-    localStorage.setItem("loggedIn", true);
+    localStorage.setItem("loggedIn", 1);
   }
 
   handleRegistration = () => {
     console.log("app saw you register");
     this.setState({ loggedIn: true });
-    localStorage.setItem("loggedIn", true);
+    localStorage.setItem("loggedIn", 1);
   }
 
   render() {
@@ -60,17 +60,6 @@ class App extends Component {
             <Route component={NotFoundPage} />
           </Switch>
         </Router>
-        {/*
-        <Footer />
-        
-
-        <SearchBar />
-        <Map />
-        <HouseInfoBlock />
-        <PhotoBlock />
-
-        <History />
-        */}
       </div>
     );
   }

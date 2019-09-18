@@ -1,0 +1,30 @@
+
+$primaryColor: #ABC6FD
+$primaryDarkColor: #383A49
+$primaryLightColor: #F3F5E7
+
+%small-caps-text
+    font-variant: small-caps
+    color: $primaryDarkColor
+    letter-spacing: .1em
+
+%page-template
+    margin-top: 100px
+    background-color: $primaryColor
+    display: grid
+
+%image-credit
+    font-size: 1em
+    color: rgba(243, 245, 231, 0.8)
+    justify-self: end
+    align-self: start
+
+%form-button-hover
+    color: $primaryLightColor
+    background-color: $primaryDarkColor
+    transition: .25s ease-in
+
+=transform($property)
+  -webkit-transform: $property
+  -ms-transform: $property
+  transform: $property

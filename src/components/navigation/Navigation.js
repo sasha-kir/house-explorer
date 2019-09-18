@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
-import './Navigation.css';
+import './Navigation.sass';
 import logo from '../../images/logo.svg';
 
 class Navigation extends Component {
@@ -39,7 +39,7 @@ class Navigation extends Component {
         } else {
             return (
                 <div className="right-nav">
-                    <NavLink to="/register" id="sign-up-btn">
+                    <NavLink to="/register" className="signup-btn">
                         sign up
                     </NavLink>
                     <NavLink to="/login" className="login-link">

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 const FormTemplate = (formType) => (WrappedComponent) => {
-    return class extends Component {
+    return class Form extends Component {
         constructor(props) {
             super(props);
             this.state = {
@@ -92,8 +92,6 @@ const FormTemplate = (formType) => (WrappedComponent) => {
                 default:
                     break;
             };
-
-            //const props = Object.assign(passedProps, {...innerProps});
 
             return(
                 <WrappedComponent {...passedProps} />

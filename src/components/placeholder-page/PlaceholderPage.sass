@@ -1,0 +1,34 @@
+@import '../../_config.sass'
+
+.placeholder-main-div,
+.not-found-main-div
+    @extend %page-template
+    grid-template-rows: 1fr 5fr
+    justify-content: center
+
+    p
+        @extend %small-caps-text
+        font-size: 2em
+        text-align: center
+        align-self: end
+
+.placeholder-image-wrapper,
+.not-found-image-wrapper
+    display: grid
+    grid-template-rows: 16fr 1fr
+    align-self: start
+    max-height: 500px
+
+    img
+        height: 500px
+        width: auto
+
+.placeholder-image-credit,
+.not-found-image-credit
+    @extend %image-credit
+    margin-right: 35px
+    margin-top: -80px
+
+    a
+        text-decoration: none
+        color: inherit

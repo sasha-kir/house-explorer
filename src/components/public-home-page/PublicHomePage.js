@@ -1,5 +1,5 @@
 import React from 'react';
-import './PublicHomePage.css';
+import './PublicHomePage.sass';
 import cover from '../../images/cover.png';
 
 const PublicHomePage = ({ history }) => {

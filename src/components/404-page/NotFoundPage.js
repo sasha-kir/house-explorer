@@ -1,5 +1,5 @@
 import React from 'react';
-import '../placeholder-page/PlaceholderPage.css';
+import '../placeholder-page/PlaceholderPage.sass';
 
 import notFound from '../../images/not-found.png';
 

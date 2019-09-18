@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import FormTemplate from '../form-template/FormTemplate';
-import './LogInPage.css';
+import './LogInPage.sass';
 
 const LogInPage = ({ hidePlaceholder, showPlaceholder, handleUsername, 
                      handlePassword, handleEnterKey, handleSubmit } ) => {
