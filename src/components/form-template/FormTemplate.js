@@ -7,7 +7,8 @@ const FormTemplate = (formType) => (WrappedComponent) => {
             this.state = {
                 username: "",
                 email: "",
-                password: ""
+                password: "",
+                hasError: [false, false]
             };
         }
     
@@ -37,10 +38,13 @@ const FormTemplate = (formType) => (WrappedComponent) => {
             const passwords = ["secret"];
             if (!username || !password) {
                 console.log("please fill in all the necessary fields");
+                this.setState({ hasError: [!username, !password] });
             } else if (!users.includes(username) || !passwords.includes(password)) {
                 console.log("wrong username or password");
+                this.setState({ hasError: [true, true] });
             } else {
                 console.log("logged in successfully");
+                this.setState({ hasError: [false, false] });
                 this.props.handleLogin();
                 this.props.history.push("/explore");
             }
@@ -78,12 +82,13 @@ const FormTemplate = (formType) => (WrappedComponent) => {
                 showPlaceholder: this.showPlaceholder,
                 handleUsername: this.handleUsernameChange,
                 handlePassword: this.handlePasswordChange,
-                handleEnterKey: this.handleEnterKey
+                handleEnterKey: this.handleEnterKey,
             };
 
             switch(formType) {
                 case "login":
                     passedProps["handleSubmit"] = this.handleLoginSubmit;
+                    passedProps["hasError"] = this.state.hasError;
                     break;
                 case "register":
                     passedProps["handleEmail"] = this.handleEmailChange;
