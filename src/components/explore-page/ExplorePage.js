@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
+import { YMaps } from "react-yandex-maps";
 
 import './ExplorePage.sass';
 
 import SearchBar from '../search-bar/SearchBar';
+import YandexMap from '../yandex-map/YandexMap';
 
 class ExplorePage extends Component {
     constructor() {
@@ -13,21 +15,34 @@ class ExplorePage extends Component {
         }
     }
 
+    handleSearchInput = (event) => {
+        this.setState({ searchTerm: event.target.value });
+        console.log(event.target.value);
+    }
+
     render() {
         return (
-            <div className="explore-main-div">
-                <Helmet>
-                    <title>Explore | House Explorer</title>
-                </Helmet>
-                <SearchBar />
-                content here
-            </div>
+            <YMaps>
+                <div className="explore-main-div">
+                    <Helmet>
+                        <title>Explore | House Explorer</title>
+                    </Helmet>
+                    <div className="explore-content">
+                        <SearchBar handleSearchInput={this.handleSearchInput} />
+                        <div>
+                            House Info
+                        </div>
+                    </div>
+                    <div className="map">
+                        <YandexMap />
+                    </div>
+                </div>
+            </YMaps>
         );
     }
 }
 
 /*
-    <Map />
     <HouseInfoBlock />
     <PhotoBlock />
 */

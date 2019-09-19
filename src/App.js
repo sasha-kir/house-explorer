@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import ProtectedRoute from './components/protected-route/ProtectedRoute';
-
 import './App.sass';
 
 import Navigation from './components/navigation/Navigation';

@@ -2,12 +2,15 @@ import React from 'react';
 
 import './SearchBar.sass';
 
-const SearchBar = () => {
+const SearchBar = ({ handleSearchInput }) => {
     return(
         <div className="searchbar-main-div">
             <div className="searchbar-wrapper">
-                <input type="text" placeholder="search" />
-                <button><i class="fas fa-search"></i></button>
+                <input type="text" placeholder="search"
+                       onChange={handleSearchInput} />
+                <button>
+                    <i className="fas fa-search"></i>
+                </button>
             </div>
         </div>
     );
