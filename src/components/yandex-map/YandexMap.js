@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, Placemark, ZoomControl } from 'react-yandex-maps';
+import { Map, Placemark, ZoomControl, GeolocationControl } from 'react-yandex-maps';
 
 const YandexMap = ({ mapCoords, startState }) => {
 
@@ -7,13 +7,17 @@ const YandexMap = ({ mapCoords, startState }) => {
         console.log(event.get("coords"));
     }
 
+    const detectLocation = (event) => {
+        console.log(event.get("position"))
+    }
+    
     return (
         <Map
-            onClick={onMapClick}
             state={{
                     center: mapCoords,
                     zoom: startState ? 10 : 17,
             }}
+            onClick={onMapClick}
             width={900} height={620} 
         >
             
@@ -32,6 +36,7 @@ const YandexMap = ({ mapCoords, startState }) => {
                     preset: 'islands#yellowDotIcon'
                 }}   
             />
+            <GeolocationControl onLocationChange={detectLocation}/>
         </Map>
     );
 }

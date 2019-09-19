@@ -12,10 +12,47 @@ class ExplorePage extends Component {
         super();
         this.state = {
             searchTerm: "",
+            userLocation: ["", ""],
             receivedCoordData: false,
-            mapCoords: [55.751244, 37.618423]
+            mapCoords: [0, 0]
         };
         this.dadataAPIKey = process.env.REACT_APP_DADATA_API_KEY;
+        this.yandexAPIKey = process.env.REACT_APP_YANDEX_API_KEY;
+    }
+
+    getCityFromIP = (ip) => {
+        const url = `https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address?ip=${ip}`
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Token ${this.dadataAPIKey}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.location) {
+                    const { region, country } = data.location.data;
+                    this.setState({ userLocation: [region, country] })
+                } else {
+                    this.setState({ userLocation: ["Москва", "Россия"] })
+                }
+            })
+            .catch(console.log)
+    }
+
+    componentDidMount() {
+        // get IP and starting mapCoords
+        let userIP;
+        fetch("http://ip-api.com/json")
+            .then(result => result.json())
+            .then(data => {
+                const { lat, lon } = data;
+                userIP = data.query;
+                this.setState({ mapCoords: [lat, lon] });
+            })
+            .then(() => this.getCityFromIP(userIP))
+            .catch(console.log)
     }
 
     handleSearchInput = (event) => {
@@ -24,6 +61,7 @@ class ExplorePage extends Component {
 
     handleSearchSubmit = () => {
         const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
+        const { searchTerm, userLocation } = this.state;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -32,28 +70,31 @@ class ExplorePage extends Component {
                 'Authorization': `Token ${this.dadataAPIKey}`
             },
             body: JSON.stringify({
-                'query': this.state.searchTerm,
+                'query': searchTerm,
                 'count': 1,
                 'locations': [
-                    { "region": "Москва" }
+                    { 
+                        "region": userLocation[0],
+                        "country": userLocation[1]
+                    }
                 ],
                 'restrict_value': true
             })
         })
-          .then(response => response.json())
-          .then(data => {
-              const suggestion = data.suggestions[0];
-              const fullAddress = suggestion.unrestricted_value;
-              const { geo_lat, geo_lon } = suggestion.data;
-              console.log(fullAddress);
-              this.setState({ mapCoords: [geo_lat, geo_lon], receivedCoordData: true });
-          })
-          .catch(console.log)
+            .then(response => response.json())
+            .then(data => {
+                const suggestion = data.suggestions[0];
+                const fullAddress = suggestion.unrestricted_value;
+                const { geo_lat, geo_lon } = suggestion.data;
+                console.log(fullAddress);
+                this.setState({ mapCoords: [geo_lat, geo_lon], receivedCoordData: true });
+            })
+            .catch(console.log)
     }
 
     render() {
         return (
-            <YMaps>
+            <YMaps query={{ apikey: this.yandexAPIKey, lang: 'en_RU' }}>
                 <div className="explore-main-div">
                     <Helmet>
                         <title>Explore | House Explorer</title>
