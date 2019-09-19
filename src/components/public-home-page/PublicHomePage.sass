@@ -45,14 +45,12 @@
     align-self: start
 
 .intro-btn
-    @extend %small-caps-text
-    background-color: transparent
+    @extend %button-with-border
     font-size: 1.5em
-    border: 4px solid $primaryDarkColor
+    border-width: 4px
     padding: 5px 30px
-    border-radius: 5px
     justify-self: center
     height: 60px
 
     &:hover
-        @extend %button-hover
+        @extend %button-with-border-hover

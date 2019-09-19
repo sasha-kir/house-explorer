@@ -51,10 +51,8 @@
         border-color: $primaryErrorColor
 
 .form-button
-    @extend %small-caps-text
-    background-color: transparent
-    border: 3px solid $primaryDarkColor
-    border-radius: 5px
+    @extend %button-with-border
+    border-width: 3px
     justify-self: stretch
     align-self: end
     padding: 5px 10px
@@ -63,7 +61,7 @@
     height: 50px
 
     &:hover
-        @extend %button-hover
+        @extend %button-with-border-hover
 
 .link-to-other-form
     margin-top: 15px

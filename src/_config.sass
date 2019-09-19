@@ -4,6 +4,11 @@ $primaryDarkColor: #383A49
 $primaryLightColor: #F3F5E7
 $primaryErrorColor: #FF8361
 
+=transform($property)
+  -webkit-transform: $property
+  -ms-transform: $property
+  transform: $property
+
 %small-caps-text
     font-variant: small-caps
     color: $primaryDarkColor
@@ -24,12 +29,18 @@ $primaryErrorColor: #FF8361
         text-decoration: none
         color: inherit
 
-%button-hover
+%button-with-border
+    @extend %small-caps-text
+    outline: 0
+    background-color: transparent
+    border-style: solid 
+    border-color: $primaryDarkColor
+    border-radius: 5px
+
+    &:active
+        +transform(scale(0.9))
+
+%button-with-border-hover
     color: $primaryLightColor
     background-color: $primaryDarkColor
-    transition: .25s ease-in
-
-=transform($property)
-  -webkit-transform: $property
-  -ms-transform: $property
-  transform: $property
+    transition: all .25s ease-in-out
