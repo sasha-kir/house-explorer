@@ -12,6 +12,7 @@ class ExplorePage extends Component {
         super();
         this.state = {
             searchTerm: "",
+            searchSuggestions: [],
             userLocation: ["", ""],
             receivedCoordData: false,
             mapCoords: [0, 0],
@@ -67,6 +68,19 @@ class ExplorePage extends Component {
         this.setState({ searchTerm: "" });
     }
 
+    getAddressSuggestions = (inputValue) => {
+        console.log(inputValue);
+        return ["suggestion one", "suggestion two"];
+    }
+
+    renderSuggestions = ({ value }) => {
+        this.setState({ searchSuggestions: this.getAddressSuggestions(value) });
+    }
+
+    clearSuggestions = () => {
+        this.setState({ searchSuggestions: [] });
+    }
+
     handleSearchSubmit = () => {
         const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
         const { searchTerm, userLocation } = this.state;
@@ -118,7 +132,11 @@ class ExplorePage extends Component {
                             handleInput={this.handleSearchInput}
                             handleSubmit={this.handleSearchSubmit}
                             searchTerm={this.state.searchTerm}
-                            clearSearchTerm={this.clearSearchTerm} />
+                            clearSearchTerm={this.clearSearchTerm}
+                            searchSuggestions={this.state.searchSuggestions}
+                            renderSuggestions={this.renderSuggestions}
+                            clearSuggestions={this.clearSuggestions}
+                        />
                         <div>
                             House Info
                         </div>
@@ -127,7 +145,8 @@ class ExplorePage extends Component {
                         <YandexMap 
                             mapCoords={this.state.mapCoords}
                             mapAddress={this.state.mapAddress}
-                            startState={!this.state.receivedCoordData} />
+                            startState={!this.state.receivedCoordData} 
+                        />
                     </div>
                 </div>
             </YMaps>

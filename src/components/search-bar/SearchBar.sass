@@ -1,6 +1,8 @@
 @import '../../_config.sass'
 
 $searchBarMainHeight: 80px
+$searchButtonWidth: 43px
+$deleteButtonWidth: 36.5px
 
 .searchbar-main-div
     background-color: $explorePrimaryColor
@@ -23,6 +25,7 @@ $searchBarMainHeight: 80px
 
     input
         color: $primaryDarkColor
+        height: $searchBarMainHeight - 30px
         outline: 0
         padding-left: 20px
         border-width: 0
@@ -37,15 +40,60 @@ $searchBarMainHeight: 80px
     .search-button,
     .delete-button
         color: $deactivatedItemColor
+        height: $searchBarMainHeight - 30px
         outline: 0
         background-color: transparent
         border-width: 0
-        padding: 5px 8px 2px 15px
+        padding: 4px 8px 2px 15px
         font-size: 20px
 
         &:hover
             color: $primaryDarkColor
             transition: .1s ease-in
 
+    .search-button
+        width: $searchButtonWidth
+
+    .delete-button
+        width: $deleteButtonWidth
+
     .hidden
         visibility: hidden
+
+
+.react-autosuggest__container
+    position: relative
+
+.unrounded-wrapper
+    border-bottom-left-radius: 0
+    border-bottom-right-radius: 0
+
+.react-autosuggest__suggestions-container
+    display: none
+
+.react-autosuggest__suggestions-container--open
+    display: block
+    position: absolute
+    color: $primaryDarkColor
+    top: $searchBarMainHeight - 29px
+    width: calc(100% + #{$searchButtonWidth} + #{$deleteButtonWidth})
+    border-width: 0
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,.2)
+    background-color: $explorePrimaryColor
+    font-size: 20px
+    border-bottom-left-radius: 4px
+    border-bottom-right-radius: 4px
+    padding-bottom: 2px
+    z-index: 2
+
+.react-autosuggest__suggestions-list
+    margin: 0
+    padding: 0
+    list-style-type: none
+
+.react-autosuggest__suggestion
+    cursor: pointer
+    padding: 10px 20px
+
+.react-autosuggest__suggestion--highlighted
+    background-color: #ddd
