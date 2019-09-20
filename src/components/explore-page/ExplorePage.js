@@ -14,7 +14,8 @@ class ExplorePage extends Component {
             searchTerm: "",
             userLocation: ["", ""],
             receivedCoordData: false,
-            mapCoords: [0, 0]
+            mapCoords: [0, 0],
+            mapAddress: ""
         };
         this.dadataAPIKey = process.env.REACT_APP_DADATA_API_KEY;
         this.yandexAPIKey = process.env.REACT_APP_YANDEX_API_KEY;
@@ -33,9 +34,12 @@ class ExplorePage extends Component {
             .then(data => {
                 if (data.location) {
                     const { region, country } = data.location.data;
-                    this.setState({ userLocation: [region, country] })
+                    this.setState({ userLocation: [region, country],
+                                    mapAddress: `${region}, ${country}`})
+
                 } else {
-                    this.setState({ userLocation: ["Москва", "Россия"] })
+                    this.setState({ userLocation: ["Москва", "Россия"], 
+                                    mapAddress: "Москва, Россия"})
                 }
             })
             .catch(console.log)
@@ -84,10 +88,16 @@ class ExplorePage extends Component {
             .then(response => response.json())
             .then(data => {
                 const suggestion = data.suggestions[0];
-                const fullAddress = suggestion.unrestricted_value;
-                const { geo_lat, geo_lon } = suggestion.data;
-                console.log(fullAddress);
-                this.setState({ mapCoords: [geo_lat, geo_lon], receivedCoordData: true });
+                if (suggestion) {
+                    const fullAddress = suggestion.unrestricted_value;
+                    const { geo_lat, geo_lon } = suggestion.data;
+                    console.log(fullAddress);
+                    this.setState({ mapCoords: [geo_lat, geo_lon], 
+                                    receivedCoordData: true, 
+                                    mapAddress: fullAddress });
+                } else {
+                    console.log("did not find such an address")
+                }
             })
             .catch(console.log)
     }
@@ -110,6 +120,7 @@ class ExplorePage extends Component {
                     <div className="map">
                         <YandexMap 
                             mapCoords={this.state.mapCoords}
+                            mapAddress={this.state.mapAddress}
                             startState={!this.state.receivedCoordData} />
                     </div>
                 </div>

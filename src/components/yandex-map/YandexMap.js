@@ -1,7 +1,7 @@
 import React from 'react';
 import { Map, Placemark, ZoomControl, GeolocationControl } from 'react-yandex-maps';
 
-const YandexMap = ({ mapCoords, startState }) => {
+const YandexMap = ({ mapCoords, mapAddress, startState }) => {
 
     const onMapClick = (event) => {
         console.log(event.get("coords"));
@@ -31,7 +31,11 @@ const YandexMap = ({ mapCoords, startState }) => {
                 }} 
             />
             <Placemark  
+                modules={['geoObject.addon.hint']}
                 geometry={mapCoords}
+                properties={{
+                    hintContent: mapAddress
+                }}
                 options={{
                     preset: 'islands#yellowDotIcon'
                 }}   
