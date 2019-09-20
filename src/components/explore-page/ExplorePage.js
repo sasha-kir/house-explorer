@@ -63,6 +63,10 @@ class ExplorePage extends Component {
         this.setState({ searchTerm: event.target.value });
     }
 
+    clearSearchTerm = () => {
+        this.setState({ searchTerm: "" });
+    }
+
     handleSearchSubmit = () => {
         const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
         const { searchTerm, userLocation } = this.state;
@@ -112,7 +116,9 @@ class ExplorePage extends Component {
                     <div className="explore-content">
                         <SearchBar 
                             handleInput={this.handleSearchInput}
-                            handleSubmit={this.handleSearchSubmit}/>
+                            handleSubmit={this.handleSearchSubmit}
+                            searchTerm={this.state.searchTerm}
+                            clearSearchTerm={this.clearSearchTerm} />
                         <div>
                             House Info
                         </div>

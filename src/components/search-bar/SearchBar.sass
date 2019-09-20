@@ -16,7 +16,7 @@ $searchBarMainHeight: 80px
 .searchbar-wrapper
     background-color: transparent
     display: grid
-    grid-template-columns: 12fr 1fr
+    grid-template-columns: 12fr 1fr 1fr
     height: $searchBarMainHeight - 30px
     box-shadow: 0 2px 6px 0 rgba(0,0,0,.2)
     border-radius: 4px
@@ -33,16 +33,19 @@ $searchBarMainHeight: 80px
 
         &::placeholder
             color: $deactivatedItemColor
-        
-    button
-        @extend %small-caps-text
+
+    .search-button,
+    .delete-button
         color: $deactivatedItemColor
         outline: 0
         background-color: transparent
         border-width: 0
-        padding: 5px 7px 2px 15px
+        padding: 5px 8px 2px 15px
         font-size: 20px
 
         &:hover
             color: $primaryDarkColor
-            transition: .2s ease-in
+            transition: .1s ease-in
+
+    .hidden
+        visibility: hidden
