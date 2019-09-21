@@ -9,7 +9,7 @@ const SearchBar = ({ handleInput, handleSubmit,
                      renderSuggestions, clearSuggestions }) => {
 
     const handleEnter = (e) => {
-        if (e.key === "Enter") {
+        if (e.key === "Enter" && !searchSuggestions.length) {
             handleSubmit();
         }
     }
@@ -17,12 +17,21 @@ const SearchBar = ({ handleInput, handleSubmit,
     const onInputChange = (event, { method }) => {
         if (method === "type") {
             handleInput(event);
+        } else {
+            console.log(method);
         }
     };
 
-    const getSuggestionValue = suggestion => suggestion;
+    const getSuggestionValue = suggestion => {
+        const selectionEvent = {
+            target: { value: suggestion }
+        };
+        handleInput(selectionEvent);
+        return suggestion;
+    };
+
     const displaySuggestion = suggestion => suggestion;
-    const shouldRenderSuggestions = value => value.trim().length > 2;
+    const shouldRenderSuggestions = value => value.trim().length > 3;
 
     const inputProps = {
         value: searchTerm,
@@ -44,9 +53,6 @@ const SearchBar = ({ handleInput, handleSubmit,
                     inputProps={inputProps}
                     shouldRenderSuggestions={shouldRenderSuggestions}
                 />
-                {/* <input ref={searchInput} type="text" placeholder="search"
-                       onKeyDown={handleEnter}
-                       onChange={handleInput} /> */}
                 <button className={`delete-button ${searchTerm ? "" : "hidden"}`}
                         onClick={clearSearchTerm}>
                     <i className="fas fa-times"></i>

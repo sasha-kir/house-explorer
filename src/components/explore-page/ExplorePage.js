@@ -68,56 +68,68 @@ class ExplorePage extends Component {
         this.setState({ searchTerm: "" });
     }
 
-    getAddressSuggestions = (inputValue) => {
-        console.log(inputValue);
-        return ["suggestion one", "suggestion two"];
+    sendDadataRequest = (query, count) => {
+        const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
+        const { userLocation } = this.state;
+        return fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Token ${this.dadataAPIKey}`
+                    },
+                    body: JSON.stringify({
+                        'query': query,
+                        'count': count,
+                        'locations': [
+                            { 
+                                "region": userLocation[0],
+                                "country": userLocation[1]
+                            }
+                        ],
+                        'restrict_value': true
+                    })
+            })
+                .then(response => response.json())
+                .then(data => data.suggestions)
+                .catch(console.log)
+    }
+
+    getAddressSuggestions = (dadataResponse) => {
+        if (dadataResponse) {
+            const suggestions = dadataResponse.map(elem => elem.value);
+            this.setState({ searchSuggestions: suggestions });
+        } else {
+            this.clearSuggestions();
+        }
     }
 
     renderSuggestions = ({ value }) => {
-        this.setState({ searchSuggestions: this.getAddressSuggestions(value) });
+        this.sendDadataRequest(value, 5)
+            .then(result => this.getAddressSuggestions(result));
     }
 
     clearSuggestions = () => {
         this.setState({ searchSuggestions: [] });
     }
 
+    processLocationResponse = (dadataResponse) => {
+        if (dadataResponse[0]) {
+            const location = dadataResponse[0];
+            const fullAddress = location.unrestricted_value;
+            const { geo_lat, geo_lon } = location.data;
+            console.log(fullAddress);
+            this.setState({ mapCoords: [geo_lat, geo_lon], 
+                            receivedCoordData: true, 
+                            mapAddress: fullAddress });
+        } else {
+            console.log("did not find such an address")
+        }
+    }
+
     handleSearchSubmit = () => {
-        const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
-        const { searchTerm, userLocation } = this.state;
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Token ${this.dadataAPIKey}`
-            },
-            body: JSON.stringify({
-                'query': searchTerm,
-                'count': 1,
-                'locations': [
-                    { 
-                        "region": userLocation[0],
-                        "country": userLocation[1]
-                    }
-                ],
-                'restrict_value': true
-            })
-        })
-            .then(response => response.json())
-            .then(data => {
-                const suggestion = data.suggestions[0];
-                if (suggestion) {
-                    const fullAddress = suggestion.unrestricted_value;
-                    const { geo_lat, geo_lon } = suggestion.data;
-                    console.log(fullAddress);
-                    this.setState({ mapCoords: [geo_lat, geo_lon], 
-                                    receivedCoordData: true, 
-                                    mapAddress: fullAddress });
-                } else {
-                    console.log("did not find such an address")
-                }
-            })
-            .catch(console.log)
+        this.sendDadataRequest(this.state.searchTerm, 1)
+            .then(result => this.processLocationResponse(result))
     }
 
     render() {
