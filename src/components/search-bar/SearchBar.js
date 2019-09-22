@@ -17,8 +17,6 @@ const SearchBar = ({ handleInput, handleSubmit,
     const onInputChange = (event, { method }) => {
         if (method === "type") {
             handleInput(event);
-        } else {
-            console.log(method);
         }
     };
 

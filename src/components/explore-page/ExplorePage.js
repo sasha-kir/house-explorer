@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 import { YMaps } from "react-yandex-maps";
 
+import { cityList } from './cityList';
 import './ExplorePage.sass';
 
 import SearchBar from '../search-bar/SearchBar';
@@ -13,7 +14,8 @@ class ExplorePage extends Component {
         this.state = {
             searchTerm: "",
             searchSuggestions: [],
-            userLocation: ["", ""],
+            locationOnMap: ["", ""],
+            locationCityOrCode: ["", ""],
             receivedCoordData: false,
             mapCoords: [0, 0],
             mapAddress: ""
@@ -34,13 +36,18 @@ class ExplorePage extends Component {
             .then(response => response.json())
             .then(data => {
                 if (data.location) {
-                    const { region, country } = data.location.data;
-                    this.setState({ userLocation: [region, country],
-                                    mapAddress: `${region}, ${country}`})
-
+                    const { city, country, region_iso_code } = data.location.data;
+                    this.setState({ 
+                                    locationOnMap: [city, country],
+                                    mapAddress: `${city}, ${country}`,
+                                    locationCityOrCode: ["", region_iso_code]
+                                });
                 } else {
-                    this.setState({ userLocation: ["Москва", "Россия"], 
-                                    mapAddress: "Москва, Россия"})
+                    this.setState({ 
+                                    locationOnMap: ["Москва", "Россия"], 
+                                    mapAddress: "Москва, Россия",
+                                    locationCityOrCode: ["Moscow", "RU-MOW"]
+                                });
                 }
             })
             .catch(console.log)
@@ -70,7 +77,7 @@ class ExplorePage extends Component {
 
     sendDadataRequest = (query, count) => {
         const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
-        const { userLocation } = this.state;
+        const { locationOnMap } = this.state;
         return fetch(url, {
                     method: 'POST',
                     headers: {
@@ -83,8 +90,8 @@ class ExplorePage extends Component {
                         'count': count,
                         'locations': [
                             { 
-                                "region": userLocation[0],
-                                "country": userLocation[1]
+                                "city": locationOnMap[0],
+                                "country": locationOnMap[1]
                             }
                         ],
                         'restrict_value': true
@@ -95,18 +102,13 @@ class ExplorePage extends Component {
                 .catch(console.log)
     }
 
-    getAddressSuggestions = (dadataResponse) => {
-        if (dadataResponse) {
-            const suggestions = dadataResponse.map(elem => elem.value);
-            this.setState({ searchSuggestions: suggestions });
-        } else {
-            this.clearSuggestions();
-        }
+    getAddressSuggestions = async (inputValue) => {
+        const dadataResponse = await this.sendDadataRequest(inputValue, 5);
+        return dadataResponse.map(elem => elem.value);
     }
 
-    renderSuggestions = ({ value }) => {
-        this.sendDadataRequest(value, 5)
-            .then(result => this.getAddressSuggestions(result));
+    renderSuggestions = async ({ value }) => {
+        this.setState({ searchSuggestions: await this.getAddressSuggestions(value) });
     }
 
     clearSuggestions = () => {
@@ -119,9 +121,11 @@ class ExplorePage extends Component {
             const fullAddress = location.unrestricted_value;
             const { geo_lat, geo_lon } = location.data;
             console.log(fullAddress);
-            this.setState({ mapCoords: [geo_lat, geo_lon], 
+            this.setState({ 
+                            mapCoords: [geo_lat, geo_lon], 
                             receivedCoordData: true, 
-                            mapAddress: fullAddress });
+                            mapAddress: fullAddress 
+                        });
         } else {
             console.log("did not find such an address")
         }
@@ -130,6 +134,17 @@ class ExplorePage extends Component {
     handleSearchSubmit = () => {
         this.sendDadataRequest(this.state.searchTerm, 1)
             .then(result => this.processLocationResponse(result))
+    }
+
+    handleCityChoiceOnMap = (event) => {
+        const selectedCity = event.get("target").data._data;
+        const { nameRus, country } = cityList.filter(city => city.location === selectedCity.center)[0];
+        this.setState({ 
+                        mapCoords: selectedCity.center,
+                        mapAddress: `${nameRus}, ${country}`,
+                        locationCityOrCode: [selectedCity.content, ""],
+                        locationOnMap: [nameRus, country]
+                    });
     }
 
     render() {
@@ -157,7 +172,10 @@ class ExplorePage extends Component {
                         <YandexMap 
                             mapCoords={this.state.mapCoords}
                             mapAddress={this.state.mapAddress}
-                            startState={!this.state.receivedCoordData} 
+                            startState={!this.state.receivedCoordData}
+                            cityList={cityList}
+                            locationCityOrCode={this.state.locationCityOrCode}
+                            handleCityChoice={this.handleCityChoiceOnMap}
                         />
                     </div>
                 </div>

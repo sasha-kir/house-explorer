@@ -1,16 +1,23 @@
 import React from 'react';
-import { Map, Placemark, ZoomControl, GeolocationControl } from 'react-yandex-maps';
+import {    Map, 
+            Placemark, 
+            ZoomControl, 
+            GeolocationControl, 
+            ListBox, 
+            ListBoxItem 
+        } from 'react-yandex-maps';
 
-const YandexMap = ({ mapCoords, mapAddress, startState }) => {
+const YandexMap = ({    mapCoords, mapAddress, startState, 
+                        cityList, locationCityOrCode, handleCityChoice }) => {
 
     const onMapClick = (event) => {
         console.log(event.get("coords"));
     }
 
     const detectLocation = (event) => {
-        console.log(event.get("position"))
+        console.log(event.get("position"));
     }
-    
+
     return (
         <Map
             state={{
@@ -40,6 +47,23 @@ const YandexMap = ({ mapCoords, mapAddress, startState }) => {
                     preset: 'islands#yellowDotIcon'
                 }}   
             />
+            <ListBox 
+                data={{ content: 'Select a city ' }}
+                onSelect={handleCityChoice}
+            >
+                {cityList.map(city => <ListBoxItem 
+                                            key={city.id} 
+                                            data={{ 
+                                                    content: city.name,
+                                                    center: city.location
+                                                }}
+                                            state={{
+                                                    selected: (city.name === locationCityOrCode[0] || 
+                                                               city.isoCode === locationCityOrCode[1])
+                                            }}
+                                        />
+                )}
+            </ListBox>
             <GeolocationControl onLocationChange={detectLocation}/>
         </Map>
     );
