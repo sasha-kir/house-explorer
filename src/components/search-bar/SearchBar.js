@@ -1,5 +1,7 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
+import AutosuggestHighlightMatch from "autosuggest-highlight/umd/match";
+import AutosuggestHighlightParse from "autosuggest-highlight/umd/parse";
 
 import './SearchBar.sass';
 
@@ -47,7 +49,24 @@ const SearchBar = ({
         return suggestion;
     };
 
-    const displaySuggestion = suggestion => suggestion;
+    const displaySuggestion = (suggestion, { query }) => {
+        const matches = AutosuggestHighlightMatch(suggestion, query);
+        const parts = AutosuggestHighlightParse(suggestion, matches);
+        return (
+            <span>
+              {parts.map((part, index) => {
+                const className = part.highlight ? 'react-autosuggest__suggestion-match' : null;
+        
+                return (
+                  <span className={className} key={index}>
+                    {part.text}
+                  </span>
+                );
+              })}
+            </span>
+        );
+    }
+
     const shouldRenderSuggestions = value => value.trim().length > 3;
 
     const inputProps = {
