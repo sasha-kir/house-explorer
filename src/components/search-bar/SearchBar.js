@@ -3,10 +3,17 @@ import Autosuggest from 'react-autosuggest';
 
 import './SearchBar.sass';
 
-const SearchBar = ({ handleInput, handleSubmit, 
-                     searchTerm, clearSearchTerm,
-                     searchSuggestions, 
-                     renderSuggestions, clearSuggestions }) => {
+const SearchBar = ({ 
+                        handleInput, 
+                        handleSubmit, 
+                        searchTerm, 
+                        clearSearchTerm,
+                        searchSuggestions, 
+                        renderSuggestions, 
+                        clearSuggestions, 
+                        saveInitialInput,
+                        fillInitialInput
+                    }) => {
 
     const handleEnter = (e) => {
         if (e.key === "Enter" && !searchSuggestions.length) {
@@ -15,8 +22,20 @@ const SearchBar = ({ handleInput, handleSubmit,
     }
 
     const onInputChange = (event, { method }) => {
-        if (method === "type") {
-            handleInput(event);
+        switch (method) {
+            case 'type':
+                handleInput(event);
+                break;
+            case 'down':
+                saveInitialInput(event);
+                break;
+            case 'up':
+                if (event.target.value === searchSuggestions[0]) {
+                   fillInitialInput();
+                }
+                break;
+            default:
+                break;
         }
     };
 

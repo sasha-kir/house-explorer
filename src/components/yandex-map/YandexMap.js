@@ -8,7 +8,7 @@ import {    Map,
         } from 'react-yandex-maps';
 
 const YandexMap = ({    mapCoords, mapAddress, startState, 
-                        cityList, locationCityOrCode, handleCityChoice }) => {
+                        cityList, locationInEnglish, handleCityChoice }) => {
 
     const onMapClick = (event) => {
         console.log(event.get("coords"));
@@ -58,8 +58,8 @@ const YandexMap = ({    mapCoords, mapAddress, startState,
                                                     center: city.location
                                                 }}
                                             state={{
-                                                    selected: (city.name === locationCityOrCode[0] || 
-                                                               city.isoCode === locationCityOrCode[1])
+                                                    selected: (city.name === locationInEnglish[0] || 
+                                                               city.isoCode === locationInEnglish[1])
                                             }}
                                         />
                 )}

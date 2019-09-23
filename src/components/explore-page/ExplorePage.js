@@ -12,13 +12,14 @@ class ExplorePage extends Component {
     constructor() {
         super();
         this.state = {
-            searchTerm: "",
-            searchSuggestions: [],
-            locationOnMap: ["", ""],
-            locationCityOrCode: ["", ""],
-            receivedCoordData: false,
-            mapCoords: [0, 0],
-            mapAddress: ""
+            searchTerm: "",                             // what is entered in input
+            savedSearchTerm: "",                        // what user unitially typed, without suggestion
+            searchSuggestions: [],                      // suggestions fetched from dadata
+            locationInRussian: ["Москва", "Россия"],    // [city, country] in Russian
+            locationInEnglish: ["Moscow", "RU-MOW"],    // [city, isoCode] in English
+            receivedCoordData: false,                   // if received coordinates from dadata
+            mapCoords: [0, 0],                          // coordinates to place pin and map center
+            mapAddress: "Москва, Россия"                // full address at pin
         };
         this.dadataAPIKey = process.env.REACT_APP_DADATA_API_KEY;
         this.yandexAPIKey = process.env.REACT_APP_YANDEX_API_KEY;
@@ -38,15 +39,9 @@ class ExplorePage extends Component {
                 if (data.location) {
                     const { city, country, region_iso_code } = data.location.data;
                     this.setState({ 
-                                    locationOnMap: [city, country],
+                                    locationInRussian: [city, country],
                                     mapAddress: `${city}, ${country}`,
-                                    locationCityOrCode: ["", region_iso_code]
-                                });
-                } else {
-                    this.setState({ 
-                                    locationOnMap: ["Москва", "Россия"], 
-                                    mapAddress: "Москва, Россия",
-                                    locationCityOrCode: ["Moscow", "RU-MOW"]
+                                    locationInEnglish: ["", region_iso_code]
                                 });
                 }
             })
@@ -77,7 +72,7 @@ class ExplorePage extends Component {
 
     sendDadataRequest = (query, count) => {
         const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
-        const { locationOnMap } = this.state;
+        const { locationInRussian } = this.state;
         return fetch(url, {
                     method: 'POST',
                     headers: {
@@ -90,8 +85,8 @@ class ExplorePage extends Component {
                         'count': count,
                         'locations': [
                             { 
-                                "city": locationOnMap[0],
-                                "country": locationOnMap[1]
+                                "city": locationInRussian[0],
+                                "country": locationInRussian[1]
                             }
                         ],
                         'restrict_value': true
@@ -136,14 +131,28 @@ class ExplorePage extends Component {
             .then(result => this.processLocationResponse(result))
     }
 
+    saveInitialInput = (event) => {
+        const { searchSuggestions, searchTerm } = this.state;
+        if (searchSuggestions && !searchSuggestions.includes(searchTerm)) {
+            this.setState({ savedSearchTerm: event.target.value });
+        }
+    }
+
+    fillInitialInput = () => {
+        const { savedSearchTerm } = this.state;
+        if (savedSearchTerm) {
+            this.setState({ searchTerm: savedSearchTerm, savedSearchTerm: "" });
+        }
+    }
+
     handleCityChoiceOnMap = (event) => {
         const selectedCity = event.get("target").data._data;
         const { nameRus, country } = cityList.filter(city => city.location === selectedCity.center)[0];
         this.setState({ 
                         mapCoords: selectedCity.center,
                         mapAddress: `${nameRus}, ${country}`,
-                        locationCityOrCode: [selectedCity.content, ""],
-                        locationOnMap: [nameRus, country]
+                        locationInEnglish: [selectedCity.content, ""],
+                        locationInRussian: [nameRus, country]
                     });
     }
 
@@ -163,6 +172,8 @@ class ExplorePage extends Component {
                             searchSuggestions={this.state.searchSuggestions}
                             renderSuggestions={this.renderSuggestions}
                             clearSuggestions={this.clearSuggestions}
+                            saveInitialInput={this.saveInitialInput}
+                            fillInitialInput={this.fillInitialInput}
                         />
                         <div>
                             House Info
@@ -174,7 +185,7 @@ class ExplorePage extends Component {
                             mapAddress={this.state.mapAddress}
                             startState={!this.state.receivedCoordData}
                             cityList={cityList}
-                            locationCityOrCode={this.state.locationCityOrCode}
+                            locationInEnglish={this.state.locationInEnglish}
                             handleCityChoice={this.handleCityChoiceOnMap}
                         />
                     </div>
