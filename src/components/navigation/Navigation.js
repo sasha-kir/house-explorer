@@ -12,7 +12,7 @@ class Navigation extends Component {
     leftContentSwitcher = () => {
         if (this.props.loggedIn) {
             return (
-                <NavLink to="/explore">
+                <NavLink to="/explore" id="explore-link">
                     explore
                 </NavLink>
             )
@@ -58,7 +58,7 @@ class Navigation extends Component {
                     <img className="logo" alt="logo" src={logo} 
                          onClick={this.handleLogoClick} />
                     {this.leftContentSwitcher()}
-                    <NavLink to="/cities">
+                    <NavLink to="/cities" id="cities-link">
                         cities
                     </NavLink>
                     <NavLink to="/about">
