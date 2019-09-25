@@ -26,8 +26,8 @@ class LogInPage extends Component {
     }
 
     render() {
-        const { handleUsername, handlePassword,
-                showPlaceholder, handleEnterKey, hasError } = this.props;
+        const { handleUsername, handlePassword, showPlaceholder, 
+                handleEnterKey, hasError, defaultPath } = this.props;
         return (
             <div className="login-main-div">
                 <Helmet>
@@ -55,7 +55,7 @@ class LogInPage extends Component {
                         </button>
                         <p className="link-to-other-form">
                             Don't have an account? &nbsp;
-                            <Link to="/register">Sign up</Link>
+                            <Link to={defaultPath + "/register"}>Sign up</Link>
                         </p>
                     </div>
                 </div>

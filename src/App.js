@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import ProtectedRoute from './components/protected-route/ProtectedRoute';
 import { HelmetProvider } from 'react-helmet-async';
 
@@ -15,8 +15,8 @@ import NotFoundPage from './components/404-page/NotFoundPage';
 
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       loggedIn: Boolean(+localStorage.loggedIn) || false
     }
@@ -42,27 +42,32 @@ class App extends Component {
 
   render() {
     const { loggedIn } = this.state;
+    const defaultPath = this.props.match.url;
     return (
       <HelmetProvider>
         <div className="body">
-          <Router>
-            <Navigation loggedIn={loggedIn} handleLogOut={this.handleLogOut} />
+            <Navigation loggedIn={loggedIn} defaultPath={defaultPath} handleLogOut={this.handleLogOut} />
             
             <Switch>
-              <Route exact path="/" 
-                    render={(routeProps) => <PublicHomePage {...routeProps} loggedIn={loggedIn} />} />
-              <Route exact path="/cities" component={PlaceholderPage} />
-              <Route exact path="/about" component={PlaceholderPage} />
-              <Route exact path="/login" 
-                    render={() => <LogInPage handleLogin={this.handleLogin} />} />
-              <Route exact path="/register" 
-                    render={() => <RegisterPage handleRegistration={this.handleRegistration} />} />
-              <ProtectedRoute exact path="/explore" auth={loggedIn} component={ExplorePage} />
-              <ProtectedRoute exact path="/profile" auth={loggedIn} component={PlaceholderPage} />
-              <ProtectedRoute exact path="/history" auth={loggedIn} component={PlaceholderPage} />
+              <Route exact path={defaultPath + "/"} 
+                    render={(routeProps) => <PublicHomePage {...routeProps} loggedIn={loggedIn} 
+                                                                            defaultPath={defaultPath}/>}                                                             
+               />
+              <Route exact path={defaultPath + "/cities"} component={PlaceholderPage} />
+              <Route exact path={defaultPath + "/about"} component={PlaceholderPage} />
+              <Route exact path={defaultPath + "/login"} 
+                    render={() => <LogInPage handleLogin={this.handleLogin} 
+                                             defaultPath={defaultPath} />}                            
+              />
+              <Route exact path={defaultPath + "/register"}
+                    render={() => <RegisterPage handleRegistration={this.handleRegistration} 
+                                                defaultPath={defaultPath} />}                             
+              />
+              <ProtectedRoute exact path={defaultPath + "/explore"} auth={loggedIn} component={ExplorePage} />
+              <ProtectedRoute exact path={defaultPath + "/profile"} auth={loggedIn} component={PlaceholderPage} />
+              <ProtectedRoute exact path={defaultPath + "/history"} auth={loggedIn} component={PlaceholderPage} />
               <Route component={NotFoundPage} />
             </Switch>
-          </Router>
         </div>
       </HelmetProvider>
     );
