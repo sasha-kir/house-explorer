@@ -46,7 +46,7 @@ const FormTemplate = (formType) => (WrappedComponent) => {
                 console.log("logged in successfully");
                 this.setState({ hasError: [false, false] });
                 this.props.handleLogin();
-                this.props.history.push(this.props.defaultPath + "explore");
+                this.props.history.push("/explore");
             }
         }
 
@@ -57,7 +57,7 @@ const FormTemplate = (formType) => (WrappedComponent) => {
             } else {
                 console.log("registered!");
                 this.props.handleRegistration();
-                this.props.history.push(this.props.defaultPath + "explore");
+                this.props.history.push("/explore");
             }
         }
 
@@ -83,7 +83,6 @@ const FormTemplate = (formType) => (WrappedComponent) => {
                 handleUsername: this.handleUsernameChange,
                 handlePassword: this.handlePasswordChange,
                 handleEnterKey: this.handleEnterKey,
-                defaultPath: this.props.defaultPath,
             };
 
             switch(formType) {

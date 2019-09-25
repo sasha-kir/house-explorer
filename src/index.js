@@ -10,7 +10,7 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
     <Router>
-        <Route path="/house-explorer/" component={App} />
+        <Route path="/house-explorer" component={App} />
     </Router>
 , document.getElementById('root'));
 

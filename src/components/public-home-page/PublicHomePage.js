@@ -6,8 +6,8 @@ const PublicHomePage = ({ loggedIn, history, defaultPath }) => {
     
     const handleIntroBtnClick = () => {
         loggedIn 
-            ? history.push(defaultPath + "explore") 
-            : history.push(defaultPath + "register");
+            ? history.push(defaultPath + "/explore") 
+            : history.push(defaultPath + "/register");
     }
     
     return(

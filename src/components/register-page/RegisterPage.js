@@ -36,7 +36,7 @@ const RegisterPage = ({ hidePlaceholder, showPlaceholder, handleUsername,
                     </button>
                     <p className="link-to-other-form">
                         Already have an account? &nbsp;
-                        <Link to={defaultPath + "login"}>Login</Link>
+                        <Link to={defaultPath + "/login"}>Login</Link>
                     </p>
                 </div>
             </div>

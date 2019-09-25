@@ -6,13 +6,13 @@ import logo from '../../images/logo.svg';
 class Navigation extends Component {
 
     handleLogoClick = () => {
-        this.props.history.push(this.props.defaultPath);
+        this.props.history.push("/");
     }
 
     leftContentSwitcher = () => {
         if (this.props.loggedIn) {
             return (
-                <NavLink to={this.props.defaultPath + "explore"}>
+                <NavLink to={this.props.defaultPath + "/explore"}>
                     explore
                 </NavLink>
             )
@@ -24,13 +24,13 @@ class Navigation extends Component {
         if (loggedIn) {
             return (
                 <div className="right-nav">
-                    <NavLink to={defaultPath + "history"}>
+                    <NavLink to={defaultPath + "/history"}>
                         history
                     </NavLink>
-                    <NavLink to={defaultPath + "profile"}>
+                    <NavLink to={defaultPath + "/profile"}>
                         profile
                     </NavLink>
-                    <NavLink to={defaultPath} className="login-link"
+                    <NavLink to={defaultPath + "/#"} className="login-link"
                              onClick={this.props.handleLogOut}>
                         log out
                     </NavLink>
@@ -40,10 +40,10 @@ class Navigation extends Component {
         } else {
             return (
                 <div className="right-nav">
-                    <NavLink to={defaultPath + "register"} className="signup-btn">
+                    <NavLink to={defaultPath + "/register"} className="signup-btn">
                         sign up
                     </NavLink>
-                    <NavLink to={defaultPath + "login"} className="login-link">
+                    <NavLink to={defaultPath + "/login"} className="login-link">
                         log in
                     </NavLink>
                     <div className="arrow"></div>
@@ -60,10 +60,10 @@ class Navigation extends Component {
                     <img className="logo" alt="logo" src={logo} 
                          onClick={this.handleLogoClick} />
                     {this.leftContentSwitcher()}
-                    <NavLink to={defaultPath + "cities"}>
+                    <NavLink to={defaultPath + "/cities"}>
                         cities
                     </NavLink>
-                    <NavLink to={defaultPath +"about"}>
+                    <NavLink to={defaultPath +"/about"}>
                         about
                     </NavLink>
                     {this.rightContentSwitcher()}
