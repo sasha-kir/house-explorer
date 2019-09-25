@@ -12,7 +12,7 @@ class Navigation extends Component {
     leftContentSwitcher = () => {
         if (this.props.loggedIn) {
             return (
-                <NavLink to={this.props.defaultPath + "/explore"}>
+                <NavLink to="/explore" id="explore-link">
                     explore
                 </NavLink>
             )
@@ -20,17 +20,16 @@ class Navigation extends Component {
     }
 
     rightContentSwitcher = () => {
-        const {loggedIn, defaultPath } = this.props;
-        if (loggedIn) {
+        if (this.props.loggedIn) {
             return (
                 <div className="right-nav">
-                    <NavLink to={defaultPath + "/history"}>
+                    <NavLink to="/history">
                         history
                     </NavLink>
-                    <NavLink to={defaultPath + "/profile"}>
+                    <NavLink to="/profile">
                         profile
                     </NavLink>
-                    <NavLink to={defaultPath + "/#"} className="login-link"
+                    <NavLink to="/#" className="login-link"
                              onClick={this.props.handleLogOut}>
                         log out
                     </NavLink>
@@ -40,10 +39,10 @@ class Navigation extends Component {
         } else {
             return (
                 <div className="right-nav">
-                    <NavLink to={defaultPath + "/register"} className="signup-btn">
+                    <NavLink to="/register" className="signup-btn">
                         sign up
                     </NavLink>
-                    <NavLink to={defaultPath + "/login"} className="login-link">
+                    <NavLink to="/login" className="login-link">
                         log in
                     </NavLink>
                     <div className="arrow"></div>
@@ -53,17 +52,16 @@ class Navigation extends Component {
     }
 
     render() {
-        const { defaultPath } = this.props;
         return (
             <nav>
                 <div className="main-nav">
                     <img className="logo" alt="logo" src={logo} 
                          onClick={this.handleLogoClick} />
                     {this.leftContentSwitcher()}
-                    <NavLink to={defaultPath + "/cities"}>
+                    <NavLink to="/cities" id="cities-link">
                         cities
                     </NavLink>
-                    <NavLink to={defaultPath +"/about"}>
+                    <NavLink to="/about">
                         about
                     </NavLink>
                     {this.rightContentSwitcher()}

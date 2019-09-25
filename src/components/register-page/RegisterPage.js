@@ -5,7 +5,7 @@ import FormTemplate from '../form-template/FormTemplate';
 import './RegisterPage.sass';
 
 const RegisterPage = ({ hidePlaceholder, showPlaceholder, handleUsername, 
-                        handleEmail, handlePassword, handleEnterKey, handleSubmit, defaultPath }) => {
+                        handleEmail, handlePassword, handleEnterKey, handleSubmit }) => {
     return (
         <div className="register-main-div">
             <Helmet>
@@ -36,7 +36,7 @@ const RegisterPage = ({ hidePlaceholder, showPlaceholder, handleUsername,
                     </button>
                     <p className="link-to-other-form">
                         Already have an account? &nbsp;
-                        <Link to={defaultPath + "/login"}>Login</Link>
+                        <Link to="/login">Login</Link>
                     </p>
                 </div>
             </div>

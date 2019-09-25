@@ -115,7 +115,7 @@ class ExplorePage extends Component {
             const location = dadataResponse[0];
             const fullAddress = location.unrestricted_value;
             const { geo_lat, geo_lon } = location.data;
-            console.log(location.data);
+            console.log(fullAddress);
             this.setState({ 
                             mapCoords: [geo_lat, geo_lon], 
                             receivedCoordData: true, 
