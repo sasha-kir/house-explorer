@@ -42,30 +42,30 @@ class App extends Component {
 
   render() {
     const { loggedIn } = this.state;
-    const defaultPath = this.props.match.url;
+    const defaultPath = this.props.match.path;
     return (
       <HelmetProvider>
         <div className="body">
             <Navigation loggedIn={loggedIn} defaultPath={defaultPath} handleLogOut={this.handleLogOut} />
             
             <Switch>
-              <Route exact path={defaultPath + "/"} 
+              <Route exact path={defaultPath} 
                     render={(routeProps) => <PublicHomePage {...routeProps} loggedIn={loggedIn} 
                                                                             defaultPath={defaultPath}/>}                                                             
                />
-              <Route exact path={defaultPath + "/cities"} component={PlaceholderPage} />
-              <Route exact path={defaultPath + "/about"} component={PlaceholderPage} />
-              <Route exact path={defaultPath + "/login"} 
+              <Route exact path={defaultPath + "cities"} component={PlaceholderPage} />
+              <Route exact path={defaultPath + "about"} component={PlaceholderPage} />
+              <Route exact path={defaultPath + "login"} 
                     render={() => <LogInPage handleLogin={this.handleLogin} 
                                              defaultPath={defaultPath} />}                            
               />
-              <Route exact path={defaultPath + "/register"}
+              <Route exact path={defaultPath + "register"}
                     render={() => <RegisterPage handleRegistration={this.handleRegistration} 
                                                 defaultPath={defaultPath} />}                             
               />
-              <ProtectedRoute exact path={defaultPath + "/explore"} auth={loggedIn} component={ExplorePage} />
-              <ProtectedRoute exact path={defaultPath + "/profile"} auth={loggedIn} component={PlaceholderPage} />
-              <ProtectedRoute exact path={defaultPath + "/history"} auth={loggedIn} component={PlaceholderPage} />
+              <ProtectedRoute exact path={defaultPath + "explore"} auth={loggedIn} component={ExplorePage} />
+              <ProtectedRoute exact path={defaultPath + "profile"} auth={loggedIn} component={PlaceholderPage} />
+              <ProtectedRoute exact path={defaultPath + "history"} auth={loggedIn} component={PlaceholderPage} />
               <Route component={NotFoundPage} />
             </Switch>
         </div>

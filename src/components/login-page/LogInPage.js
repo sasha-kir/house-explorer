@@ -55,7 +55,7 @@ class LogInPage extends Component {
                         </button>
                         <p className="link-to-other-form">
                             Don't have an account? &nbsp;
-                            <Link to={defaultPath + "/register"}>Sign up</Link>
+                            <Link to={defaultPath + "register"}>Sign up</Link>
                         </p>
                     </div>
                 </div>
