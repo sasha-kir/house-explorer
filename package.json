@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "async-wait-until": "^1.2.4",
     "autosuggest-highlight": "^3.1.1",
     "node-sass": "^4.12.0",
     "react": "^16.9.0",
@@ -36,7 +37,6 @@
     ]
   },
   "devDependencies": {
-    "async-wait-until": "^1.2.4",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.4.0",

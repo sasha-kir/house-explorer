@@ -6,7 +6,11 @@ import { cityList } from './cityList';
 import './ExplorePage.sass';
 
 import SearchBar from '../search-bar/SearchBar';
-import YandexMap from '../yandex-map/YandexMap';
+
+const YandexMap = React.lazy(() => 
+    import ('../yandex-map/YandexMap')
+);
+
 
 class ExplorePage extends Component {
     constructor() {
@@ -110,7 +114,8 @@ class ExplorePage extends Component {
         this.setState({ searchSuggestions: [] });
     }
 
-    processLocationResponse = (dadataResponse) => {
+    handleSearchSubmit = async () => {
+        let dadataResponse = await this.sendDadataRequest(this.state.searchTerm, 1);
         if (dadataResponse[0]) {
             const location = dadataResponse[0];
             const fullAddress = location.unrestricted_value;
@@ -124,11 +129,6 @@ class ExplorePage extends Component {
         } else {
             console.log("did not find such an address")
         }
-    }
-
-    handleSearchSubmit = () => {
-        this.sendDadataRequest(this.state.searchTerm, 1)
-            .then(result => this.processLocationResponse(result))
     }
 
     saveInitialInput = (event) => {
@@ -179,16 +179,16 @@ class ExplorePage extends Component {
                             House Info
                         </div>
                     </div>
-                    <div className="map">
-                        <YandexMap 
-                            mapCoords={this.state.mapCoords}
-                            mapAddress={this.state.mapAddress}
-                            startState={!this.state.receivedCoordData}
-                            cityList={cityList}
-                            locationInEnglish={this.state.locationInEnglish}
-                            handleCityChoice={this.handleCityChoiceOnMap}
-                        />
-                    </div>
+                    <React.Suspense fallback={<div></div>}>
+                            <YandexMap 
+                                mapCoords={this.state.mapCoords}
+                                mapAddress={this.state.mapAddress}
+                                startState={!this.state.receivedCoordData}
+                                cityList={cityList}
+                                locationInEnglish={this.state.locationInEnglish}
+                                handleCityChoice={this.handleCityChoiceOnMap}
+                            />
+                    </React.Suspense>
                 </div>
             </YMaps>
         );

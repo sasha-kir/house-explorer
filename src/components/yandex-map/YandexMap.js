@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {    Map, 
             Placemark, 
             ZoomControl, 
@@ -7,66 +7,105 @@ import {    Map,
             ListBoxItem 
         } from 'react-yandex-maps';
 
-const YandexMap = ({    mapCoords, mapAddress, startState, 
-                        cityList, locationInEnglish, handleCityChoice }) => {
+import * as waitUntil from 'async-wait-until';
 
-    const onMapClick = (event) => {
+import Spinner from '../spinner/Spinner';
+
+import './YandexMap.sass';
+
+class YandexMap extends Component { 
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            isMapReady: false
+        };
+        this.mapContentRef = React.createRef();
+    }
+
+    componentDidMount() {
+        this.watchMapLoading();
+    }
+
+    watchMapLoading = async () => {
+        try {
+            let mapLoaded = await waitUntil(() => {
+                return this.mapContentRef.current.childElementCount > 0;
+            }, 20000);
+            this.setState({ isMapReady: mapLoaded });
+        } catch {
+            console.log("map waiting timed out");
+            this.setState({ isMapReady: true });
+        }
+    }
+
+    onMapClick = (event) => {
         console.log(event.get("coords"));
     }
 
-    const detectLocation = (event) => {
+    detectLocation = (event) => {
         console.log(event.get("position"));
     }
 
-    return (
-        <Map
-            state={{
-                    center: mapCoords,
-                    zoom: startState ? 10 : 17,
-            }}
-            onClick={onMapClick}
-            width={900} height={620} 
-        >
-            
-            <ZoomControl 
-                options={{ 
-                    position: {
-                        left: 'auto',
-                        right: 20,
-                        top: 170
-                    }
-                }} 
-            />
-            <Placemark  
-                modules={['geoObject.addon.hint']}
-                geometry={mapCoords}
-                properties={{
-                    hintContent: mapAddress
-                }}
-                options={{
-                    preset: 'islands#yellowDotIcon'
-                }}   
-            />
-            <ListBox 
-                data={{ content: 'Select a city ' }}
-                onSelect={handleCityChoice}
-            >
-                {cityList.map(city => <ListBoxItem 
-                                            key={city.id} 
-                                            data={{ 
-                                                    content: city.name,
-                                                    center: city.location
-                                                }}
-                                            state={{
-                                                    selected: (city.name === locationInEnglish[0] || 
-                                                               city.isoCode === locationInEnglish[1])
-                                            }}
-                                        />
-                )}
-            </ListBox>
-            <GeolocationControl onLocationChange={detectLocation}/>
-        </Map>
-    );
-}
+    render() {
+        const { mapCoords, mapAddress, startState, 
+                cityList, locationInEnglish, handleCityChoice } = this.props;
 
-export default YandexMap
+        return (
+            <div className="map-main-div">
+            <Spinner isMapReady={this.state.isMapReady} />
+            <div className="map-content" ref={this.mapContentRef}>
+            <Map
+                state={{
+                        center: mapCoords,
+                        zoom: startState ? 10 : 17,
+                }}
+                onClick={this.onMapClick}
+                width={900} height={620}
+            >
+                
+                <ZoomControl 
+                    options={{ 
+                        position: {
+                            left: 'auto',
+                            right: 20,
+                            top: 170
+                        }
+                    }} 
+                />
+                <Placemark  
+                    modules={['geoObject.addon.hint']}
+                    geometry={mapCoords}
+                    properties={{
+                        hintContent: mapAddress
+                    }}
+                    options={{
+                        preset: 'islands#yellowDotIcon'
+                    }}   
+                />
+                <ListBox 
+                    data={{ content: 'Select a city ' }}
+                    onSelect={handleCityChoice}
+                >
+                    {cityList.map(city => <ListBoxItem 
+                                                key={city.id} 
+                                                data={{ 
+                                                        content: city.name,
+                                                        center: city.location
+                                                    }}
+                                                state={{
+                                                        selected: (city.name === locationInEnglish[0] || 
+                                                                city.isoCode === locationInEnglish[1])
+                                                }}
+                                            />
+                    )}
+                </ListBox>
+                <GeolocationControl onLocationChange={this.detectLocation}/>
+            </Map>
+            </div>
+            </div>
+        );
+    }
+};
+
+export default YandexMap;

@@ -45,7 +45,7 @@ class App extends Component {
     return (
       <HelmetProvider>
         <div className="body">
-          <Router>
+          <Router basename="/house-explorer">
             <Navigation loggedIn={loggedIn} handleLogOut={this.handleLogOut} />
             
             <Switch>

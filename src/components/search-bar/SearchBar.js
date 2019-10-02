@@ -89,7 +89,7 @@ const SearchBar = ({
                     inputProps={inputProps}
                     shouldRenderSuggestions={shouldRenderSuggestions}
                 />
-                <button className={`delete-button ${searchTerm ? "" : "hidden"}`}
+                <button className={`delete-button ${searchTerm ? "" : "hidden-button"}`}
                         onClick={clearSearchTerm}>
                     <i className="fas fa-times"></i>
                 </button>
