@@ -57,13 +57,13 @@ class YandexMap extends Component {
                     <Spinner isMapReady={this.state.isMapReady} />
                 </div>
                 <div className="map-content" ref={this.mapContentRef}>
-                    <Map
+                    <Map 
+                        className="map"
                         state={{
                                 center: mapCoords,
                                 zoom: startState ? 10 : 17,
                         }}
                         onClick={this.onMapClick}
-                        width={900} height={620}
                     >
                 
                         <ZoomControl 
