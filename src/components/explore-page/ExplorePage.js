@@ -6,6 +6,7 @@ import { cityList } from './cityList';
 import './ExplorePage.sass';
 
 import SearchBar from '../search-bar/SearchBar';
+import HouseInfoBlock from '../house-info-block/HouseInfoBlock';
 
 const YandexMap = React.lazy(() => 
     import ('../yandex-map/YandexMap')
@@ -175,9 +176,7 @@ class ExplorePage extends Component {
                             saveInitialInput={this.saveInitialInput}
                             fillInitialInput={this.fillInitialInput}
                         />
-                        <div>
-                            House Info
-                        </div>
+                        <HouseInfoBlock />
                     </div>
                     <React.Suspense fallback={<div></div>}>
                             <YandexMap 
@@ -194,10 +193,5 @@ class ExplorePage extends Component {
         );
     }
 }
-
-/*
-    <HouseInfoBlock />
-    <PhotoBlock />
-*/
 
 export default ExplorePage;

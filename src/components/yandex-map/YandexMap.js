@@ -82,7 +82,8 @@ class YandexMap extends Component {
                                 hintContent: mapAddress
                             }}
                             options={{
-                                preset: 'islands#yellowDotIcon'
+                                preset: 'islands#dotIcon',
+                                iconColor: '#343543'
                             }}   
                         />
                         <ListBox 
