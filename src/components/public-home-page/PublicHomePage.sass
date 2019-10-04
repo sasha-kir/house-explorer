@@ -19,37 +19,38 @@
 .cover-image-credit
     @extend %image-credit
     margin-top: -70px
-    margin-right: 110px
+    margin-right: 55px //110px
 
 .intro-wrapper
     color: $primaryDarkColor
-    /* margin: 0 10px */
-    margin-top: -80px
     justify-self: end
     align-self: start
     display: grid
-    grid-template-rows: 4fr 3fr 1fr
+    grid-template-rows: 4fr 3.5fr 2fr
     max-height: 500px
 
 .intro-heading
     font-size: 5em
     font-weight: bold
-    letter-spacing: .1em
-    text-align: center
-    margin-bottom: 0px
-    padding: 0 70px
+    letter-spacing: .05em
+    padding: 0 120px
 
 .intro-text
-    font-size: 2em
-    margin-left: 70px
-    align-self: start
+    font-size: 25px
+    margin-left: 120px
+    text-align: justify
+    align-self: end
+    padding-left: 15px
+    border-left: 5px solid $primaryDarkColor
 
 .intro-btn
     @extend %button-with-border
     font-size: 1.5em
     border-width: 4px
     padding: 5px 30px
-    justify-self: center
+    justify-self: start
+    margin-left: 120px
+    align-self: end
     height: 60px
 
     &:hover

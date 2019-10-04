@@ -15,11 +15,12 @@ const PublicHomePage = ({ loggedIn, history }) => {
             <div></div>
             <div></div>
             <div className="intro-wrapper">
-                <p className="intro-heading">House<br/>Explorer</p>
-                <p className="intro-text" >
-                    Lorem ipsum odor amet, consectetuer adipiscing elit. 
-                    Scelerisque mus neque class dolor. Adipiscing placerat tempor.
-                </p>
+                <div className="intro-heading">House<br/>Explorer</div>
+                <div className="intro-text" >
+                    Delve into the diverse residential architechture of Russian cities.
+                    Search by address or explore buildings around your current location.
+                    Find out when the house was built, what type of series it belongs to, and more!
+                </div>
                 <button className="intro-btn" onClick={handleIntroBtnClick}>
                     get started
                 </button>
