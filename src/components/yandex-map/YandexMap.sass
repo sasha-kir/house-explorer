@@ -3,19 +3,9 @@
 .map-main-div
     display: grid
     position: relative
-    width: 900px
-    height: 650px
+    width: $mainMapWidth
+    height: $mainMapHeight + 20px
     overflow: hidden
-
-    .map
-        width: 900px
-        height: 650px
-
-@media only screen and (max-width: 1200px)
-    .map-main-div
-        width: 600px
-        .map
-            width: 600px
 
 .spinner-wrapper
     width: 100%
@@ -28,3 +18,13 @@
     border-radius: 5px
     padding-top: 20px
     justify-self: end
+
+    .map
+        width: $mainMapWidth
+        height: $mainMapHeight
+
+@media only screen and (max-width: 1200px)
+    .map-main-div
+        width: $mainMapWidth - 300px
+        .map
+            width: $mainMapWidth - 300px

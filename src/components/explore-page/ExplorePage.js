@@ -176,7 +176,10 @@ class ExplorePage extends Component {
                             saveInitialInput={this.saveInitialInput}
                             fillInitialInput={this.fillInitialInput}
                         />
-                        <HouseInfoBlock />
+                        <HouseInfoBlock 
+                            mapAddress={this.state.mapAddress}
+                            startState={!this.state.receivedCoordData}
+                        />
                     </div>
                     <React.Suspense fallback={<div></div>}>
                             <YandexMap 
