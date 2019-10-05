@@ -19,17 +19,22 @@ const HouseInfoBlock = ({ mapAddress, startState }) => {
     const renderStartBlock = () => {
         return (
             <div className="house-info-wrapper">
-                <div className="house-info-header">
-                    start exploring
+                <div className="house-info-start-header">
+                    <span className="header-highlight">start exploring</span>
                 </div>
                 <div className="house-info-start-content">
-                    <p> Lorem ipsum odor amet, consectetuer adipiscing elit. 
-                    Scelerisque mus neque class dolor. Adipiscing placerat tempor.</p>
                     <img 
                         src={searchHouse}
                         alt="magnifying glass over paper with house on it"
-                        title="Designed By IYIKON from Pngtree.com"
+                        title="Icon made by IYIKON from pngtree.com"
                     />
+                    <p> 
+                        Start entering an address and choose one from the suggestions. <br/><br/>
+                        <span className="help-text">
+                            Your location was determined automatically. 
+                            You can choose another city by using the menu on the map.
+                        </span>
+                    </p>
                 </div>
             </div>
         );
@@ -39,9 +44,9 @@ const HouseInfoBlock = ({ mapAddress, startState }) => {
         return (
             <div className="house-info-wrapper">
                 <div className="house-info-header">
-                    about this house
+                    <span className="header-highlight"> about this house</span>
                 </div>
-                <div className="house-info-content">
+                <div className="house-info-house-content">
                     <div className="house-info-block">
                         <img    
                             src={images["address"]} 
