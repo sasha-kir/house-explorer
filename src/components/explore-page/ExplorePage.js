@@ -17,8 +17,9 @@ class ExplorePage extends Component {
     constructor() {
         super();
         this.state = {
-            searchTerm: "",                             // what is entered in input
-            savedSearchTerm: "",                        // what user unitially typed, without suggestion
+            inputValue: "",                             // input contents
+            searchTerm: "",                             // what is searched on submit
+            savedInput: "",                             // what user unitially typed, without suggestion
             searchSuggestions: [],                      // suggestions fetched from dadata
             locationInRussian: ["Москва", "Россия"],    // [city, country] in Russian
             locationInEnglish: ["Moscow", "RU-MOW"],    // [city, isoCode] in English
@@ -69,12 +70,18 @@ class ExplorePage extends Component {
             .catch(console.log)
     }
 
-    handleSearchInput = (event) => {
-        this.setState({ searchTerm: event.target.value });
+    handleSearchInput = (inputValue, translit = "") => {
+        if (translit) {
+            this.setState({ searchTerm: translit });
+        } else {
+            this.setState({ searchTerm: inputValue });
+        };
+
+        this.setState({ inputValue: inputValue });
     }
 
     clearSearchTerm = () => {
-        this.setState({ searchTerm: "" });
+        this.setState({ searchTerm: "", inputValue: "" });
     }
 
     sendDadataRequest = (query, count) => {
@@ -110,6 +117,9 @@ class ExplorePage extends Component {
     }
 
     renderSuggestions = async ({ value }) => {
+        if (this.state.searchTerm !== this.state.inputValue) {
+            value = this.state.searchTerm;
+        };
         this.setState({ searchSuggestions: await this.getAddressSuggestions(value) });
     }
 
@@ -123,7 +133,9 @@ class ExplorePage extends Component {
         if (dadataResponse[0]) {
             const location = dadataResponse[0];
             const { geo_lat, geo_lon } = location.data;
-            if (location.data.house === null) {
+            const fiasLevel = +location.data.fias_level;
+            if (fiasLevel < 8) {
+                if (fiasLevel === 7) this.setState({ mapCoords: [geo_lat, geo_lon] });
                 this.setState({ addressNotFound: true });
             } else {
                 this.setState({ 
@@ -139,16 +151,20 @@ class ExplorePage extends Component {
     }
 
     saveInitialInput = (event) => {
-        const { searchSuggestions, searchTerm } = this.state;
-        if (searchSuggestions && !searchSuggestions.includes(searchTerm)) {
-            this.setState({ savedSearchTerm: event.target.value });
+        const { searchSuggestions, inputValue } = this.state;
+        if (searchSuggestions && !searchSuggestions.includes(inputValue)) {
+            this.setState({ savedInput: event.target.value });
         }
     }
 
     fillInitialInput = () => {
-        const { savedSearchTerm } = this.state;
-        if (savedSearchTerm) {
-            this.setState({ searchTerm: savedSearchTerm, savedSearchTerm: "" });
+        const { savedInput } = this.state;
+        if (savedInput) {
+            this.setState({ 
+                            searchTerm: savedInput, 
+                            inputValue: savedInput,
+                            savedInput: "" 
+            });
         }
     }
 
@@ -174,8 +190,8 @@ class ExplorePage extends Component {
                         <SearchBar 
                             handleInput={this.handleSearchInput}
                             handleSubmit={this.handleSearchSubmit}
-                            searchTerm={this.state.searchTerm}
-                            clearSearchTerm={this.clearSearchTerm}
+                            inputValue={this.state.inputValue}
+                            clearInput={this.clearSearchTerm}
                             searchSuggestions={this.state.searchSuggestions}
                             renderSuggestions={this.renderSuggestions}
                             clearSuggestions={this.clearSuggestions}

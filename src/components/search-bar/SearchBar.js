@@ -3,13 +3,14 @@ import Autosuggest from 'react-autosuggest';
 import AutosuggestHighlightMatch from "autosuggest-highlight/umd/match";
 import AutosuggestHighlightParse from "autosuggest-highlight/umd/parse";
 
+import toCyrillic from './toCyrillic';
 import './SearchBar.sass';
 
 const SearchBar = ({ 
                         handleInput, 
                         handleSubmit, 
-                        searchTerm, 
-                        clearSearchTerm,
+                        inputValue, 
+                        clearInput,
                         searchSuggestions, 
                         renderSuggestions, 
                         clearSuggestions, 
@@ -23,10 +24,15 @@ const SearchBar = ({
         }
     }
 
-    const onInputChange = (event, { method }) => {
+    const onInputChange = (event, { newValue, method }) => {
         switch (method) {
             case 'type':
-                handleInput(event);
+                if (newValue.match(/^[\w.,\-\s]+$/) !== null) {
+                    let cyrInput = toCyrillic(newValue);
+                    handleInput(newValue, cyrInput);
+                } else {
+                    handleInput(newValue);
+                }
                 break;
             case 'down':
                 saveInitialInput(event);
@@ -42,10 +48,7 @@ const SearchBar = ({
     };
 
     const getSuggestionValue = suggestion => {
-        const selectionEvent = {
-            target: { value: suggestion }
-        };
-        handleInput(selectionEvent);
+        handleInput(suggestion);
         return suggestion;
     };
 
@@ -70,7 +73,7 @@ const SearchBar = ({
     const shouldRenderSuggestions = value => value.trim().length > 3;
 
     const inputProps = {
-        value: searchTerm,
+        value: inputValue,
         type: "text",
         placeholder: "search",
         onKeyDown: handleEnter,
@@ -89,8 +92,8 @@ const SearchBar = ({
                     inputProps={inputProps}
                     shouldRenderSuggestions={shouldRenderSuggestions}
                 />
-                <button className={`delete-button ${searchTerm ? "" : "hidden-button"}`}
-                        onClick={clearSearchTerm}>
+                <button className={`delete-button ${inputValue ? "" : "hidden-button"}`}
+                        onClick={clearInput}>
                     <i className="fas fa-times"></i>
                 </button>
                 <button className="search-button" 
