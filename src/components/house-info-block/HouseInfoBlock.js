@@ -1,10 +1,11 @@
 import React from 'react';
 
 import searchHouse from '../../images/search-house.png';
+import searchError from '../../images/search-error.png';
 
 import './HouseInfoBlock.sass';
 
-const HouseInfoBlock = ({ mapAddress, startState }) => {
+const HouseInfoBlock = ({ address, startState, addressNotFound }) => {
 
     const importAll = (req) => {
         let images = {};
@@ -19,7 +20,7 @@ const HouseInfoBlock = ({ mapAddress, startState }) => {
     const renderStartBlock = () => {
         return (
             <div className="house-info-wrapper">
-                <div className="house-info-start-header">
+                <div className="house-info-header house-info-start-header">
                     <span className="header-highlight">start exploring</span>
                 </div>
                 <div className="house-info-start-content">
@@ -29,7 +30,8 @@ const HouseInfoBlock = ({ mapAddress, startState }) => {
                         title="Icon made by IYIKON from pngtree.com"
                     />
                     <p> 
-                        Start entering an address and choose one from the suggestions. <br/><br/>
+                        Start entering an address and choose from the suggestions 
+                        to get the full info about the house. <br/><br/>
                         <span className="help-text">
                             Your location was determined automatically. 
                             You can choose another city by using the menu on the map.
@@ -53,7 +55,7 @@ const HouseInfoBlock = ({ mapAddress, startState }) => {
                             alt="house inside map pin"
                             title="Icon made by Freepik from www.flaticon.com"
                         />
-                        <p>{mapAddress}</p>
+                        <p>{address}</p>
                     </div>
                     <div className="house-info-block">
                         <img 
@@ -100,9 +102,35 @@ const HouseInfoBlock = ({ mapAddress, startState }) => {
         );
     }
     
+    const renderErrorBlock = () => {
+        return (
+            <div className="house-info-wrapper">
+                <div className="house-info-header house-info-error-header">
+                    <span className="header-highlight">error: house not found</span>
+                </div>
+                <div className="house-info-error-content">
+                    <img 
+                        src={searchError}
+                        alt="exclamation point inside magnifying glass"
+                        title="Icon made by syedhassan from pngtree.com"
+                    />
+                    <p> 
+                        Please check the address and try again. <br/><br/>
+                        <span className="help-text">
+                            If an address is not in the suggestions, 
+                            try changing the city by using the menu on the map.
+                        </span>
+                    </p>
+                </div>
+            </div>
+        ); 
+    }
+
     const contentSwitcher = () => {
         if (startState) {
             return renderStartBlock();
+        } else if (addressNotFound) {
+            return renderErrorBlock();
         } else {
             return renderHouseBlock();
         }

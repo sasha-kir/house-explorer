@@ -22,9 +22,11 @@ class ExplorePage extends Component {
             searchSuggestions: [],                      // suggestions fetched from dadata
             locationInRussian: ["Москва", "Россия"],    // [city, country] in Russian
             locationInEnglish: ["Moscow", "RU-MOW"],    // [city, isoCode] in English
-            receivedCoordData: false,                   // if received coordinates from dadata
+            startState: true,                           // display instructions or no
+            addressNotFound: false,                     // if address was not found by dadata
             mapCoords: [0, 0],                          // coordinates to place pin and map center
-            mapAddress: "Москва, Россия"                // full address at pin
+            mapPinAddress: "Москва, Россия",            // full address at pin
+            infoBlockAddress: ""                        // address in info block
         };
         this.dadataAPIKey = process.env.REACT_APP_DADATA_API_KEY;
         this.yandexAPIKey = process.env.REACT_APP_YANDEX_API_KEY;
@@ -45,7 +47,7 @@ class ExplorePage extends Component {
                     const { city, country, region_iso_code } = data.location.data;
                     this.setState({ 
                                     locationInRussian: [city, country],
-                                    mapAddress: `${city}, ${country}`,
+                                    mapPinAddress: `${city}, ${country}`,
                                     locationInEnglish: ["", region_iso_code]
                                 });
                 }
@@ -117,18 +119,22 @@ class ExplorePage extends Component {
 
     handleSearchSubmit = async () => {
         let dadataResponse = await this.sendDadataRequest(this.state.searchTerm, 1);
+        if (this.state.startState) this.setState({ startState: false });
         if (dadataResponse[0]) {
             const location = dadataResponse[0];
-            const fullAddress = location.unrestricted_value;
             const { geo_lat, geo_lon } = location.data;
-            console.log(fullAddress);
-            this.setState({ 
-                            mapCoords: [geo_lat, geo_lon], 
-                            receivedCoordData: true, 
-                            mapAddress: fullAddress 
-                        });
+            if (location.data.house === null) {
+                this.setState({ addressNotFound: true });
+            } else {
+                this.setState({ 
+                    mapCoords: [geo_lat, geo_lon],
+                    addressNotFound: false,
+                    mapPinAddress: location.unrestricted_value,
+                    infoBlockAddress: `${location.data.city}, ${location.value}`
+                });
+            };
         } else {
-            console.log("did not find such an address")
+            this.setState({ addressNotFound: true });
         }
     }
 
@@ -151,7 +157,7 @@ class ExplorePage extends Component {
         const { nameRus, country } = cityList.filter(city => city.location === selectedCity.center)[0];
         this.setState({ 
                         mapCoords: selectedCity.center,
-                        mapAddress: `${nameRus}, ${country}`,
+                        mapPinAddress: `${nameRus}, ${country}`,
                         locationInEnglish: [selectedCity.content, ""],
                         locationInRussian: [nameRus, country]
                     });
@@ -177,15 +183,16 @@ class ExplorePage extends Component {
                             fillInitialInput={this.fillInitialInput}
                         />
                         <HouseInfoBlock 
-                            mapAddress={this.state.mapAddress}
-                            startState={!this.state.receivedCoordData}
+                            address={this.state.infoBlockAddress}
+                            startState={this.state.startState}
+                            addressNotFound={this.state.addressNotFound}
                         />
                     </div>
                     <React.Suspense fallback={<div></div>}>
                             <YandexMap 
                                 mapCoords={this.state.mapCoords}
-                                mapAddress={this.state.mapAddress}
-                                startState={!this.state.receivedCoordData}
+                                mapAddress={this.state.mapPinAddress}
+                                startState={this.state.startState}
                                 cityList={cityList}
                                 locationInEnglish={this.state.locationInEnglish}
                                 handleCityChoice={this.handleCityChoiceOnMap}

@@ -19,7 +19,6 @@ $infoHeaderHeight: 50px
     display: grid
     grid-template-rows: 1fr 9fr
     align-items: center
-    //grid-gap: 5px
     background-color: transparent
     box-shadow: 0 2px 6px 0 rgba(0,0,0,.2)
     border-radius: 4px
@@ -29,7 +28,6 @@ $infoHeaderHeight: 50px
     .header-highlight
         background: linear-gradient(180deg, $explorePrimaryColor 60%, $primaryColor 40%)
 
-.house-info-start-header,
 .house-info-header
     @extend %small-caps-text
     font-size: 30px
@@ -37,17 +35,18 @@ $infoHeaderHeight: 50px
     text-align: center
     height: $infoHeaderHeight
 
-.house-info-start-header
+.house-info-start-header,
+.house-info-error-header
     font-size: 30px
     letter-spacing: 0.15em
     align-self: end
     margin-top: 20px
 
-.house-info-start-content
+.house-info-start-content,
+.house-info-error-content
     display: grid
     justify-items: center
     align-items: center
-    //grid-gap: 15px
     grid-template-rows: 1.5fr 1fr
     height: $infoWrapperHeight - $infoHeaderHeight
     
@@ -64,14 +63,15 @@ $infoHeaderHeight: 50px
         width: auto
 
 @media (max-width: 1500px)
-    .house-info-start-content
+    .house-info-start-content,
+    .house-info-error-content
         p
             padding: 0 60px
 
 .house-info-house-content
     display: grid
-    grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr
-    grid-gap: 10px
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr
+    grid-gap: 5px
     align-items: center
     height: $infoWrapperHeight - $infoHeaderHeight
 
@@ -83,6 +83,7 @@ $infoHeaderHeight: 50px
 
     p
         text-align: center
+        margin-right: 20px
 
     img
         height: 50px
