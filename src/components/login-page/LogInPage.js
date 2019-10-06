@@ -6,28 +6,10 @@ import './LogInPage.sass';
 
 class LogInPage extends Component {
 
-    constructor(props) {
-        super(props);
-        this.username = React.createRef();
-        this.password = React.createRef();
-    }
-
-    handleFocus = (e) => {
-        this.props.hidePlaceholder(e);
-        this.username.current.className = "form-element";
-        this.password.current.className = "form-element";
-    }
-
-    handleClick = () => {
-        const { handleSubmit, hasError } = this.props;
-        handleSubmit();
-        this.username.current.className = `form-element ${hasError[0] ? "invalid" : ""}`;
-        this.password.current.className = `form-element ${hasError[1] ? "invalid" : ""}`;
-    }
-
     render() {
         const { handleUsername, handlePassword,
-                showPlaceholder, handleEnterKey, hasError } = this.props;
+                handleEnterKey, handleSubmit,
+                hasError, clearErrors } = this.props;
         return (
             <div className="login-main-div">
                 <Helmet>
@@ -36,21 +18,27 @@ class LogInPage extends Component {
                 <div className="login-wrapper">
                     <div className="login-form">
                         <h2 className="form-header">log in</h2> 
-                        <input  className={`form-element ${hasError[0] ? "invalid" : ""}`}
-                                ref={this.username}
-                                onChange={handleUsername}
-                                onFocus={this.handleFocus}
-                                onBlur={(e) => showPlaceholder(e, "username")}
-                                placeholder="username" type="text" />
-                        <input  className={`form-element ${hasError[1] ? "invalid" : ""}`}
-                                ref={this.password}
-                                onChange={handlePassword}
-                                onKeyDown={handleEnterKey}
-                                onFocus={this.handleFocus}
-                                onBlur={(e) => showPlaceholder(e, "password")}
-                                placeholder="password" type="password" />
+                        <div className="form-element-wrapper">
+                            <div className={`form-element-name ${hasError[0] ? "invalid" : ""}`}>
+                                username
+                            </div>
+                            <input  className={`form-element ${hasError[0] ? "invalid" : ""}`}
+                                    onChange={handleUsername}
+                                    onFocus={clearErrors}
+                                    type="text" />
+                        </div>
+                        <div className="form-element-wrapper">
+                            <div className={`form-element-name ${hasError[1] ? "invalid" : ""}`}>
+                                password
+                            </div>
+                            <input  className={`form-element ${hasError[1] ? "invalid" : ""}`}
+                                    onChange={handlePassword}
+                                    onKeyDown={handleEnterKey}
+                                    onFocus={clearErrors}
+                                    type="password" />
+                        </div>
                         <button className="form-button"
-                                onClick={this.handleClick}>
+                                onClick={handleSubmit}>
                             submit
                         </button>
                         <p className="link-to-other-form">

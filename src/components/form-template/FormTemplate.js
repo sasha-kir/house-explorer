@@ -11,15 +11,11 @@ const FormTemplate = (formType) => (WrappedComponent) => {
                 hasError: [false, false, false] // [username, password, email]
             };
         }
-    
-        hidePlaceholder = event => {
-            event.target.placeholder = "";
+        
+        clearErrors = () => {
+            this.setState({ hasError: [false, false, false] });
         }
-    
-        showPlaceholder = (event, placeholder) => {
-            event.target.placeholder = placeholder;
-        }
-    
+
         handleUsernameChange = event => {
             this.setState({ username: event.target.value });
         }
@@ -109,12 +105,11 @@ const FormTemplate = (formType) => (WrappedComponent) => {
 
         render() {
             const passedProps = {
-                hidePlaceholder: this.hidePlaceholder,
-                showPlaceholder: this.showPlaceholder,
                 handleUsername: this.handleUsernameChange,
                 handlePassword: this.handlePasswordChange,
                 handleEnterKey: this.handleEnterKey,
-                hasError: this.state.hasError
+                hasError: this.state.hasError,
+                clearErrors: this.clearErrors
             };
 
             switch(formType) {

@@ -22,21 +22,31 @@
 .login-form,
 .register-form
     display: grid
-    padding: 50px
+    padding: 30px 50px 50px 50px
     row-gap: 10px
     font-size: 30px
-    grid-template-rows: 1fr 1fr 1fr 1fr
+    grid-template-rows: 0.8fr 1fr 1fr 1fr
 
 .form-header
     @extend %small-caps-text
     font-size: 45px
-    margin: 0 0 20px 0
     text-align: center
+    align-self: start
+
+.form-element-wrapper
+    margin: 10px 0 10px 0
+
+.form-element-name
+    @extend %small-caps-text
+    font-size: 15px
+
+    &.invalid
+        color: $primaryErrorColor
 
 .form-element
     background: transparent
+    width: 100%
     color: $primaryDarkColor
-    padding-left: 10px
     align-self: center
     outline: 0
     border-width: 0 0 2px
@@ -54,7 +64,7 @@
     @extend %button-with-border
     border-width: 3px
     justify-self: stretch
-    align-self: end
+    align-self: center
     padding: 5px 10px
     margin-top: 20px
     font-size: 25px
