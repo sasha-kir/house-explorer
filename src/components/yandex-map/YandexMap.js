@@ -14,6 +14,7 @@ import Spinner from '../spinner/Spinner';
 import './YandexMap.sass';
 
 class YandexMap extends Component { 
+    _isMounted = false;
 
     constructor(props) {
         super(props);
@@ -25,17 +26,22 @@ class YandexMap extends Component {
 
     componentDidMount() {
         this.watchMapLoading();
+        this._isMounted = true;
     }
+
+    componentWillUnmount() {
+		this._isMounted = false;
+	}
 
     watchMapLoading = async () => {
         try {
             let mapLoaded = await waitUntil(() => {
                 return this.mapContentRef.current.childElementCount > 0;
             }, 20000);
-            this.setState({ isMapReady: mapLoaded });
+            if (this._isMounted) this.setState({ isMapReady: mapLoaded });
         } catch {
             console.log("map waiting timed out");
-            this.setState({ isMapReady: true });
+            if (this._isMounted) this.setState({ isMapReady: true });
         }
     }
 
