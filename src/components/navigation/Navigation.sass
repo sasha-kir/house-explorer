@@ -20,7 +20,24 @@ nav
     height: 80px
     width: auto
     padding: 10px 40px 10px 30px
-  
+
+.user-pic
+    display: inline-block
+    height: 40px
+    width: auto
+    margin: 0 10px
+    padding-bottom: 10px
+    transition: 0.2s ease-in-out
+
+    &:hover
+        cursor: pointer
+        opacity: 0.7
+        +transform(scale(0.9))
+    
+    &:active
+        +transform(scale(1.1))
+
+
 nav 
     a
         @extend %small-caps-text
@@ -71,6 +88,8 @@ nav
 
 .right-nav
     margin-left: auto
+    display: flex
+    align-items: center
 
 .arrow
     display: inline-block

@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import './Navigation.sass';
 import logo from '../../images/logo.svg';
+import userPic from '../../images/user-placeholder.png';
 
 class Navigation extends Component {
 
     handleLogoClick = () => {
         this.props.history.push("/");
+    }
+
+    handleUserpicClick = () => {
+        this.props.history.push("/profile");
     }
 
     leftContentSwitcher = () => {
@@ -26,9 +31,9 @@ class Navigation extends Component {
                     <NavLink to="/history">
                         history
                     </NavLink>
-                    <NavLink to="/profile">
-                        profile
-                    </NavLink>
+                    <img className="user-pic" alt="userpic" src={userPic} 
+                            onClick={this.handleUserpicClick}
+                    />
                     <NavLink to="/#" className="login-link"
                              onClick={this.props.handleLogOut}>
                         log out
