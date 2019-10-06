@@ -10,18 +10,21 @@ class RegisterPage extends Component {
         super(props);
         this.username= React.createRef();
         this.email= React.createRef();
+        this.password= React.createRef();
     }
 
     handleFocus = (e) => {
         this.props.hidePlaceholder(e);
         this.username.current.className = "form-element";
         this.email.current.className = "form-element";
+        this.password.current.className = "form-element";
     }
 
     handleClick = () => {
         const { handleSubmit, hasError } = this.props;
         handleSubmit();
         this.username.current.className = `form-element ${hasError[0] ? "invalid" : ""}`;
+        this.password.current.className = `form-element ${hasError[1] ? "invalid" : ""}`;
         this.email.current.className = `form-element ${hasError[2] ? "invalid" : ""}`;
     }
 
@@ -29,7 +32,7 @@ class RegisterPage extends Component {
         const { showPlaceholder, 
                 handleUsername, handleEmail,
                 handlePassword, handleEnterKey, 
-                handleSubmit, hasError } = this.props;
+                hasError } = this.props;
 
         return (
             <div className="register-main-div">
@@ -51,14 +54,15 @@ class RegisterPage extends Component {
                                 onFocus={this.handleFocus}
                                 onBlur={(e) => showPlaceholder(e, "email")}
                                 placeholder="email" type="text" />
-                        <input className="form-element"
+                        <input className={`form-element ${hasError[1] ? "invalid" : ""}`}
+                                ref={this.password}
                                 onChange={handlePassword}
                                 onKeyDown={handleEnterKey}
                                 onFocus={this.handleFocus}
                                 onBlur={(e) => showPlaceholder(e, "password")}
                                 placeholder="password" type="password" />
                         <button className="form-button"
-                                onClick={handleSubmit}>
+                                onClick={this.handleClick}>
                             get started
                         </button>
                         <p className="link-to-other-form">
