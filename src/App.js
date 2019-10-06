@@ -18,7 +18,15 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      loggedIn: Boolean(+localStorage.loggedIn) || false
+      loggedIn: Boolean(+localStorage.loggedIn) || false,
+      user: {
+        username: "",
+        email: "",
+        joined: ""
+      }
+    };
+    if (localStorage.user !== undefined) {
+      this.state = {...this.state, user: JSON.parse(localStorage.user) };
     }
   }
   
@@ -34,10 +42,12 @@ class App extends Component {
     localStorage.setItem("loggedIn", 1);
   }
 
-  handleRegistration = () => {
-    console.log("app saw you register");
-    this.setState({ loggedIn: true });
+  handleRegistration = (userData) => {
+    const { username, email, joined } = userData;
+    this.setState({ loggedIn: true, user: { username, email, joined } });
     localStorage.setItem("loggedIn", 1);
+    localStorage.setItem("user", JSON.stringify(userData));
+    console.log("registered!");
   }
 
   render() {
