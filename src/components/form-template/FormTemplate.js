@@ -8,12 +8,16 @@ const FormTemplate = (formType) => (WrappedComponent) => {
                 username: "",
                 email: "",
                 password: "",
-                hasError: [false, false, false] // [username, password, email]
+                hasError: [false, false, false],    // [username, password, email]
+                errorText: ["username", "password", "email"]
             };
         }
         
         clearErrors = () => {
-            this.setState({ hasError: [false, false, false] });
+            this.setState({ 
+                hasError: [false, false, false], 
+                errorText: ["username", "password", "email"]
+            });
         }
 
         handleUsernameChange = event => {
@@ -43,14 +47,24 @@ const FormTemplate = (formType) => (WrappedComponent) => {
 			// })
 
             if (!username || !password) {
-                console.log("please fill in all the necessary fields");
-                this.setState({ hasError: [!username, !password, false] });
+                this.setState({ 
+                    hasError: [!username, !password, false],
+                    errorText: [ 
+                        username ? "username" : "Required field", 
+                        password ? "password" : "Required field", 
+                        "email"
+                    ]
+                });
             } else if (!users.includes(username) || !passwords.includes(password)) {
-                console.log("wrong username or password");
-                this.setState({ hasError: [true, true, false] });
+                this.setState({ 
+                    hasError: [true, true, false],
+                    errorText: [ 
+                        " ", 
+                        "Wrong username or password", 
+                        "email"
+                    ]
+                });
             } else {
-                console.log("logged in successfully");
-                this.setState({ hasError: [false, false, false] });
                 this.props.handleLogin();
                 this.props.history.push("/explore");
             }
@@ -60,8 +74,14 @@ const FormTemplate = (formType) => (WrappedComponent) => {
             const { username, email, password } = this.state;
             
             if (!username || !email || !password) {
-                this.setState({ hasError: [!username, !password, !email] });
-                console.log("please fill in all the necessary fields");
+                this.setState({ 
+                    hasError: [!username, !password, !email],
+                    errorText: [ 
+                        username ? "username" : "Required field", 
+                        password ? "password" : "Required field", 
+                        email    ? "email" : "Required field",
+                    ] 
+                });
             } else {
                 let response = await fetch("http://localhost:5000/register", {
                     method: "post",
@@ -74,14 +94,27 @@ const FormTemplate = (formType) => (WrappedComponent) => {
                 });
                 let data = await response.json();
                 if (response.status === 200) {
-                    this.setState({ hasError: [false, false, false] });
                     this.props.handleRegistration(data);
                     this.props.history.push("/explore");
                 } else {
                     if (data.error.includes("username")) {
-                        this.setState({ hasError: [true, false, false] });
+                        this.setState({ 
+                            hasError: [true, false, false],
+                            errorText: [ 
+                                "Username already in use", 
+                                "password", 
+                                "email"
+                            ] 
+                        });
                     } else if (data.error.includes("email")) {
-                        this.setState({ hasError: [false, false, true] });
+                        this.setState({ 
+                            hasError: [false, false, true],
+                            errorText: [ 
+                                "username", 
+                                "password", 
+                                "Email already in use"
+                            ] 
+                        });
                     }
                     console.log(data.error);
                 }
@@ -109,6 +142,7 @@ const FormTemplate = (formType) => (WrappedComponent) => {
                 handlePassword: this.handlePasswordChange,
                 handleEnterKey: this.handleEnterKey,
                 hasError: this.state.hasError,
+                errorText: this.state.errorText,
                 clearErrors: this.clearErrors
             };
 

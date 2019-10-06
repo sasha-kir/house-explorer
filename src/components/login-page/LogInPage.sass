@@ -23,7 +23,7 @@
 .register-form
     display: grid
     padding: 30px 50px 50px 50px
-    row-gap: 10px
+    //row-gap: 10px
     font-size: 30px
     grid-template-rows: 0.8fr 1fr 1fr 1fr
 
@@ -34,7 +34,7 @@
     align-self: start
 
 .form-element-wrapper
-    margin: 10px 0 10px 0
+    margin: 10px 0 0px 0
 
 .form-element-name
     @extend %small-caps-text
@@ -50,15 +50,27 @@
     align-self: center
     outline: 0
     border-width: 0 0 2px
-    border-color: $primaryDarkColor
+    border-color: $deactivatedItemColor
     height: 40px
     font-size: 20px
+
+    &:focus
+        border-color: $primaryDarkColor
 
     &::placeholder
         color: $deactivatedItemColor
 
     &.invalid
         border-color: $primaryErrorColor
+
+.form-error-message
+    visibility: hidden
+    font-size: 15px
+    color: $primaryErrorColor
+    margin-top: 5px
+
+    &.show
+       visibility: visible
 
 .form-button
     @extend %button-with-border

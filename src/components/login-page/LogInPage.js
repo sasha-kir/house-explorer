@@ -9,7 +9,7 @@ class LogInPage extends Component {
     render() {
         const { handleUsername, handlePassword,
                 handleEnterKey, handleSubmit,
-                hasError, clearErrors } = this.props;
+                hasError, errorText, clearErrors } = this.props;
         return (
             <div className="login-main-div">
                 <Helmet>
@@ -25,7 +25,11 @@ class LogInPage extends Component {
                             <input  className={`form-element ${hasError[0] ? "invalid" : ""}`}
                                     onChange={handleUsername}
                                     onFocus={clearErrors}
-                                    type="text" />
+                                    type="text" 
+                            />
+                            <div className={`form-error-message ${hasError[0] ? "show" : ""}`} >
+                                {errorText[0]}
+                            </div>
                         </div>
                         <div className="form-element-wrapper">
                             <div className={`form-element-name ${hasError[1] ? "invalid" : ""}`}>
@@ -35,7 +39,11 @@ class LogInPage extends Component {
                                     onChange={handlePassword}
                                     onKeyDown={handleEnterKey}
                                     onFocus={clearErrors}
-                                    type="password" />
+                                    type="password"
+                            />
+                            <div className={`form-error-message ${hasError[1] ? "show" : ""}`} >
+                                {errorText[1]}
+                            </div>
                         </div>
                         <button className="form-button"
                                 onClick={handleSubmit}>
