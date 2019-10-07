@@ -25,29 +25,25 @@ class App extends Component {
         joined: ""
       }
     };
-    if (localStorage.user !== undefined) {
+    if (localStorage.user) {
       this.state = {...this.state, user: JSON.parse(localStorage.user) };
     }
   }
   
   handleLogOut = () => {
-    console.log("you're logged out");
-    this.setState({ loggedIn: false });
+    this.setState({ 
+      loggedIn: false, 
+      user: { username: "",  email: "", joined: "" }
+    });
     localStorage.setItem("loggedIn", 0);
+    localStorage.setItem("user", "");
   }
 
-  handleLogin = () => {
-    console.log("app saw you log in");
-    this.setState({ loggedIn: true });
-    localStorage.setItem("loggedIn", 1);
-  }
-
-  handleRegistration = (userData) => {
+  handleLogIn = (userData) => {
     const { username, email, joined } = userData;
     this.setState({ loggedIn: true, user: { username, email, joined } });
     localStorage.setItem("loggedIn", 1);
     localStorage.setItem("user", JSON.stringify(userData));
-    console.log("registered!");
   }
 
   render() {
@@ -64,9 +60,9 @@ class App extends Component {
               <Route exact path="/cities" component={PlaceholderPage} />
               <Route exact path="/about" component={PlaceholderPage} />
               <Route exact path="/login" 
-                    render={() => <LogInPage handleLogin={this.handleLogin} />} />
+                    render={() => <LogInPage handleLogIn={this.handleLogIn} />} />
               <Route exact path="/register" 
-                    render={() => <RegisterPage handleRegistration={this.handleRegistration} />} />
+                    render={() => <RegisterPage handleLogIn={this.handleLogIn} />} />
               <ProtectedRoute exact path="/explore" auth={loggedIn} component={ExplorePage} />
               <ProtectedRoute exact path="/profile" auth={loggedIn} component={PlaceholderPage} />
               <ProtectedRoute exact path="/history" auth={loggedIn} component={PlaceholderPage} />

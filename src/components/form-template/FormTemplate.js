@@ -20,6 +20,17 @@ const FormTemplate = (formType) => (WrappedComponent) => {
             });
         }
 
+        showServerConnectionError = () => {
+            this.setState({ 
+                hasError: [true, true, true],
+                errorText: [ 
+                    " ", 
+                    "Server disconnected. Please try again later.", 
+                    " "
+                ] 
+            });
+        }
+
         handleUsernameChange = event => {
             this.setState({ username: event.target.value });
         }
@@ -32,19 +43,8 @@ const FormTemplate = (formType) => (WrappedComponent) => {
             this.setState({ email: event.target.value })
         }
 
-        handleLoginSubmit = () => {
+        handleLoginSubmit = async () => {
             const { username, password } = this.state;
-            const users = ["sasha"];
-            const passwords = ["secret"];
-
-            // fetch("http://localhost:5000/login", {
-			// 	method: "post",
-			// 	headers: {'Content-Type': 'application/json'},
-			// 	body: JSON.stringify({
-			// 		username: username,
-			// 		password: password
-			// 	})
-			// })
 
             if (!username || !password) {
                 this.setState({ 
@@ -55,19 +55,34 @@ const FormTemplate = (formType) => (WrappedComponent) => {
                         "email"
                     ]
                 });
-            } else if (!users.includes(username) || !passwords.includes(password)) {
-                this.setState({ 
-                    hasError: [true, true, false],
-                    errorText: [ 
-                        " ", 
-                        "Wrong username or password", 
-                        "email"
-                    ]
-                });
             } else {
-                this.props.handleLogin();
-                this.props.history.push("/explore");
-            }
+                try {
+                    let response = await fetch("http://localhost:5000/login", {
+                        	method: "post",
+                        	headers: {'Content-Type': 'application/json'},
+                        	body: JSON.stringify({
+                        		username: username,
+                        		password: password
+                        	})
+                    });
+                    let data = await response.json();
+                    if (response.status === 200) {
+                        this.props.handleLogIn(data);
+                        this.props.history.push("/explore");
+                    } else {
+                        this.setState({ 
+                            hasError: [true, true, false],
+                            errorText: [ 
+                                " ", 
+                                "Wrong username or password", 
+                                "email"
+                            ]
+                        });
+                    }
+                } catch (TypeError) {
+                    this.showServerConnectionError();
+                }
+            } 
         }
 
         handleRegisterSubmit = async () => {
@@ -83,40 +98,52 @@ const FormTemplate = (formType) => (WrappedComponent) => {
                     ] 
                 });
             } else {
-                let response = await fetch("http://localhost:5000/register", {
-                    method: "post",
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        username: username,
-                        email: email,
-                        password: password
-                    })
-                });
-                let data = await response.json();
-                if (response.status === 200) {
-                    this.props.handleRegistration(data);
-                    this.props.history.push("/explore");
-                } else {
-                    if (data.error.includes("username")) {
-                        this.setState({ 
-                            hasError: [true, false, false],
-                            errorText: [ 
-                                "Username already in use", 
-                                "password", 
-                                "email"
-                            ] 
-                        });
-                    } else if (data.error.includes("email")) {
-                        this.setState({ 
-                            hasError: [false, false, true],
-                            errorText: [ 
-                                "username", 
-                                "password", 
-                                "Email already in use"
-                            ] 
-                        });
+                try {
+                    let response = await fetch("http://localhost:5000/register", {
+                        method: "post",
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            username: username,
+                            email: email,
+                            password: password
+                        })
+                    });
+                    let data = await response.json();
+                    if (response.status === 200) {
+                        this.props.handleLogIn(data);
+                        this.props.history.push("/explore");
+                    } else {
+                        if (data.error.includes("username")) {
+                            this.setState({ 
+                                hasError: [true, false, false],
+                                errorText: [ 
+                                    "Username already in use", 
+                                    "password", 
+                                    "email"
+                                ] 
+                            });
+                        } else if (data.error.includes("email")) {
+                            this.setState({ 
+                                hasError: [false, false, true],
+                                errorText: [ 
+                                    "username", 
+                                    "password", 
+                                    "Email already in use"
+                                ] 
+                            });
+                        } else {
+                            this.setState({ 
+                                hasError: [true, true, true],
+                                errorText: [ 
+                                    " ", 
+                                    "Unknown error. Please try again later.", 
+                                    " "
+                                ] 
+                            });
+                        }
                     }
-                    console.log(data.error);
+                } catch (TypeError) {
+                    this.showServerConnectionError();
                 }
             }
         }
