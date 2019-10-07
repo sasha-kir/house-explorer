@@ -25,7 +25,7 @@ class ExplorePage extends Component {
             locationInEnglish: ["Moscow", "RU-MOW"],    // [city, isoCode] in English
             startState: true,                           // display instructions or no
             addressNotFound: false,                     // if address was not found by dadata
-            mapCoords: [0, 0],                          // coordinates to place pin and map center
+            mapCoords: [55.753215, 37.622504],          // coordinates to place pin and map center
             mapPinAddress: "Москва, Россия",            // full address at pin
             infoBlockAddress: ""                        // address in info block
         };
@@ -33,41 +33,27 @@ class ExplorePage extends Component {
         this.yandexAPIKey = process.env.REACT_APP_YANDEX_API_KEY;
     }
 
-    getCityFromIP = (ip) => {
-        const url = `https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address?ip=${ip}`
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                "Accept": "application/json",
-                "Authorization": `Token ${this.dadataAPIKey}`
+    async componentDidMount() {
+        // get user ip and coordinates
+        try {
+            let response = await fetch("http://localhost:5000/user_location");
+            let data = await response.json();
+            if (response.status === 200) {
+                const { lat, lon, city, country, isoCode } = data;
+                this.setState({ 
+                    mapCoords: [lat, lon],
+                    locationInRussian: [city, country],
+                    mapPinAddress: `${city}, ${country}`,
+                    locationInEnglish: ["", isoCode]
+                });
+            } else {
+                // stay with default (Moscow)
+                console.log('dadata could not determine user location');
             }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.location) {
-                    const { city, country, region_iso_code } = data.location.data;
-                    this.setState({ 
-                                    locationInRussian: [city, country],
-                                    mapPinAddress: `${city}, ${country}`,
-                                    locationInEnglish: ["", region_iso_code]
-                                });
-                }
-            })
-            .catch(console.log)
-    }
-
-    componentDidMount() {
-        // get IP and starting mapCoords
-        let userIP;
-        fetch("http://ip-api.com/json")
-            .then(result => result.json())
-            .then(data => {
-                const { lat, lon } = data;
-                userIP = data.query;
-                this.setState({ mapCoords: [lat, lon] });
-            })
-            .then(() => this.getCityFromIP(userIP))
-            .catch(console.log)
+        } catch {
+            // stay with default (Moscow)
+            console.log('could not fetch user location from server');
+        }
     }
 
     handleSearchInput = (inputValue, translit = "") => {
