@@ -70,43 +70,34 @@ class ExplorePage extends Component {
         this.setState({ searchTerm: "", inputValue: "" });
     }
 
-    sendDadataRequest = (query, count) => {
-        const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
+    requestSuggestions = async (query, count) => {
         const { locationInRussian } = this.state;
-        return fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Authorization': `Token ${this.dadataAPIKey}`
-                    },
-                    body: JSON.stringify({
-                        'query': query,
-                        'count': count,
-                        'locations': [
-                            { 
-                                "city": locationInRussian[0],
-                                "country": locationInRussian[1]
-                            }
-                        ],
-                        'restrict_value': true
-                    })
-            })
-                .then(response => response.json())
-                .then(data => data.suggestions)
-                .catch(console.log)
-    }
-
-    getAddressSuggestions = async (inputValue) => {
-        const dadataResponse = await this.sendDadataRequest(inputValue, 5);
-        return dadataResponse.map(elem => elem.value);
+        const [ city, country ] = locationInRussian;
+        try {
+            let response = await fetch('http://localhost:5000/suggestions', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    query,
+                    count,
+                    city,
+                    country
+                })
+            });
+            let data = await response.json();
+            
+            return response.status === 200 ? data : [];
+        } catch {
+            console.log('could not fetch suggestions from server');
+        }
     }
 
     renderSuggestions = async ({ value }) => {
         if (this.state.searchTerm !== this.state.inputValue) {
             value = this.state.searchTerm;
         };
-        this.setState({ searchSuggestions: await this.getAddressSuggestions(value) });
+        const suggestions = await this.requestSuggestions(value, 5);
+        this.setState({ searchSuggestions: suggestions.map(elem => elem.address) });
     }
 
     clearSuggestions = () => {
@@ -114,21 +105,22 @@ class ExplorePage extends Component {
     }
 
     handleSearchSubmit = async () => {
-        let dadataResponse = await this.sendDadataRequest(this.state.searchTerm, 1);
+        let suggestions = await this.requestSuggestions(this.state.searchTerm, 1);
         if (this.state.startState) this.setState({ startState: false });
-        if (dadataResponse[0]) {
-            const location = dadataResponse[0];
-            const { geo_lat, geo_lon } = location.data;
-            const fiasLevel = +location.data.fias_level;
+        if (suggestions[0]) {
+            let { lat, lon, address, fiasLevel, fullAddress } = suggestions[0];
+            fiasLevel = Number(fiasLevel);
+
             if (fiasLevel < 8) {
-                if (fiasLevel === 7) this.setState({ mapCoords: [geo_lat, geo_lon] });
+                if (fiasLevel === 7) this.setState({ mapCoords: [lat, lon] });
                 this.setState({ addressNotFound: true });
             } else {
+                const { locationInRussian } = this.state;
                 this.setState({ 
-                    mapCoords: [geo_lat, geo_lon],
+                    mapCoords: [lat, lon],
                     addressNotFound: false,
-                    mapPinAddress: location.unrestricted_value,
-                    infoBlockAddress: `${location.data.city}, ${location.value}`
+                    mapPinAddress: fullAddress,
+                    infoBlockAddress: `${locationInRussian[0]}, ${address}`
                 });
             };
         } else {
