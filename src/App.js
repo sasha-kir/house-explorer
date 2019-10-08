@@ -20,18 +20,18 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      loggedIn: false
+      navKey: Math.floor((Math.random() * 100) + 1)
     }
   }
 
   handleLogOut = () => {
-    this.setState({ loggedIn: false });
     localStorage.setItem("userToken", "");
+    this.setState({ navKey: Math.floor((Math.random() * 100) + 1) });
   }
 
   handleLogIn = (data) => {
-    this.setState({ loggedIn: true });
     localStorage.setItem("userToken", data.token);
+    this.setState({ navKey: Math.floor((Math.random() * 100) + 1) });
   }
 
   render() {
@@ -39,7 +39,7 @@ class App extends Component {
       <HelmetProvider>
         <div className="body">
           <Router basename="/house-explorer">
-            <Navigation loggedIn={this.state.loggedIn} handleLogOut={this.handleLogOut} />
+            <Navigation key={this.state.navKey} handleLogOut={this.handleLogOut} />
             
             <Switch>
               <Route exact path="/" 

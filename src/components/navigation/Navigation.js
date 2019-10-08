@@ -6,6 +6,32 @@ import userPic from '../../images/user-placeholder.png';
 
 class Navigation extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            loggedIn: false
+        }
+    }
+
+    async componentDidMount() {
+        try {
+            console.log("checking token...")
+            let token = localStorage.getItem('userToken');
+            let response = await fetch('http://localhost:5000/check_token', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ token })
+            });
+            if (response.status === 200) {
+                this.setState({ loggedIn: true });
+            } else {
+                this.setState({ loggedIn: false });
+            };
+        } catch (TypeError) {
+            console.log('server error: could not check token');
+        }
+    }
+
     handleLogoClick = () => {
         this.props.history.push("/");
     }
@@ -15,7 +41,7 @@ class Navigation extends Component {
     }
 
     leftContentSwitcher = () => {
-        if (this.props.loggedIn) {
+        if (this.state.loggedIn) {
             return (
                 <NavLink to="/explore" id="explore-link">
                     explore
@@ -25,7 +51,7 @@ class Navigation extends Component {
     }
 
     rightContentSwitcher = () => {
-        if (this.props.loggedIn) {
+        if (this.state.loggedIn) {
             return (
                 <div className="right-nav">
                     <NavLink to="/history">
