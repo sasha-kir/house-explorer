@@ -20,18 +20,18 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      navKey: Math.floor((Math.random() * 100) + 1)
+      navKey: Math.floor((Math.random() * 1000) + 1)
     }
   }
 
   handleLogOut = () => {
     localStorage.setItem("userToken", "");
-    this.setState({ navKey: Math.floor((Math.random() * 100) + 1) });
+    this.setState({ navKey: Math.floor((Math.random() * 1000) + 1) });
   }
 
   handleLogIn = (data) => {
     localStorage.setItem("userToken", data.token);
-    this.setState({ navKey: Math.floor((Math.random() * 100) + 1) });
+    this.setState({ navKey: Math.floor((Math.random() * 1000) + 1) });
   }
 
   render() {

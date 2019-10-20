@@ -15,7 +15,6 @@ class Navigation extends Component {
 
     async componentDidMount() {
         try {
-            console.log("checking token...")
             let token = localStorage.getItem('userToken');
             let response = await fetch('http://localhost:5000/check_token', {
                 method: 'POST',

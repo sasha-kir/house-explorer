@@ -75,6 +75,15 @@ $infoHeaderHeight: 50px
     align-items: center
     height: $infoWrapperHeight - $infoHeaderHeight
 
+    .double-row
+        display: grid
+        grid-template-columns: 110px 150px
+        grid-gap: 15px
+
+        .key
+            justify-self: start
+            font-weight: bold
+
 .house-info-block
     display: grid
     grid-template-columns: 1fr 3fr

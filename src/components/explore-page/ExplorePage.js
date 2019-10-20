@@ -27,9 +27,8 @@ class ExplorePage extends Component {
             addressNotFound: false,                     // if address was not found by dadata
             mapCoords: [55.753215, 37.622504],          // coordinates to place pin and map center
             mapPinAddress: "Москва, Россия",            // full address at pin
-            infoBlockAddress: ""                        // address in info block
+            infoBlock: {}                               // house info block data
         };
-        this.dadataAPIKey = process.env.REACT_APP_DADATA_API_KEY;
         this.yandexAPIKey = process.env.REACT_APP_YANDEX_API_KEY;
     }
 
@@ -104,23 +103,45 @@ class ExplorePage extends Component {
         this.setState({ searchSuggestions: [] });
     }
 
+    requestHouseInfo = async (query) => {
+        const { locationInRussian } = this.state;
+        const [ city, country ] = locationInRussian;
+        try {
+            let response = await fetch('http://localhost:5000/house_info', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    query,
+                    city,
+                    country
+                })
+            });
+            let data = await response.json();
+            return response.status === 200 ? data : false;
+        } catch {
+            console.log('could not fetch house info from server');
+        }
+    }
+
     handleSearchSubmit = async () => {
-        let suggestions = await this.requestSuggestions(this.state.searchTerm, 1);
+        let house_info = await this.requestHouseInfo(this.state.searchTerm);
         if (this.state.startState) this.setState({ startState: false });
-        if (suggestions[0]) {
-            let { lat, lon, address, fiasLevel, fullAddress } = suggestions[0];
+        if (house_info) {
+            let { lat, lon, fiasLevel, fullAddress, infoBlock } = house_info;
             fiasLevel = Number(fiasLevel);
 
             if (fiasLevel < 8) {
-                if (fiasLevel === 7) this.setState({ mapCoords: [lat, lon] });
+                if (fiasLevel === 7) this.setState({ 
+                    mapCoords: [lat, lon],
+                    mapPinAddress: fullAddress
+                 });
                 this.setState({ addressNotFound: true });
             } else {
-                const { locationInRussian } = this.state;
                 this.setState({ 
                     mapCoords: [lat, lon],
                     addressNotFound: false,
                     mapPinAddress: fullAddress,
-                    infoBlockAddress: `${locationInRussian[0]}, ${address}`
+                    infoBlock,
                 });
             };
         } else {
@@ -177,7 +198,7 @@ class ExplorePage extends Component {
                             fillInitialInput={this.fillInitialInput}
                         />
                         <HouseInfoBlock 
-                            address={this.state.infoBlockAddress}
+                            infoBlock={this.state.infoBlock}
                             startState={this.state.startState}
                             addressNotFound={this.state.addressNotFound}
                         />

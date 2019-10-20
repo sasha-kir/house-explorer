@@ -5,7 +5,7 @@ import searchError from '../../images/search-error.png';
 
 import './HouseInfoBlock.sass';
 
-const HouseInfoBlock = ({ address, startState, addressNotFound }) => {
+const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
 
     const importAll = (req) => {
         let images = {};
@@ -55,7 +55,7 @@ const HouseInfoBlock = ({ address, startState, addressNotFound }) => {
                             alt="house inside map pin"
                             title="Icon made by Freepik from www.flaticon.com"
                         />
-                        <p>{address}</p>
+                        <p>{infoBlock.address}</p>
                     </div>
                     <div className="house-info-block">
                         <img 
@@ -63,7 +63,10 @@ const HouseInfoBlock = ({ address, startState, addressNotFound }) => {
                             alt="crane" 
                             title="Icon made by Freepik from www.flaticon.com" 
                         />
-                        <p>year built</p>
+                        <p className="double-row">
+                            <div className="key">built in:</div>
+                            <div>{infoBlock.yearBuilt}</div>
+                        </p>
                     </div>
                     <div className="house-info-block">
                         <img 
@@ -71,7 +74,10 @@ const HouseInfoBlock = ({ address, startState, addressNotFound }) => {
                             alt="paper and ruler" 
                             title="Icon made by Freepik from www.flaticon.com" 
                         />
-                        <p>type of house</p>
+                        <p className="double-row">
+                            <div className="key">house type:</div>
+                            <div>{infoBlock.houseType}</div>
+                        </p>
                     </div>
                     <div className="house-info-block">
                         <img 
@@ -79,7 +85,10 @@ const HouseInfoBlock = ({ address, startState, addressNotFound }) => {
                             alt="two tall houses" 
                             title="Icon made by Freepik from www.flaticon.com" 
                         />
-                        <p>numer of floors</p>
+                        <p className="double-row">
+                            <div className="key">floor count:</div>
+                            <div>{infoBlock.floorCount}</div>
+                        </p>
                     </div>
                     <div className="house-info-block">
                         <img 
@@ -87,7 +96,7 @@ const HouseInfoBlock = ({ address, startState, addressNotFound }) => {
                             alt="lightning bolt inside box" 
                             title="Icon made by Freepik from www.flaticon.com" 
                         />
-                        <p>natural gas or no</p>
+                        <p style={{color: "#ddd"}}>natural gas or no</p>
                     </div>
                     <div className="house-info-block">
                         <img 
@@ -95,7 +104,10 @@ const HouseInfoBlock = ({ address, startState, addressNotFound }) => {
                             alt="brick wall" 
                             title="Icon made by Freepik from www.flaticon.com" 
                         />
-                        <p>type of walls</p>
+                        <p className="double-row">
+                            <div className="key">walls:</div>
+                            <div>{infoBlock.wallsMaterial}</div>
+                        </p>
                     </div>
                 </div>
             </div>

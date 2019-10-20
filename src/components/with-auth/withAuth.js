@@ -27,6 +27,7 @@ export default function withAuth(ComponentToProtect) {
             };
         } catch (TypeError) {
             console.log('server error: could not check token');
+            this.setState({ loading: false, redirect: true });
         }
     }
 
