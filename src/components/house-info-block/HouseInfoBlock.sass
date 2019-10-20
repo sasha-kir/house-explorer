@@ -84,6 +84,21 @@ $infoHeaderHeight: 50px
             justify-self: start
             font-weight: bold
 
+        a
+            width: fit-content
+            justify-self: center
+            text-decoration: none
+            padding-bottom: 5px
+            border-bottom: 1px solid $primaryColor
+            box-shadow: 0 -3px 0 $primaryColor inset
+            color: inherit
+
+            &:hover
+                border-bottom: none
+                box-shadow: none
+                transition: 0.3s ease-in-out
+            
+
 .house-info-block
     display: grid
     grid-template-columns: 1fr 3fr

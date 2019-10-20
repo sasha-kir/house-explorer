@@ -76,7 +76,16 @@ const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
                         />
                         <p className="double-row">
                             <div className="key">house type:</div>
-                            <div>{infoBlock.houseType}</div>
+                            { 
+                                infoBlock.houseTypeLink
+                                  ? <a  href={infoBlock.houseTypeLink} 
+                                        rel="noopener noreferrer" 
+                                        target="_blank"
+                                    >
+                                        {infoBlock.houseType}
+                                    </a>
+                                  : <div>{infoBlock.houseType}</div>
+                            }
                         </p>
                     </div>
                     <div className="house-info-block">
