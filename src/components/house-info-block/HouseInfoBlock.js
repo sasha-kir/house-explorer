@@ -92,14 +92,6 @@ const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
                     </div>
                     <div className="house-info-block">
                         <img 
-                            src={images["electricity"]} 
-                            alt="lightning bolt inside box" 
-                            title="Icon made by Freepik from www.flaticon.com" 
-                        />
-                        <p style={{color: "#ddd"}}>natural gas or no</p>
-                    </div>
-                    <div className="house-info-block">
-                        <img 
                             src={images["wall"]} 
                             alt="brick wall" 
                             title="Icon made by Freepik from www.flaticon.com" 
