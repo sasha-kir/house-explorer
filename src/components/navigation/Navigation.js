@@ -2,27 +2,28 @@ import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import './Navigation.sass';
 import logo from '../../images/logo.svg';
-import userPic from '../../images/user-placeholder.png';
 
 class Navigation extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            loggedIn: false
+            loggedIn: false,
+            userPic: ""
         }
     }
 
     async componentDidMount() {
         try {
             let token = localStorage.getItem('userToken');
-            let response = await fetch('http://localhost:5000/check_token', {
+            let response = await fetch('http://localhost:5000/userpic', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ token })
             });
             if (response.status === 200) {
-                this.setState({ loggedIn: true });
+                let data = await response.json();
+                this.setState({ loggedIn: true, userPic: data.userPic });
             } else {
                 this.setState({ loggedIn: false });
             };
@@ -56,7 +57,7 @@ class Navigation extends Component {
                     <NavLink to="/history">
                         history
                     </NavLink>
-                    <img className="user-pic" alt="userpic" src={userPic} 
+                    <img className="user-pic" alt="userpic" src={this.state.userPic} 
                             onClick={this.handleUserpicClick}
                     />
                     <NavLink to="/#" className="login-link"

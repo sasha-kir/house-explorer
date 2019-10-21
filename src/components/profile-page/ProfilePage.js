@@ -3,12 +3,11 @@ import withAuth from '../with-auth/withAuth';
 
 import './ProfilePage.sass';
 
-import userPic from '../../images/user-placeholder.png';
-
 class ProfilePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            userpicSrc: "",
             username: "",
             email: "",
             daysRegistered: ""
@@ -27,8 +26,8 @@ class ProfilePage extends Component {
             });
             if (response.status === 200) {
                 let data = await response.json();
-                let { username, email, daysRegistered } = data;
-                this.setState({ username, email, daysRegistered });
+                let { userPic, username, email, daysRegistered } = data;
+                this.setState({ userPic, username, email, daysRegistered });
             } else {
                 console.log("error fetching profile from server");
             }
@@ -40,7 +39,7 @@ class ProfilePage extends Component {
             <div className="profile-main-div">
                 <div className="profile-wrapper">
                     <div className="profile-image">
-                        <img src={userPic} alt="userpic" />
+                        <img src={this.state.userPic} alt="userpic" />
                     </div>
                     <div className="profile-days-text">
                         <span className="highlight">
