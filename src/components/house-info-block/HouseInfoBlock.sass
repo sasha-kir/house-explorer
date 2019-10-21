@@ -25,15 +25,32 @@ $infoHeaderHeight: 50px
     padding: 10px 10px 5px 10px
     overflow: hidden
 
-    .header-highlight
-        background: linear-gradient(180deg, $explorePrimaryColor 60%, $primaryColor 40%)
-
 .house-info-header
     @extend %small-caps-text
     font-size: 30px
     font-weight: bold
     text-align: center
     height: $infoHeaderHeight
+
+    .header-highlight
+        background: linear-gradient(180deg, $explorePrimaryColor 60%, $primaryColor 40%)
+
+.house-info-content-header
+    display: grid
+    grid-template-columns: 5fr 1fr
+
+    .content-header
+        justify-self: end
+        margin-right: 30px
+        width: fit-content
+
+    img
+        cursor: pointer
+        align-self: start
+        margin-top: -10px
+        justify-self: center
+        height: 40px
+        width: auto
 
 .house-info-start-header,
 .house-info-error-header

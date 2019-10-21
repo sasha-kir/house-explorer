@@ -15,11 +15,12 @@ const SearchBar = ({
                         renderSuggestions, 
                         clearSuggestions, 
                         saveInitialInput,
+                        initialInput,
                         fillInitialInput
                     }) => {
 
     const handleEnter = (e) => {
-        if (e.key === "Enter" && !searchSuggestions.length) {
+        if (e.key === "Enter" && (!searchSuggestions.length || !initialInput)) {
             handleSubmit();
         }
     }

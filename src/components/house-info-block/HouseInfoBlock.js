@@ -1,23 +1,39 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import searchHouse from '../../images/search-house.png';
 import searchError from '../../images/search-error.png';
 
+import Alert from '../css-alert/Alert';
+
 import './HouseInfoBlock.sass';
 
-const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
+class HouseInfoBlock extends Component {
+    constructor(props) {
+        super(props);
+        this.images = this.importAll(require.context('../../images/house-info-icons', false, /.*\.svg$/));
+        this.state = {
+            showHistoryAlert: false
+        }
+    }
 
-    const importAll = (req) => {
+    importAll = (req) => {
         let images = {};
         req.keys().forEach(key => {
             images[key.slice(2, -4)] = req(key);
         });
         return images;
     };
-    
-    const images = importAll(require.context('../../images/house-info-icons', false, /.*\.svg$/));
 
-    const renderStartBlock = () => {
+    disableAlert = () => {
+        setTimeout(() => { this.setState({ showHistoryAlert: false }) }, 3000);
+    }
+
+    handleBookmarkClick = () => {
+        console.log(this.props.infoBlock);
+        this.setState({ showHistoryAlert: true }, this.disableAlert);
+    }
+
+    renderStartBlock = () => {
         return (
             <div className="house-info-wrapper">
                 <div className="house-info-header house-info-start-header">
@@ -42,16 +58,27 @@ const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
         );
     }
 
-    const renderHouseBlock = () => {
+    renderHouseBlock = () => {
+        const { infoBlock } = this.props;
         return (
             <div className="house-info-wrapper">
-                <div className="house-info-header">
-                    <span className="header-highlight"> about this house</span>
+                <div className="house-info-header house-info-content-header">
+                    <div className="content-header">
+                        <span className="header-highlight"> about this house</span>
+                    </div>
+                    <img    src={this.images["bookmark"]} 
+                            alt="bookmark" 
+                            onClick={this.handleBookmarkClick}
+                    />
                 </div>
                 <div className="house-info-house-content">
+                    <Alert  show={this.state.showHistoryAlert} 
+                            text="House added to history" 
+                            type="success" 
+                    />
                     <div className="house-info-block">
                         <img    
-                            src={images["address"]} 
+                            src={this.images["address"]} 
                             alt="house inside map pin"
                             title="Icon made by Freepik from www.flaticon.com"
                         />
@@ -59,7 +86,7 @@ const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
                     </div>
                     <div className="house-info-block">
                         <img 
-                            src={images["crane"]} 
+                            src={this.images["crane"]} 
                             alt="crane" 
                             title="Icon made by Freepik from www.flaticon.com" 
                         />
@@ -70,7 +97,7 @@ const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
                     </div>
                     <div className="house-info-block">
                         <img 
-                            src={images["design"]} 
+                            src={this.images["design"]} 
                             alt="paper and ruler" 
                             title="Icon made by Freepik from www.flaticon.com" 
                         />
@@ -90,7 +117,7 @@ const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
                     </div>
                     <div className="house-info-block">
                         <img 
-                            src={images["skyscraper"]} 
+                            src={this.images["skyscraper"]} 
                             alt="two tall houses" 
                             title="Icon made by Freepik from www.flaticon.com" 
                         />
@@ -101,7 +128,7 @@ const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
                     </div>
                     <div className="house-info-block">
                         <img 
-                            src={images["wall"]} 
+                            src={this.images["wall"]} 
                             alt="brick wall" 
                             title="Icon made by Freepik from www.flaticon.com" 
                         />
@@ -115,7 +142,7 @@ const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
         );
     }
     
-    const renderErrorBlock = () => {
+    renderErrorBlock = () => {
         return (
             <div className="house-info-wrapper">
                 <div className="house-info-header house-info-error-header">
@@ -139,21 +166,23 @@ const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
         ); 
     }
 
-    const contentSwitcher = () => {
-        if (startState) {
-            return renderStartBlock();
-        } else if (addressNotFound) {
-            return renderErrorBlock();
+    contentSwitcher = () => {
+        if (this.props.startState) {
+            return this.renderStartBlock();
+        } else if (this.props.addressNotFound) {
+            return this.renderErrorBlock();
         } else {
-            return renderHouseBlock();
+            return this.renderHouseBlock();
         }
     }
 
-    return(
-        <div className="house-info-main-div">
-            {contentSwitcher()}
-        </div>
-    );
+    render() {
+        return(
+            <div className="house-info-main-div">
+                {this.contentSwitcher()}
+            </div>
+        );
+    }
 };
 
 export default HouseInfoBlock;

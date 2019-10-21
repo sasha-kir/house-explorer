@@ -195,6 +195,7 @@ class ExplorePage extends Component {
                             renderSuggestions={this.renderSuggestions}
                             clearSuggestions={this.clearSuggestions}
                             saveInitialInput={this.saveInitialInput}
+                            initialInput={this.state.savedInput}
                             fillInitialInput={this.fillInitialInput}
                         />
                         <HouseInfoBlock 
