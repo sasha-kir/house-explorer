@@ -1,0 +1,55 @@
+@import '../../_config.sass'
+
+.profile-main-div
+    height: 100vh
+    display: flex
+    justify-content: center
+    background-color: $primaryColor
+     /* http://www.heropatterns.com/ */
+    background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23f3f5e7' fill-opacity='0.33'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+
+.profile-wrapper
+    background-color: rgba( 255, 255, 255, 0.8 )
+    border-radius: 5px
+    margin-top: 70px
+    align-self: center
+    height: 500px
+    width: 700px
+    display: grid
+    grid-template-rows: 4fr 1fr 4fr
+    box-shadow: 0 0 10px rgba( 255, 255, 255, 0.5 )
+
+.profile-image
+    display: flex
+    justify-content: center
+    align-items: center
+
+    img
+        height: 150px
+        width: auto
+
+.profile-days-text
+    @extend %small-caps-text
+    text-align: center
+    font-size: 20px
+
+.profile-form
+    display: grid
+    grid-template-rows: 1fr 1fr
+    grid-gap: 10px
+    margin: 0px 50px
+
+.profile-form-element-name
+    @extend %small-caps-text
+    font-size: 16px
+    margin-bottom: 10px
+
+.profile-form-element
+    background: transparent
+    width: 100%
+    color: $primaryDarkColor
+    align-self: center
+    border-width: 0 0 2px
+    border-color: $deactivatedItemColor
+    height: 40px
+    font-size: 20px

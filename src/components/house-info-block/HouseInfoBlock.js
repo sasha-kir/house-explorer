@@ -64,8 +64,8 @@ const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
                             title="Icon made by Freepik from www.flaticon.com" 
                         />
                         <p className="double-row">
-                            <div className="key">built in:</div>
-                            <div>{infoBlock.yearBuilt}</div>
+                            <span className="key">built in:</span>
+                            <span>{infoBlock.yearBuilt}</span>
                         </p>
                     </div>
                     <div className="house-info-block">
@@ -75,7 +75,7 @@ const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
                             title="Icon made by Freepik from www.flaticon.com" 
                         />
                         <p className="double-row">
-                            <div className="key">house type:</div>
+                            <span className="key">house type:</span>
                             { 
                                 infoBlock.houseTypeLink
                                   ? <a  href={infoBlock.houseTypeLink} 
@@ -84,7 +84,7 @@ const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
                                     >
                                         {infoBlock.houseType}
                                     </a>
-                                  : <div>{infoBlock.houseType}</div>
+                                  : <span>{infoBlock.houseType}</span>
                             }
                         </p>
                     </div>
@@ -95,8 +95,8 @@ const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
                             title="Icon made by Freepik from www.flaticon.com" 
                         />
                         <p className="double-row">
-                            <div className="key">floor count:</div>
-                            <div>{infoBlock.floorCount}</div>
+                            <span className="key">floor count:</span>
+                            <span>{infoBlock.floorCount}</span>
                         </p>
                     </div>
                     <div className="house-info-block">
@@ -106,8 +106,8 @@ const HouseInfoBlock = ({ infoBlock, startState, addressNotFound }) => {
                             title="Icon made by Freepik from www.flaticon.com" 
                         />
                         <p className="double-row">
-                            <div className="key">walls:</div>
-                            <div>{infoBlock.wallsMaterial}</div>
+                            <span className="key">walls:</span>
+                            <span>{infoBlock.wallsMaterial}</span>
                         </p>
                     </div>
                 </div>
