@@ -42,9 +42,8 @@ class ProfilePage extends Component {
                         <img src={this.state.userPic} alt="userpic" />
                     </div>
                     <div className="profile-days-text">
-                        <span className="highlight">
-                            exploring houses for {this.state.daysRegistered} days
-                        </span>
+                        exploring houses for {this.state.daysRegistered} 
+                        &nbsp;{this.state.daysRegistered === 1 ? "day" : "days"}
                     </div>
                     <div className="profile-form">
                         <div className="profile-form-element-wrapper">

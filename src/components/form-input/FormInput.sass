@@ -1,0 +1,40 @@
+@import '../../_config.sass'
+
+.form-input-main-div
+    margin: 10px 0 0px 0
+
+.form-element-name
+    @extend %small-caps-text
+    font-size: 15px
+
+    &.invalid
+        color: $primaryErrorColor
+
+.form-element
+    background: transparent
+    width: 100%
+    color: $primaryDarkColor
+    align-self: center
+    outline: 0
+    border-width: 0 0 2px
+    border-color: $deactivatedItemColor
+    height: 40px
+    font-size: 20px
+
+    &:focus
+        border-color: $primaryDarkColor
+
+    &::placeholder
+        color: $deactivatedItemColor
+
+    &.invalid
+        border-color: $primaryErrorColor
+
+.form-error-message
+    visibility: hidden
+    font-size: 15px
+    color: $primaryErrorColor
+    margin-top: 5px
+
+    &.show
+       visibility: visible
