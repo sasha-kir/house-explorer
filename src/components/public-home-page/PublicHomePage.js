@@ -1,4 +1,6 @@
 import React from 'react';
+import { Helmet } from "react-helmet-async";
+
 import './PublicHomePage.sass';
 import cover from '../../images/cover.png';
 
@@ -10,6 +12,9 @@ const PublicHomePage = ({ history }) => {
     
     return(
         <div className="public-home-main-div">
+            <Helmet>
+                <title>House Explorer</title>
+            </Helmet>
             <div></div>
             <div></div>
             <div className="intro-wrapper">

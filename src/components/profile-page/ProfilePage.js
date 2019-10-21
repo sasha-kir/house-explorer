@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Helmet } from "react-helmet-async";
+
 import withAuth from '../with-auth/withAuth';
 
 import './ProfilePage.sass';
@@ -37,6 +39,9 @@ class ProfilePage extends Component {
     render() {
         return (
             <div className="profile-main-div">
+                <Helmet>
+                    <title>Profile | House Explorer</title>
+                </Helmet>
                 <div className="profile-wrapper">
                     <div className="profile-image">
                         <img src={this.state.userPic} alt="userpic" />
