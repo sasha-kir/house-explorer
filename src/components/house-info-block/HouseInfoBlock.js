@@ -68,6 +68,7 @@ class HouseInfoBlock extends Component {
                     </div>
                     <img    src={this.images["bookmark"]} 
                             alt="bookmark" 
+                            title="Add house to history"
                             onClick={this.handleBookmarkClick}
                     />
                 </div>

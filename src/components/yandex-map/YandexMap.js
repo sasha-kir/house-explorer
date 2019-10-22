@@ -19,9 +19,13 @@ class YandexMap extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isMapReady: false
+            isMapReady: false,
+            showBalloon: false,
+            clickCoords: this.props.mapCoords,
+            clickAddress: ""
         };
         this.mapContentRef = React.createRef();
+        this.yandexAPIKey = process.env.REACT_APP_YANDEX_API_KEY;
     }
 
     componentDidMount() {
@@ -45,8 +49,24 @@ class YandexMap extends Component {
         }
     }
 
-    onMapClick = (event) => {
-        console.log(event.get("coords"));
+    onMapClick = async (event) => {
+        const clickCoords = event.get("coords");
+        let geoUrl = new URL("https://geocode-maps.yandex.ru/1.x");
+        let params = {
+            geocode: `${clickCoords[1]}, ${clickCoords[0]}`,
+            kind: "house",
+            format: "json",
+            apikey: this.yandexAPIKey,
+            results: 1
+        };
+        Object.keys(params).forEach(key => geoUrl.searchParams.append(key, params[key]))
+        let geocodeResult = await fetch(geoUrl);
+        let data = await geocodeResult.json();
+        this.setState({ 
+            clickAddress: data.response.GeoObjectCollection.featureMember[0].GeoObject.name,
+            clickCoords,
+            showBalloon: true
+        });
     }
 
     detectLocation = (event) => {
@@ -71,7 +91,6 @@ class YandexMap extends Component {
                         }}
                         onClick={this.onMapClick}
                     >
-                
                         <ZoomControl 
                             options={{ 
                                 position: {
@@ -81,7 +100,8 @@ class YandexMap extends Component {
                                 }
                             }} 
                         />
-                        <Placemark  
+                        <Placemark
+                            key={1}
                             modules={['geoObject.addon.hint']}
                             geometry={mapCoords}
                             properties={{
@@ -91,6 +111,19 @@ class YandexMap extends Component {
                                 preset: 'islands#dotIcon',
                                 iconColor: '#343543'
                             }}   
+                        />
+                        <Placemark
+                            instanceRef={ ref => { if (ref && this.state.showBalloon) return ref.balloon.open() } } 
+                            key={2}
+                            geometry={this.state.clickCoords}
+                            modules={["geoObject.addon.balloon"]}
+                            onBalloonClose={() => { this.setState({showBalloon: false}) }}
+                            properties={{
+                                balloonContent: this.state.clickAddress,
+                            }}
+                            options={{ 
+                                visible: false
+                            }}
                         />
                         <ListBox 
                             data={{ content: 'Select a city ' }}

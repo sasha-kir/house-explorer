@@ -180,7 +180,7 @@ class ExplorePage extends Component {
 
     render() {
         return (
-            <YMaps query={{ apikey: this.yandexAPIKey, lang: 'en_RU' }}>
+            <YMaps  query={{ apikey: this.yandexAPIKey, lang: 'en_RU' }}>
                 <div className="explore-main-div">
                     <Helmet>
                         <title>Explore | House Explorer</title>
