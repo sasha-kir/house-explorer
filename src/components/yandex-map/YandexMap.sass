@@ -23,6 +23,23 @@
         width: $mainMapWidth
         height: $mainMapHeight
 
+    .balloon
+        color: $primaryDarkColor
+        font-size: 15px
+        display: grid
+
+        .balloon-link
+            @extend %button-with-border
+            border-radius: 3px
+            justify-self: center
+            font-size: 15px
+            cursor: pointer
+            margin-top: -10px
+
+            &:hover
+                @extend %button-with-border-hover
+
+
 @media (max-width: 1400px)
     .map-main-div
         width: $mainMapWidth - 200px

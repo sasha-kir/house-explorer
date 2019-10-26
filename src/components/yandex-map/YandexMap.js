@@ -10,7 +10,6 @@ import {    Map,
 import * as waitUntil from 'async-wait-until';
 
 import Spinner from '../spinner/Spinner';
-
 import './YandexMap.sass';
 
 class YandexMap extends Component { 
@@ -19,10 +18,12 @@ class YandexMap extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            // ymaps: null,
             isMapReady: false,
             showBalloon: false,
             clickCoords: this.props.mapCoords,
-            clickAddress: ""
+            clickAddress: "",
+            isAddressValid: false,
         };
         this.mapContentRef = React.createRef();
         this.yandexAPIKey = process.env.REACT_APP_YANDEX_API_KEY;
@@ -31,6 +32,10 @@ class YandexMap extends Component {
     componentDidMount() {
         this.watchMapLoading();
         this._isMounted = true;
+    }
+
+    UNSAFE_componentWillReceiveProps() {
+        this.setState({ showBalloon: false });
     }
 
     componentWillUnmount() {
@@ -62,10 +67,21 @@ class YandexMap extends Component {
         Object.keys(params).forEach(key => geoUrl.searchParams.append(key, params[key]))
         let geocodeResult = await fetch(geoUrl);
         let data = await geocodeResult.json();
+
+        let address, isAddressValid;
+        try {
+            address = data.response.GeoObjectCollection.featureMember[0].GeoObject.name;
+            isAddressValid = true;
+        } catch (TypeError) {
+            address = "No houses here!";
+            isAddressValid = false;
+        }
+
         this.setState({ 
-            clickAddress: data.response.GeoObjectCollection.featureMember[0].GeoObject.name,
+            clickAddress: address,
             clickCoords,
-            showBalloon: true
+            showBalloon: true,
+            isAddressValid
         });
     }
 
@@ -73,9 +89,23 @@ class YandexMap extends Component {
         console.log(event.get("position"));
     }
 
+    copyBalloonAddress = () => {
+        const address = document.getElementById('balloon-text').textContent;
+        const textArea = document.createElement('textarea');
+        document.body.appendChild(textArea);
+        textArea.value = address;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = 0;
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+    }
+
     render() {
         const { mapCoords, mapAddress, startState, 
-                cityList, locationInEnglish, handleCityChoice } = this.props;
+                cityList, locationInEnglish, 
+                handleCityChoice } = this.props;
 
         return (
             <div className="map-main-div">
@@ -90,6 +120,7 @@ class YandexMap extends Component {
                                 zoom: startState ? 10 : 17,
                         }}
                         onClick={this.onMapClick}
+                        // onLoad={ ymaps => { this.setState({ ymaps }) } }
                     >
                         <ZoomControl 
                             options={{ 
@@ -113,14 +144,42 @@ class YandexMap extends Component {
                             }}   
                         />
                         <Placemark
-                            instanceRef={ ref => { if (ref && this.state.showBalloon) return ref.balloon.open() } } 
+                            balloonContent={<div>this.state.clickAddress</div>}
+                            instanceRef={ ref => { 
+                                if (ref && this.state.showBalloon) {
+                                    return ref.balloon.open();
+                                } else if (ref && !this.state.showBalloon) {
+                                    return ref.balloon.close();
+                                }
+                            } } 
                             key={2}
                             geometry={this.state.clickCoords}
                             modules={["geoObject.addon.balloon"]}
                             onBalloonClose={() => { this.setState({showBalloon: false}) }}
-                            properties={{
-                                balloonContent: this.state.clickAddress,
-                            }}
+                            properties={
+                                this.state.isAddressValid 
+                                  ? {
+                                        balloonContentBody: [
+                                            '<div class="balloon">',
+                                            '<address id="balloon-text">',
+                                            this.state.clickAddress,
+                                            '</address>',
+                                            '<br/>',
+                                            '<button class="balloon-link" ',
+                                            `onclick="javascript:(${this.copyBalloonAddress})()">`,
+                                            'copy address',
+                                            '</button>',
+                                            '</div>'
+                                        ].join('')
+                                    }
+                                  : {
+                                        balloonContentBody: [
+                                            '<div class="balloon">',
+                                            this.state.clickAddress,
+                                            '</div>'
+                                        ].join('')
+                                  }
+                            }
                             options={{ 
                                 visible: false
                             }}
