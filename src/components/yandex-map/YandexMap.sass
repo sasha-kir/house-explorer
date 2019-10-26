@@ -28,7 +28,7 @@
         font-size: 15px
         display: grid
 
-        .balloon-link
+        #balloon-button
             @extend %button-with-border
             border-radius: 3px
             justify-self: center
@@ -36,8 +36,13 @@
             cursor: pointer
             margin-top: -10px
 
-            &:hover
+            &:hover:enabled
                 @extend %button-with-border-hover
+
+            &:disabled
+                border-color: $deactivatedItemColor
+                color: $deactivatedItemColor
+
 
 
 @media (max-width: 1400px)

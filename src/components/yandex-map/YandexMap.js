@@ -8,6 +8,7 @@ import {    Map,
         } from 'react-yandex-maps';
 
 import * as waitUntil from 'async-wait-until';
+import onClickOutside from "react-onclickoutside";
 
 import Spinner from '../spinner/Spinner';
 import './YandexMap.sass';
@@ -32,10 +33,6 @@ class YandexMap extends Component {
     componentDidMount() {
         this.watchMapLoading();
         this._isMounted = true;
-    }
-
-    UNSAFE_componentWillReceiveProps() {
-        this.setState({ showBalloon: false });
     }
 
     componentWillUnmount() {
@@ -85,6 +82,10 @@ class YandexMap extends Component {
         });
     }
 
+    handleClickOutside = () => {
+        this.setState({ showBalloon: false });
+    };
+
     detectLocation = (event) => {
         console.log(event.get("position"));
     }
@@ -100,6 +101,9 @@ class YandexMap extends Component {
         textArea.select();
         document.execCommand('copy');
         document.body.removeChild(textArea);
+        let balloonButton = document.getElementById('balloon-button');
+        balloonButton.textContent = 'copied!';
+        balloonButton.disabled = true;
     }
 
     render() {
@@ -165,7 +169,7 @@ class YandexMap extends Component {
                                             this.state.clickAddress,
                                             '</address>',
                                             '<br/>',
-                                            '<button class="balloon-link" ',
+                                            '<button id="balloon-button" ',
                                             `onclick="javascript:(${this.copyBalloonAddress})()">`,
                                             'copy address',
                                             '</button>',
@@ -209,4 +213,4 @@ class YandexMap extends Component {
     }
 };
 
-export default YandexMap;
+export default onClickOutside(YandexMap);
