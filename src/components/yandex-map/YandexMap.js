@@ -8,7 +8,7 @@ import {    Map,
         } from 'react-yandex-maps';
 
 import * as waitUntil from 'async-wait-until';
-import onClickOutside from "react-onclickoutside";
+import ClickOutside from 'react-click-outside';
 
 import Spinner from '../spinner/Spinner';
 import './YandexMap.sass';
@@ -36,7 +36,7 @@ class YandexMap extends Component {
     }
 
     componentWillUnmount() {
-		this._isMounted = false;
+        this._isMounted = false;
 	}
 
     watchMapLoading = async () => {
@@ -83,7 +83,7 @@ class YandexMap extends Component {
     }
 
     handleClickOutside = () => {
-        this.setState({ showBalloon: false });
+        if (this._isMounted) this.setState({ showBalloon: false });
     };
 
     detectLocation = (event) => {
@@ -112,105 +112,107 @@ class YandexMap extends Component {
                 handleCityChoice } = this.props;
 
         return (
-            <div className="map-main-div">
-                <div className="spinner-wrapper">
-                    <Spinner isMapReady={this.state.isMapReady} />
-                </div>
-                <div className="map-content" ref={this.mapContentRef}>
-                    <Map 
-                        className="map"
-                        state={{
-                                center: mapCoords,
-                                zoom: startState ? 10 : 17,
-                        }}
-                        onClick={this.onMapClick}
-                        // onLoad={ ymaps => { this.setState({ ymaps }) } }
-                    >
-                        <ZoomControl 
-                            options={{ 
-                                position: {
-                                    left: 'auto',
-                                    right: 20,
-                                    top: 170
-                                }
-                            }} 
-                        />
-                        <Placemark
-                            key={1}
-                            modules={['geoObject.addon.hint']}
-                            geometry={mapCoords}
-                            properties={{
-                                hintContent: mapAddress
+            <ClickOutside onClickOutside={this.handleClickOutside}>
+                <div className="map-main-div">
+                    <div className="spinner-wrapper">
+                        <Spinner isMapReady={this.state.isMapReady} />
+                    </div>
+                    <div className="map-content" ref={this.mapContentRef}>
+                        <Map 
+                            className="map"
+                            state={{
+                                    center: mapCoords,
+                                    zoom: startState ? 10 : 17,
                             }}
-                            options={{
-                                preset: 'islands#dotIcon',
-                                iconColor: '#343543'
-                            }}   
-                        />
-                        <Placemark
-                            balloonContent={<div>this.state.clickAddress</div>}
-                            instanceRef={ ref => { 
-                                if (ref && this.state.showBalloon) {
-                                    return ref.balloon.open();
-                                } else if (ref && !this.state.showBalloon) {
-                                    return ref.balloon.close();
-                                }
-                            } } 
-                            key={2}
-                            geometry={this.state.clickCoords}
-                            modules={["geoObject.addon.balloon"]}
-                            onBalloonClose={() => { this.setState({showBalloon: false}) }}
-                            properties={
-                                this.state.isAddressValid 
-                                  ? {
-                                        balloonContentBody: [
-                                            '<div class="balloon">',
-                                            '<address id="balloon-text">',
-                                            this.state.clickAddress,
-                                            '</address>',
-                                            '<br/>',
-                                            '<button id="balloon-button" ',
-                                            `onclick="javascript:(${this.copyBalloonAddress})()">`,
-                                            'copy address',
-                                            '</button>',
-                                            '</div>'
-                                        ].join('')
-                                    }
-                                  : {
-                                        balloonContentBody: [
-                                            '<div class="balloon">',
-                                            this.state.clickAddress,
-                                            '</div>'
-                                        ].join('')
-                                  }
-                            }
-                            options={{ 
-                                visible: false
-                            }}
-                        />
-                        <ListBox 
-                            data={{ content: 'Select a city ' }}
-                            onSelect={handleCityChoice}
+                            onClick={this.onMapClick}
+                            // onLoad={ ymaps => { this.setState({ ymaps }) } }
                         >
-                            {cityList.map(city => <ListBoxItem 
-                                                    key={city.id} 
-                                                    data={{ 
-                                                            content: city.name,
-                                                            center: city.location
-                                                    }}
-                                                    state={{
-                                                            selected: (city.name === locationInEnglish[0] || 
-                                                                       city.isoCode === locationInEnglish[1])
-                                                    }}
-                                                    />
-                            )}
-                        </ListBox>
-                        <GeolocationControl onLocationChange={this.detectLocation}/>
-                    </Map>
+                            <ZoomControl 
+                                options={{ 
+                                    position: {
+                                        left: 'auto',
+                                        right: 20,
+                                        top: 170
+                                    }
+                                }} 
+                            />
+                            <Placemark
+                                key={1}
+                                modules={['geoObject.addon.hint']}
+                                geometry={mapCoords}
+                                properties={{
+                                    hintContent: mapAddress
+                                }}
+                                options={{
+                                    preset: 'islands#dotIcon',
+                                    iconColor: '#343543'
+                                }}   
+                            />
+                            <Placemark
+                                balloonContent={<div>this.state.clickAddress</div>}
+                                instanceRef={ ref => { 
+                                    if (ref && this.state.showBalloon) {
+                                        return ref.balloon.open();
+                                    } else if (ref && !this.state.showBalloon) {
+                                        return ref.balloon.close();
+                                    }
+                                } } 
+                                key={2}
+                                geometry={this.state.clickCoords}
+                                modules={["geoObject.addon.balloon"]}
+                                onBalloonClose={() => { this.setState({showBalloon: false}) }}
+                                properties={
+                                    this.state.isAddressValid 
+                                    ? {
+                                            balloonContentBody: [
+                                                '<div class="balloon">',
+                                                '<address id="balloon-text">',
+                                                this.state.clickAddress,
+                                                '</address>',
+                                                '<br/>',
+                                                '<button id="balloon-button" ',
+                                                `onclick="javascript:(${this.copyBalloonAddress})()">`,
+                                                'copy address',
+                                                '</button>',
+                                                '</div>'
+                                            ].join('')
+                                        }
+                                    : {
+                                            balloonContentBody: [
+                                                '<div class="balloon">',
+                                                this.state.clickAddress,
+                                                '</div>'
+                                            ].join('')
+                                    }
+                                }
+                                options={{ 
+                                    visible: false
+                                }}
+                            />
+                            <ListBox 
+                                data={{ content: 'Select a city ' }}
+                                onSelect={handleCityChoice}
+                            >
+                                {cityList.map(city => <ListBoxItem 
+                                                        key={city.id} 
+                                                        data={{ 
+                                                                content: city.name,
+                                                                center: city.location
+                                                        }}
+                                                        state={{
+                                                                selected: (city.name === locationInEnglish[0] || 
+                                                                        city.isoCode === locationInEnglish[1])
+                                                        }}
+                                                        />
+                                )}
+                            </ListBox>
+                            <GeolocationControl onLocationChange={this.detectLocation}/>
+                        </Map>
+                    </div>
                 </div>
-            </div>
+            </ClickOutside>
         );
     }
 };
 
-export default onClickOutside(YandexMap);
+export default YandexMap;
