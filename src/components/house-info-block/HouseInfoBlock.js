@@ -12,7 +12,8 @@ class HouseInfoBlock extends Component {
         super(props);
         this.images = this.importAll(require.context('../../images/house-info-icons', false, /.*\.svg$/));
         this.state = {
-            showHistoryAlert: false
+            showHistoryAlert: false,
+            alertType: ""
         }
     }
 
@@ -28,9 +29,24 @@ class HouseInfoBlock extends Component {
         setTimeout(() => { this.setState({ showHistoryAlert: false }) }, 3000);
     }
 
-    handleBookmarkClick = () => {
-        console.log(this.props.infoBlock);
-        this.setState({ showHistoryAlert: true }, this.disableAlert);
+    handleBookmarkClick = async () => {
+        try {
+            let response = await fetch("http://localhost:5000/save_house", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                token: localStorage.getItem("userToken"),
+                house_info: this.props.infoBlock
+            })
+            });
+            if (response.status === 200) {
+                this.setState({ showHistoryAlert: true, alertType: "success" }, this.disableAlert);
+            } else {
+                this.setState({ showHistoryAlert: true, alertType: "error" }, this.disableAlert);
+            }
+        } catch (TypeError) {
+            this.setState({ showHistoryAlert: true, alertType: "error" }, this.disableAlert);
+        }
     }
 
     renderStartBlock = () => {
@@ -74,8 +90,12 @@ class HouseInfoBlock extends Component {
                 </div>
                 <div className="house-info-house-content">
                     <Alert  show={this.state.showHistoryAlert} 
-                            text="House added to history" 
-                            type="success" 
+                            text={
+                                this.state.alertType === "success" 
+                                    ? "House added to history" 
+                                    : "Error adding to history"
+                            }
+                            type={this.state.alertType}
                     />
                     <div className="house-info-block">
                         <img    
