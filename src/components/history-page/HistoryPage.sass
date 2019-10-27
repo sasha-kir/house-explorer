@@ -1,0 +1,25 @@
+@import '../../_config.sass'
+
+.history-main-div
+    @extend %page-template
+    background-color: $explorePrimaryColor
+    padding: 80px 0
+
+.empty-history-wrapper
+    display: grid
+    grid-template-rows: 5fr 1fr 1fr
+    justify-items: center
+
+    img
+        height: 300px
+        width: auto
+
+    .empty-history-text
+        text-align: center
+        color: $deactivatedItemColor
+        font-size: 20px
+        align-self: center
+
+        &.heading
+            font-size: 30px
+            align-self: center

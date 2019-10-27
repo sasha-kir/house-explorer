@@ -12,7 +12,8 @@ import PlaceholderPage from './components/placeholder-page/PlaceholderPage';
 import LogInPage from './components/login-page/LogInPage';
 import RegisterPage from './components/register-page/RegisterPage';
 import ExplorePage from './components/explore-page/ExplorePage';
-import ProfilePage from './components/profile-page/ProfilePage'
+import ProfilePage from './components/profile-page/ProfilePage';
+import HistoryPage from './components/history-page/HistoryPage';
 import NotFoundPage from './components/404-page/NotFoundPage';
 
 
@@ -55,7 +56,7 @@ class App extends Component {
               <Route exact path="/explore" component={withAuth(ExplorePage)} />
               <Route exact path="/profile" 
                     render={(routeProps) => <ProfilePage {...routeProps} />} />
-              <Route exact path="/history" component={withAuth(PlaceholderPage)} />
+              <Route exact path="/history" component={withAuth(HistoryPage)} />
 
               <Route component={NotFoundPage} />
             </Switch>
