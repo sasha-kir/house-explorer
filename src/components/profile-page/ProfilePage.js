@@ -21,16 +21,20 @@ class ProfilePage extends Component {
         if (!token) {
             this.props.history.push("/login");
         } else {
-            let response = await fetch("http://localhost:5000/profile", {
-                method: "POST",
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ token })
-            });
-            if (response.status === 200) {
-                let data = await response.json();
-                let { userPic, username, email, daysRegistered } = data;
-                this.setState({ userPic, username, email, daysRegistered });
-            } else {
+            try {
+                let response = await fetch("http://localhost:5000/profile", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ token })
+                });
+                if (response.status === 200) {
+                    let data = await response.json();
+                    let { userPic, username, email, daysRegistered } = data;
+                    this.setState({ userPic, username, email, daysRegistered });
+                } else {
+                    console.log("error fetching profile from server");
+                }
+            } catch (TypeError) {
                 console.log("error fetching profile from server");
             }
         }
