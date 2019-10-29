@@ -1,15 +1,76 @@
-import React from "react";
+import React, { Component } from "react";
 import './HistoryPage.sass';
 
 import { Icon, Menu, Button, Popup, Table } from "semantic-ui-react";
 
 import emptyState from '../../images/NoGPS.png';
 
-const HistoryPage = () => {
-    const history = 0;
+class HistoryPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: true,
+            history: 0
+        }
+    }
 
-    const contentSwitcher = () => {
-        if (history === null) {
+    async componentDidMount() {
+        const token = localStorage.getItem("userToken");
+        try {
+            let response = await fetch("http://localhost:5000/history", {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ token })
+            });
+            if (response.status === 200) {
+                let data = await response.json();
+                this.setState({ history: data.history, loading: false });
+            } else {
+                console.log("error fetching history from server");
+                this.setState({ loading: false });
+            }
+        } catch (TypeError) {
+            console.log("error fetching history from server");
+            this.setState({ loading: false });
+        }
+    }
+
+    constructTableRows = () => {
+        let { history } = this.state;
+        let tableBody = [];
+        for (let i = 0; i < history.length; i++) {
+            tableBody.push(
+                <Table.Row key={i}>
+                    <Table.Cell>
+                        <Icon name="calendar outline" />
+                        { new Date(Date.parse(history[i].date)).toLocaleDateString("en-GB") }
+                    </Table.Cell>
+                    <Table.Cell>{history[i].houseInfo.address}</Table.Cell>
+                    <Table.Cell>{history[i].houseInfo.yearBuilt}</Table.Cell>
+                    <Table.Cell>
+                        <Popup
+                            trigger={<Button circular basic color='blue' icon="map marker alternate" />}
+                            content='Show on map'
+                            size='small'
+                            position='top center'
+                        />
+                    </Table.Cell>
+                    <Table.Cell>
+                        <Popup
+                            trigger={<Icon link size="large" name="trash alternate outline" />}
+                            content='Delete'
+                            size='small'
+                            position='top center'
+                        />
+                    </Table.Cell>
+                </Table.Row>
+            );
+        };
+        return tableBody;
+    }
+
+    contentSwitcher = () => {
+        if (this.state.history === null) {
             return (
                 <div className="empty-history-wrapper">
                     <img alt="map pin" src={emptyState} />
@@ -34,75 +95,7 @@ const HistoryPage = () => {
                         </Table.Header>
 
                         <Table.Body>
-                        <Table.Row>
-                            <Table.Cell>
-                            <Icon name="calendar outline" /> 23/10/2019
-                            </Table.Cell>
-                            <Table.Cell>Москва, Нагатинский бульвар, 6</Table.Cell>
-                            <Table.Cell>1992</Table.Cell>
-                            <Table.Cell>
-                            <Popup
-                                trigger={<Button circular basic color='blue' icon="map marker alternate" />}
-                                content='Show on map'
-                                size='small'
-                                position='top center'
-                            />
-                            </Table.Cell>
-                            <Table.Cell>
-                            <Popup
-                                trigger={<Icon link size="large" name="trash alternate outline" />}
-                                content='Delete'
-                                size='small'
-                                position='top center'
-                            />
-                            </Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>
-                            <Icon name="calendar outline" /> 24/10/2019
-                            </Table.Cell>
-                            <Table.Cell>Нагатинский бульвар, 6</Table.Cell>
-                            <Table.Cell>1992</Table.Cell>
-                            <Table.Cell>
-                            <Popup
-                                trigger={<Button circular basic color='blue' icon="map marker alternate" />}
-                                content='Show on map'
-                                size='small'
-                                position='top center'
-                            />
-                            </Table.Cell>
-                            <Table.Cell>
-                            <Popup
-                                trigger={<Icon link size="large" name="trash alternate outline" />}
-                                content='Delete'
-                                size='small'
-                                position='top center'
-                            />
-                            </Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>
-                            <Icon name="calendar outline" /> 25/10/2019
-                            </Table.Cell>
-                            <Table.Cell>Нагатинский бульвар, 6</Table.Cell>
-                            <Table.Cell>1992</Table.Cell>
-                            <Table.Cell>
-                            <Popup
-                                trigger={<Button circular basic color='blue' icon="map marker alternate" />}
-                                content='Show on map'
-                                size='small'
-                                position='top center'
-                            />
-                            </Table.Cell>
-                            <Table.Cell>
-                            <Popup
-                                trigger={<Icon link size="large" name="trash alternate outline" />}
-                                content='Delete'
-                                size='small'
-                                position='top center'
-                            />
-                            </Table.Cell>
-                        </Table.Row>
+                            {this.constructTableRows()}
                         </Table.Body>
 
                         <Table.Footer>
@@ -130,11 +123,14 @@ const HistoryPage = () => {
         }
     }
 
-    return (
-        <div className="history-main-div">
-            {contentSwitcher()}
-        </div>
-    )
+    render() {
+        if (this.state.loading) return null;
+        return (
+            <div className="history-main-div">
+                {this.contentSwitcher()}
+            </div>
+        );
+    }
 }
 
 export default HistoryPage;

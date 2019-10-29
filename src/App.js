@@ -54,8 +54,7 @@ class App extends Component {
                     render={() => <RegisterPage handleLogIn={this.handleLogIn} />} />
 
               <Route exact path="/explore" component={withAuth(ExplorePage)} />
-              <Route exact path="/profile" 
-                    render={(routeProps) => <ProfilePage {...routeProps} />} />
+              <Route exact path="/profile" component={withAuth(ProfilePage)} />
               <Route exact path="/history" component={withAuth(HistoryPage)} />
 
               <Route component={NotFoundPage} />
