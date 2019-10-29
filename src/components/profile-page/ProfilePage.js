@@ -9,6 +9,7 @@ class ProfilePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: true,
             userpicSrc: "",
             username: "",
             email: "",
@@ -18,29 +19,28 @@ class ProfilePage extends Component {
 
     async componentDidMount() {
         const token = localStorage.getItem("userToken");
-        if (!token) {
-            this.props.history.push("/login");
-        } else {
-            try {
-                let response = await fetch("http://localhost:5000/profile", {
-                    method: "POST",
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ token })
-                });
-                if (response.status === 200) {
-                    let data = await response.json();
-                    let { userPic, username, email, daysRegistered } = data;
-                    this.setState({ userPic, username, email, daysRegistered });
-                } else {
-                    console.log("error fetching profile from server");
-                }
-            } catch (TypeError) {
+        try {
+            let response = await fetch("http://localhost:5000/profile", {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ token })
+            });
+            if (response.status === 200) {
+                let data = await response.json();
+                let { userPic, username, email, daysRegistered } = data;
+                this.setState({ userPic, username, email, daysRegistered, loading: false });
+            } else {
                 console.log("error fetching profile from server");
+                this.setState({ loading: false });
             }
+        } catch (TypeError) {
+            console.log("error fetching profile from server");
+            this.setState({ loading: false });
         }
     }
 
     render() {
+        if (this.state.loading) return null;
         return (
             <div className="profile-main-div">
                 <Helmet>
