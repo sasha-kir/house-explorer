@@ -8,6 +8,7 @@ class Navigation extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: true,
             loggedIn: false,
             userPic: ""
         }
@@ -23,12 +24,13 @@ class Navigation extends Component {
             });
             if (response.status === 200) {
                 let data = await response.json();
-                this.setState({ loggedIn: true, userPic: data.userPic });
+                this.setState({ loggedIn: true, userPic: data.userPic, loading: false });
             } else {
-                this.setState({ loggedIn: false });
+                this.setState({ loggedIn: false, loading: false });
             };
         } catch (TypeError) {
             console.log('server error: could not check token');
+            this.setState({ loading: false });
         }
     }
 
@@ -83,6 +85,7 @@ class Navigation extends Component {
     }
 
     render() {
+        if (this.state.loading) return null;
         return (
             <nav>
                 <div className="main-nav">
