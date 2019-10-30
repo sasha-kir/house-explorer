@@ -35,19 +35,41 @@ class HistoryPage extends Component {
         }
     }
 
+    deleteEntry = async (index) => {
+        let { history } = this.state;
+        let houseToDelete = history.splice(index, 1);
+        try {
+            let response = await fetch("http://localhost:5000/delete_house", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                token: localStorage.getItem("userToken"),
+                houseCoords: houseToDelete[0].houseCoords
+            })
+            });
+            if (response.status === 200) {
+                this.setState({ history });
+            } else {
+                console.log("server error while deleting house")
+            }
+        } catch (TypeError) {
+            console.log("server error while deleting house")
+        }
+    }
+
     constructTableRows = () => {
         let { history } = this.state;
         let tableBody = [];
         let mapBaseUrl = "https://yandex.ru/maps/";
         for (let i = 0; i < history.length; i++) {
-            let mapLink = `${mapBaseUrl}?pt=${history[i].mapCoords}&z=17&l=map`;
+            let mapLink = `${mapBaseUrl}?pt=${history[i].houseCoords}&z=17&l=map`;
             tableBody.push(
                 <Table.Row key={i}>
                     <Table.Cell>
                         <Icon name="calendar outline" />
                         { new Date(Date.parse(history[i].date)).toLocaleDateString("en-GB") }
                     </Table.Cell>
-                    <Table.Cell>{history[i].houseInfo.address}</Table.Cell>
+                    <Table.Cell textAlign="left">{history[i].houseInfo.address}</Table.Cell>
                     <Table.Cell>{history[i].houseInfo.yearBuilt}</Table.Cell>
                     <Table.Cell>
                         <a href={mapLink} target="_blank" rel="noopener noreferrer">
@@ -61,7 +83,7 @@ class HistoryPage extends Component {
                     </Table.Cell>
                     <Table.Cell>
                         <Popup
-                            trigger={<Icon link size="large" name="trash alternate outline" />}
+                            trigger={<Icon link onClick={() => this.deleteEntry(i)} size="large" name="trash alternate outline" />}
                             content='Delete'
                             size='small'
                             position='top center'
@@ -74,7 +96,7 @@ class HistoryPage extends Component {
     }
 
     contentSwitcher = () => {
-        if (this.state.history === null) {
+        if (this.state.history === null || !this.state.history.length) {
             return (
                 <div className="empty-history-wrapper">
                     <img alt="map pin" src={emptyState} />
@@ -90,9 +112,9 @@ class HistoryPage extends Component {
                     <Table selectable unstackable textAlign="center">
                         <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>Date added</Table.HeaderCell>
-                            <Table.HeaderCell>Address</Table.HeaderCell>
-                            <Table.HeaderCell>Year Built</Table.HeaderCell>
+                            <Table.HeaderCell>date added</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="left">address</Table.HeaderCell>
+                            <Table.HeaderCell>year built</Table.HeaderCell>
                             <Table.HeaderCell />
                             <Table.HeaderCell />
                         </Table.Row>
