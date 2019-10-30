@@ -36,7 +36,8 @@ class HouseInfoBlock extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 token: localStorage.getItem("userToken"),
-                house_info: this.props.infoBlock
+                houseInfo: this.props.infoBlock,
+                mapCoords: this.props.mapCoords
             })
             });
             if (response.status === 200) {

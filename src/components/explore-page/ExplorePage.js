@@ -200,6 +200,7 @@ class ExplorePage extends Component {
                         />
                         <HouseInfoBlock 
                             infoBlock={this.state.infoBlock}
+                            mapCoords={this.state.mapCoords}
                             startState={this.state.startState}
                             addressNotFound={this.state.addressNotFound}
                         />

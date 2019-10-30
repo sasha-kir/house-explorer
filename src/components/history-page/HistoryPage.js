@@ -38,7 +38,9 @@ class HistoryPage extends Component {
     constructTableRows = () => {
         let { history } = this.state;
         let tableBody = [];
+        let mapBaseUrl = "https://yandex.ru/maps/";
         for (let i = 0; i < history.length; i++) {
+            let mapLink = `${mapBaseUrl}?pt=${history[i].mapCoords}&z=17&l=map`;
             tableBody.push(
                 <Table.Row key={i}>
                     <Table.Cell>
@@ -48,12 +50,14 @@ class HistoryPage extends Component {
                     <Table.Cell>{history[i].houseInfo.address}</Table.Cell>
                     <Table.Cell>{history[i].houseInfo.yearBuilt}</Table.Cell>
                     <Table.Cell>
-                        <Popup
-                            trigger={<Button circular basic color='blue' icon="map marker alternate" />}
-                            content='Show on map'
-                            size='small'
-                            position='top center'
-                        />
+                        <a href={mapLink} target="_blank" rel="noopener noreferrer">
+                            <Popup
+                                trigger={<Button circular basic color='blue' icon="map marker alternate" />}
+                                content='Show on map'
+                                size='small'
+                                position='top center'
+                            />
+                        </a>
                     </Table.Cell>
                     <Table.Cell>
                         <Popup
