@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import './HistoryPage.sass';
 
-import { Icon, Menu, Button, Popup, Table } from "semantic-ui-react";
-
 import emptyState from '../../images/NoGPS.png';
+
+import HistoryTable from '../history-table/HistoryTable';
+
 
 class HistoryPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             loading: true,
-            history: 0
+            history: 0,
+            activePage: 1
         }
     }
 
@@ -57,42 +59,8 @@ class HistoryPage extends Component {
         }
     }
 
-    constructTableRows = () => {
-        let { history } = this.state;
-        let tableBody = [];
-        let mapBaseUrl = "https://yandex.ru/maps/";
-        for (let i = 0; i < history.length; i++) {
-            let mapLink = `${mapBaseUrl}?pt=${history[i].houseCoords}&z=17&l=map`;
-            tableBody.push(
-                <Table.Row key={i}>
-                    <Table.Cell>
-                        <Icon name="calendar outline" />
-                        { new Date(Date.parse(history[i].date)).toLocaleDateString("en-GB") }
-                    </Table.Cell>
-                    <Table.Cell textAlign="left">{history[i].houseInfo.address}</Table.Cell>
-                    <Table.Cell>{history[i].houseInfo.yearBuilt}</Table.Cell>
-                    <Table.Cell>
-                        <a href={mapLink} target="_blank" rel="noopener noreferrer">
-                            <Popup
-                                trigger={<Button circular basic color='blue' icon="map marker alternate" />}
-                                content='Show on map'
-                                size='small'
-                                position='top center'
-                            />
-                        </a>
-                    </Table.Cell>
-                    <Table.Cell>
-                        <Popup
-                            trigger={<Icon link onClick={() => this.deleteEntry(i)} size="large" name="trash alternate outline" />}
-                            content='Delete'
-                            size='small'
-                            position='top center'
-                        />
-                    </Table.Cell>
-                </Table.Row>
-            );
-        };
-        return tableBody;
+    handlePageChange = (e, {activePage}) => {
+        this.setState({ activePage} );
     }
 
     contentSwitcher = () => {
@@ -109,41 +77,12 @@ class HistoryPage extends Component {
         } else {
             return (
                 <div className="history-table-wrapper">
-                    <Table selectable unstackable textAlign="center">
-                        <Table.Header>
-                        <Table.Row>
-                            <Table.HeaderCell>date added</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="left">address</Table.HeaderCell>
-                            <Table.HeaderCell>year built</Table.HeaderCell>
-                            <Table.HeaderCell />
-                            <Table.HeaderCell />
-                        </Table.Row>
-                        </Table.Header>
-
-                        <Table.Body>
-                            {this.constructTableRows()}
-                        </Table.Body>
-
-                        <Table.Footer>
-                        <Table.Row>
-                            <Table.HeaderCell colSpan="5">
-                            <Menu floated="right" pagination>
-                                <Menu.Item as="a" icon>
-                                <Icon name="chevron left" />
-                                </Menu.Item>
-                                <Menu.Item as="a">1</Menu.Item>
-                                <Menu.Item as="a">2</Menu.Item>
-                                <Menu.Item as="a">3</Menu.Item>
-                                <Menu.Item as="a">4</Menu.Item>
-                                <Menu.Item as="a" icon>
-                                <Icon name="chevron right" />
-                                </Menu.Item>
-                            </Menu>
-                            </Table.HeaderCell>
-                        </Table.Row>
-                        </Table.Footer>
-                    </Table>
-
+                    <HistoryTable 
+                        activePage={this.state.activePage}
+                        history={this.state.history} 
+                        handlePageChange={this.handlePageChange}
+                        deleteEntry={this.deleteEntry}    
+                    />
                 </div>
             )
         }

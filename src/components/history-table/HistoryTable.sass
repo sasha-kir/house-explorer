@@ -1,0 +1,57 @@
+@import '../../_config.sass'
+
+.ui.table 
+    min-width: 1000px
+    color: $primaryDarkColor!important
+
+    thead th
+        padding: 20px
+        font-variant: small-caps
+        color: $primaryDarkColor!important
+        font-size: 23px
+        letter-spacing: .05em
+
+    tr td
+        font-size: 18px
+
+    .ui.button
+        line-height: normal
+
+    .ui.basic.button
+        box-shadow: 0 0 0 2px $primaryColor inset!important
+        color: $primaryColor!important
+
+        &:focus
+            box-shadow: 0 0 0 2px $primaryColor inset!important
+            background-color: transparent!important
+            color: $primaryColor!important
+
+        &:hover
+            box-shadow: 0 0 0 2px $primaryColor inset!important
+            color: #fff!important
+            background-color: $primaryColor !important
+
+        &:active
+            +transform(scale(0.9))
+
+    .map.marker
+        font-size: 1.3em
+
+    .trash
+        color: $primaryDarkColor
+
+        &:hover
+            color: $primaryErrorColor
+
+
+    .ui.pagination 
+        float: right
+        font-size: 17px
+        color: $primaryDarkColor!important
+
+        .item, .active.item
+            padding: 0px
+            justify-content: center
+
+.popup
+    padding: 5px 10px!important

@@ -3,7 +3,7 @@
 .history-main-div
     @extend %page-template
     background-color: $explorePrimaryColor
-    padding: 80px 0
+    padding: 35px 0 30px 0
 
 .empty-history-wrapper
     display: grid
@@ -26,49 +26,3 @@
 
 .history-table-wrapper
     margin: 0 50px
-
-    .ui.table 
-        min-width: 1000px
-
-    .ui.table thead th
-        padding: 20px
-        font-variant: small-caps
-        font-size: 21px
-        letter-spacing: .05em
-
-    .ui.button
-        line-height: normal
-
-    .ui.table .map.marker
-        font-size: 1.3em
-
-    .ui.table .trash
-        color: $primaryDarkColor
-
-        &:hover
-            color: $primaryErrorColor
-
-    .ui.basic.button
-        box-shadow: 0 0 0 2px $primaryColor inset!important
-        color: $primaryColor!important
-
-        &:focus
-            box-shadow: 0 0 0 2px $primaryColor inset!important
-            background-color: transparent!important
-            color: $primaryColor!important
-
-        &:hover
-            box-shadow: 0 0 0 2px $primaryColor inset!important
-            color: #fff!important
-            background-color: $primaryColor !important
-
-        &:active
-            +transform(scale(0.9))
-
-
-    .ui.pagination .item
-        padding: 0px
-        justify-content: center
-
-.popup
-    padding: 5px 10px!important
