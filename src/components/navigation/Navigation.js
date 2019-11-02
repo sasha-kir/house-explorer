@@ -17,7 +17,7 @@ class Navigation extends Component {
     async componentDidMount() {
         try {
             let token = localStorage.getItem('userToken');
-            let response = await fetch('http://localhost:5000/userpic', {
+            let response = await fetch(process.env.REACT_APP_SERVER_URL + '/userpic', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ token })

@@ -20,7 +20,7 @@ class ProfilePage extends Component {
     async componentDidMount() {
         const token = localStorage.getItem("userToken");
         try {
-            let response = await fetch("http://localhost:5000/profile", {
+            let response = await fetch(process.env.REACT_APP_SERVER_URL + "/profile", {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ token })

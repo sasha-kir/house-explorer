@@ -15,7 +15,7 @@ export default function withAuth(ComponentToProtect) {
     async componentDidMount() {
         try {
             let token = localStorage.getItem('userToken');
-            let response = await fetch('http://localhost:5000/check_token', {
+            let response = await fetch(process.env.REACT_APP_SERVER_URL + '/check_token', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ token })

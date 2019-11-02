@@ -19,7 +19,7 @@ class HistoryPage extends Component {
     async componentDidMount() {
         const token = localStorage.getItem("userToken");
         try {
-            let response = await fetch("http://localhost:5000/history", {
+            let response = await fetch(process.env.REACT_APP_SERVER_URL + "/history", {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ token })
@@ -41,7 +41,7 @@ class HistoryPage extends Component {
         let { history } = this.state;
         let houseToDelete = history.splice(index, 1);
         try {
-            let response = await fetch("http://localhost:5000/delete_house", {
+            let response = await fetch(process.env.REACT_APP_SERVER_URL + "/delete_house", {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

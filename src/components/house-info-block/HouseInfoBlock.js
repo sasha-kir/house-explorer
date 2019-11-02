@@ -31,7 +31,7 @@ class HouseInfoBlock extends Component {
 
     handleBookmarkClick = async () => {
         try {
-            let response = await fetch("http://localhost:5000/save_house", {
+            let response = await fetch(process.env.REACT_APP_SERVER_URL + "/save_house", {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

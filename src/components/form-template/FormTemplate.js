@@ -57,7 +57,7 @@ const FormTemplate = (formType) => (WrappedComponent) => {
                 });
             } else {
                 try {
-                    let response = await fetch("http://localhost:5000/login", {
+                    let response = await fetch(process.env.REACT_APP_SERVER_URL + "/login", {
                         	method: "post",
                         	headers: {'Content-Type': 'application/json'},
                         	body: JSON.stringify({
@@ -99,7 +99,7 @@ const FormTemplate = (formType) => (WrappedComponent) => {
                 });
             } else {
                 try {
-                    let response = await fetch("http://localhost:5000/register", {
+                    let response = await fetch(process.env.REACT_APP_SERVER_URL + "/register", {
                         method: "post",
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify({

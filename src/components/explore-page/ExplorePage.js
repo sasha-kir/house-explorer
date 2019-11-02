@@ -35,7 +35,7 @@ class ExplorePage extends Component {
     async componentDidMount() {
         // get user ip and coordinates
         try {
-            let response = await fetch("http://localhost:5000/user_location");
+            let response = await fetch(process.env.REACT_APP_SERVER_URL + "/user_location");
             let data = await response.json();
             if (response.status === 200) {
                 const { lat, lon, city, country, isoCode } = data;
@@ -73,7 +73,7 @@ class ExplorePage extends Component {
         const { locationInRussian } = this.state;
         const [ city, country ] = locationInRussian;
         try {
-            let response = await fetch('http://localhost:5000/suggestions', {
+            let response = await fetch(process.env.REACT_APP_SERVER_URL + '/suggestions', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -107,7 +107,7 @@ class ExplorePage extends Component {
         const { locationInRussian } = this.state;
         const [ city, country ] = locationInRussian;
         try {
-            let response = await fetch('http://localhost:5000/house_info', {
+            let response = await fetch(process.env.REACT_APP_SERVER_URL + '/house_info', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
