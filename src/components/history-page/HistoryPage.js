@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Helmet } from "react-helmet-async";
 import './HistoryPage.sass';
 
 import emptyState from '../../images/NoGPS.png';
@@ -92,6 +93,9 @@ class HistoryPage extends Component {
         if (this.state.loading) return null;
         return (
             <div className="history-main-div">
+                <Helmet>
+                    <title>History | House Explorer</title>
+                </Helmet>
                 {this.contentSwitcher()}
             </div>
         );

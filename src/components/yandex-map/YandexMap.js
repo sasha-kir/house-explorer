@@ -91,18 +91,24 @@ class YandexMap extends Component {
     }
 
     copyBalloonAddress = () => {
-        const address = document.getElementById('balloon-text').textContent;
-        const textArea = document.createElement('textarea');
+        let balloonTextStr = String(/balloon-text/).substring(1).slice(0,-1);
+        let textAreaStr = String(/textarea/).substring(1).slice(0,-1);
+        let fixedStr = String(/fixed/).substring(1).slice(0,-1);
+        let copyStr = String(/copy/).substring(1).slice(0,-1);
+        let balloonButtonStr = String(/balloon-button/).substring(1).slice(0,-1);
+        let copiedStr = String(/copied!/).substring(1).slice(0,-1);
+        const address = document.getElementById(balloonTextStr).textContent;
+        const textArea = document.createElement(textAreaStr);
         document.body.appendChild(textArea);
         textArea.value = address;
-        textArea.style.position = 'fixed';
+        textArea.style.position = fixedStr;
         textArea.style.opacity = 0;
         textArea.focus();
         textArea.select();
-        document.execCommand('copy');
+        document.execCommand(copyStr);
         document.body.removeChild(textArea);
-        let balloonButton = document.getElementById('balloon-button');
-        balloonButton.textContent = 'copied!';
+        let balloonButton = document.getElementById(balloonButtonStr);
+        balloonButton.textContent = copiedStr;
         balloonButton.disabled = true;
     }
 
@@ -171,7 +177,7 @@ class YandexMap extends Component {
                                                 '</address>',
                                                 '<br/>',
                                                 '<button id="balloon-button" ',
-                                                `onclick="javascript:(${this.copyBalloonAddress})()">`,
+                                                `onclick='javascript:(${this.copyBalloonAddress})()'>`,
                                                 'copy address',
                                                 '</button>',
                                                 '</div>'
