@@ -15,10 +15,10 @@ const PublicHomePage = ({ history }) => {
             <Helmet>
                 <title>House Explorer</title>
             </Helmet>
-            <div></div>
-            <div></div>
+            <div className="placeholder"></div>
+            <div className="placeholder"></div>
             <div className="intro-wrapper">
-                <div className="intro-heading">House<br/>Explorer</div>
+                <div className="intro-heading">House <br/>Explorer</div>
                 <div className="intro-text" >
                     Delve into the diverse residential architechture of Russian cities.
                     Search by address or explore buildings around your current location.

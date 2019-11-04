@@ -52,6 +52,95 @@
     margin-left: 120px
     align-self: end
     height: 60px
+    z-index: 5
 
     &:hover
         @extend %button-with-border-hover
+
+@media screen and (max-width: 1300px)
+    .public-home-main-div
+        grid-template-columns: 1fr
+
+    .intro-wrapper
+        justify-self: center
+        grid-template-rows: 2fr 1fr
+
+    .intro-heading
+        padding: 10px 0 0 0
+
+    .intro-text, br
+        display: none
+
+    .intro-btn
+        margin-left: 0px
+        padding: 5px 65px
+        justify-self: center
+        align-self: center
+    
+    .cover-image
+        margin-top: -30px
+
+    .cover-image-credit
+        display: none
+
+@media screen and (max-width: 750px)
+    .intro-wrapper
+        grid-template-rows: 3fr 1fr
+
+    .intro-heading
+        font-size: 4em
+        align-self: center
+
+    .intro-btn
+        font-size: 1.3em
+        height: 50px
+
+    .cover-image
+        height: 350px
+        margin-top: 0px
+
+@media screen and (max-width: 650px)
+    .intro-heading
+        font-size: 3.5em
+
+    .cover-image
+        height: 300px
+
+@media screen and (max-width: 550px)
+    br
+        display: inline-block
+
+    .public-home-main-div
+        grid-template-rows: 1fr
+
+    .intro-wrapper
+        justify-self: start
+        grid-template-rows: 3.5fr 1fr
+
+    .placeholder
+        display: none
+
+    .intro-heading
+        font-size: 3.5em
+        justify-self: start
+        padding: 0 40px
+
+    .intro-btn
+        justify-self: start
+        margin-left: 40px
+        padding: 5px 40px
+
+    .cover-image
+        height: 250px
+        justify-self: start
+        margin-top: -10px
+        margin-left: -20px
+
+@media screen and (max-width: 450px)
+    .cover-image
+        height: 200px
+        margin-top: 10px
+
+@media screen and (max-width: 350px)
+    .cover-image
+        margin-left: -40px
