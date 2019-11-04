@@ -1,4 +1,5 @@
 import React from 'react';
+import {Helmet} from "react-helmet-async";
 import './PlaceholderPage.sass';
 
 import placeholder from '../../images/under-construction.png';
@@ -6,6 +7,9 @@ import placeholder from '../../images/under-construction.png';
 const PlaceholderPage = () => {
     return (
         <div className="placeholder-main-div">
+            <Helmet>
+                <title>House Explorer</title>
+            </Helmet>
             <p>page under construction</p>
             <div className="placeholder-image-wrapper">
                 <img alt="placeholder" src={placeholder} />

@@ -98,6 +98,9 @@ class Navigation extends Component {
                     <NavLink to="/about">
                         about
                     </NavLink>
+                    <button className="hamburger-button">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     {this.rightContentSwitcher()}
                 </div>
             </nav>

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Helmet} from "react-helmet-async";
 import '../placeholder-page/PlaceholderPage.sass';
 
 import notFound from '../../images/not-found.png';
@@ -6,6 +7,9 @@ import notFound from '../../images/not-found.png';
 const NotFoundPage = () => {
     return (
         <div className="not-found-main-div">
+            <Helmet>
+                <title>404 | House Explorer</title>
+            </Helmet>
             <p>page not found (._.)</p>
             <div className="not-found-image-wrapper">
                 <img alt="404 message illustration" src={notFound} />
