@@ -98,7 +98,7 @@ class HouseInfoBlock extends Component {
                             }
                             type={this.state.alertType}
                     />
-                    <div className="house-info-block">
+                    <div className="house-info-block address">
                         <img    
                             src={this.images["address"]} 
                             alt="house inside map pin"

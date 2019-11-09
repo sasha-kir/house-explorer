@@ -14,19 +14,30 @@
         height: 300px
         width: auto
 
-    .empty-history-text
+    .empty-history-text,
+    .empty-history-heading
         text-align: center
         color: $deactivatedItemColor
         font-size: 20px
         align-self: center
+        padding: 0 20px
 
-        &.heading
-            font-size: 30px
-            align-self: center
+    .empty-history-heading
+        font-size: 30px
 
 .history-table-wrapper
     margin: 0 50px
 
 @media screen and (max-width: 600px)
+    .empty-history-wrapper
+        grid-template-rows: 5fr 1fr 2fr
+
+        img
+            height: 250px
+
+        .empty-history-heading
+            font-size: 25px
+
     .history-table-wrapper
         margin: 0 5px
+

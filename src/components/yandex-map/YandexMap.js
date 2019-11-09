@@ -25,18 +25,25 @@ class YandexMap extends Component {
             clickCoords: this.props.mapCoords,
             clickAddress: "",
             isAddressValid: false,
+            mapWidth: this.getMapWidth() + "px"
         };
         this.mapContentRef = React.createRef();
         this.yandexAPIKey = process.env.REACT_APP_YANDEX_API_KEY;
     }
 
+    getMapWidth = () => {
+        if (window.innerWidth > 950) return window.innerWidth - 550;
+        else return window.innerWidth - 40;
+    }
     componentDidMount() {
         this.watchMapLoading();
         this._isMounted = true;
+        window.addEventListener('resize', this.resizeMap);
     }
 
     componentWillUnmount() {
         this._isMounted = false;
+        window.removeEventListener('resize', this.resizeMap);
 	}
 
     watchMapLoading = async () => {
@@ -49,6 +56,13 @@ class YandexMap extends Component {
             console.log("map waiting timed out");
             if (this._isMounted) this.setState({ isMapReady: true });
         }
+    }
+
+    resizeMap = () => {
+        let newWidth;
+        if (window.innerWidth > 950) newWidth = window.innerWidth - 550;
+        else newWidth = window.innerWidth - 40;
+        this.setState({ mapWidth: newWidth + "px" });
     }
 
     onMapClick = async (event) => {
@@ -119,12 +133,13 @@ class YandexMap extends Component {
 
         return (
             <ClickOutside onClickOutside={this.handleClickOutside}>
-                <div className="map-main-div">
+                <div className="map-main-div" style={{width: this.state.mapWidth}}>
                     <div className="spinner-wrapper">
                         <Spinner isMapReady={this.state.isMapReady} />
                     </div>
                     <div className="map-content" ref={this.mapContentRef}>
-                        <Map 
+                        <Map
+                            style={{width: this.state.mapWidth}}
                             className="map"
                             state={{
                                     center: mapCoords,

@@ -44,11 +44,18 @@
                 color: $deactivatedItemColor
 
 
-
-@media (max-width: 1400px)
+@media (max-width: 950px)
     .map-main-div
-        width: $mainMapWidth - 200px
-        .map-content
-            justify-self: center
-            .map
-                width: $mainMapWidth - 250px
+        overflow: visible
+        height: 300px
+
+    .spinner-wrapper
+        height: 300px
+        margin-top: 40px
+
+
+    .map-content
+        padding: 0 20px
+
+        .map
+            height: 300px

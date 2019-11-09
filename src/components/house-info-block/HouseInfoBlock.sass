@@ -129,3 +129,73 @@ $infoHeaderHeight: 50px
     .house-info-error-content
         p
             padding: 0 60px
+
+@media screen and (max-width: 950px)
+    .house-info-main-div
+        max-width: 950px
+        min-width: 200px
+        height: 200px
+    
+    .house-info-wrapper
+        height: 200px
+
+    .house-info-start-content,
+    .house-info-error-content
+        height: 200px
+
+        img
+            display: none
+
+        p
+            align-self: end
+
+    .house-info-content-header
+        justify-self: center
+        
+    .house-info-house-content
+        grid-gap: 10px
+        height: auto
+
+        .house-info-block
+            grid-template-columns: 1fr
+            
+            &.address
+                display: none
+
+        img
+            display: none
+
+@media screen and (max-width: 550px)
+    .house-info-start-content,
+    .house-info-error-content
+        p
+            font-size: 16px
+
+    .house-info-content-header
+        grid-template-columns: 1fr
+
+        .content-header
+            justify-self: center
+
+        img
+            display: none
+
+    .house-info-house-content
+        .alert
+            display: none
+
+@media screen and (max-width: 450px)
+    .house-info-start-content,
+    .house-info-error-content
+        
+        p
+            padding: 0 20px
+            align-self: center
+
+        .help-text, br
+            display: none
+
+    .house-info-header
+        font-size: 25px
+
+        
