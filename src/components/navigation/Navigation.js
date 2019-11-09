@@ -73,7 +73,10 @@ class Navigation extends Component {
             );
             let hamburgerMenu = (
                 <div className="hamburger-menu">
-                    <ul ref={this.sideMenu} className={`side-menu ${this.state.isHamburgerOpen ? "visible" : ""}`}>
+                    <ul ref={this.sideMenu} 
+                        className={`side-menu ${this.state.isHamburgerOpen ? "visible" : ""}`}
+                        onClick={this.toggleHamburger}
+                    >
                         {leftLinks.map(link => <li>{link}</li>)}
                         <hr />
                         {!this.state.loggedIn
@@ -154,7 +157,10 @@ class Navigation extends Component {
     toggleHamburger = () => {
         if (!this.state.isHamburgerOpen) {
             this.setState({ isHamburgerOpen: true });
-            this.sideMenu.current.style.right = (window.innerWidth - 300) * (-1) + "px";
+            this.sideMenu.current.style.right = 
+            window.innerWidth > 550
+                ? (window.innerWidth - 300) * (-1) + "px"
+                : 0;
         } else {
             this.setState({ isHamburgerOpen: false });
         }

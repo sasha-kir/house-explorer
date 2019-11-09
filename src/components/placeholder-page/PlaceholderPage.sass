@@ -28,3 +28,23 @@
     @extend %image-credit
     margin-right: 35px
     margin-top: -70px
+
+@media screen and (max-width: 550px)
+    .placeholder-main-div,
+    .not-found-main-div
+        p
+            font-size: 1.4em
+
+    .placeholder-image-wrapper,
+    .not-found-image-wrapper
+        justify-self: center
+        grid-template-rows: 1fr
+
+        img
+            height: 300px
+
+    .placeholder-image-credit,
+    .not-found-image-credit
+        display: none
+
+    

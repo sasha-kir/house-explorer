@@ -16,12 +16,12 @@ const HistoryTable = ({ activePage, history, handlePageChange, deleteEntry }) =>
             let mapLink = `${mapBaseUrl}?pt=${history[i].houseCoords}&z=17&l=map`;
             tableBody.push(
                 <Table.Row key={i}>
-                    <Table.Cell>
+                    <Table.Cell className="desktop-only">
                         <Icon name="calendar outline" />
                         { new Date(Date.parse(history[i].date)).toLocaleDateString("en-GB") }
                     </Table.Cell>
                     <Table.Cell textAlign="left">{history[i].houseInfo.address}</Table.Cell>
-                    <Table.Cell>{history[i].houseInfo.yearBuilt}</Table.Cell>
+                    <Table.Cell className="desktop-only">{history[i].houseInfo.yearBuilt}</Table.Cell>
                     <Table.Cell>
                         <a href={mapLink} target="_blank" rel="noopener noreferrer">
                             <Popup
@@ -50,9 +50,9 @@ const HistoryTable = ({ activePage, history, handlePageChange, deleteEntry }) =>
         <Table selectable unstackable textAlign="center">
             <Table.Header>
                 <Table.Row>
-                    <Table.HeaderCell>date added</Table.HeaderCell>
+                    <Table.HeaderCell className="desktop-only">date added</Table.HeaderCell>
                     <Table.HeaderCell textAlign="left">address</Table.HeaderCell>
-                    <Table.HeaderCell>year built</Table.HeaderCell>
+                    <Table.HeaderCell className="desktop-only">year built</Table.HeaderCell>
                     <Table.HeaderCell />
                     <Table.HeaderCell />
                 </Table.Row>
