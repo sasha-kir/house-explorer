@@ -125,7 +125,7 @@ class Navigation extends Component {
             );
             let profileLink = <NavLink className="side-nav-item" to="/profile">profile</NavLink>;
             let logoutLink = (
-                <NavLink to="/#" className={`${this.state.isMobile ? "side-nav-item" : ""} login-link`}
+                <NavLink exact to="/#" className={`${this.state.isMobile ? "side-nav-item" : ""} login-link`}
                         onClick={this.props.handleLogOut}
                 >
                     log out
