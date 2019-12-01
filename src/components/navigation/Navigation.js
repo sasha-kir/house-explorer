@@ -77,17 +77,17 @@ class Navigation extends Component {
                         className={`side-menu ${this.state.isHamburgerOpen ? "visible" : ""}`}
                         onClick={this.toggleHamburger}
                     >
-                        {leftLinks.map(link => <li>{link}</li>)}
+                        {leftLinks.map((link, index) => <li key={`l${index}`}>{link}</li>)}
                         <hr />
                         {!this.state.loggedIn
                             ?   [
-                                    <li>
+                                    <li key={`r0`}>
                                         {rightLinks[1]}
                                         &nbsp; &nbsp; &nbsp; 
                                         {rightLinks[0]}
                                     </li>,
                                 ]
-                            :  rightLinks.map(link => <li>{link}</li>)
+                            :  rightLinks.map((link, index) => <li key={`r${index}`}>{link}</li>)
                         }
                     </ul>
                 </div>
@@ -125,7 +125,7 @@ class Navigation extends Component {
             );
             let profileLink = <NavLink className="side-nav-item" to="/profile">profile</NavLink>;
             let logoutLink = (
-                <NavLink exact to="/#" className={`${this.state.isMobile ? "side-nav-item" : ""} login-link`}
+                <NavLink to="/#" activeClassName="selected" className={`${this.state.isMobile ? "side-nav-item" : ""} login-link`}
                         onClick={this.props.handleLogOut}
                 >
                     log out
