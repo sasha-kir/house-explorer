@@ -1,7 +1,7 @@
 {
   "name": "house-explorer",
   "version": "0.1.0",
-  "homepage": "http://132.59.212.153/house-explorer",
+  "homepage": "https://132.59.212.153/house-explorer",
   "private": true,
   "dependencies": {
     "async-wait-until": "^1.2.4",
