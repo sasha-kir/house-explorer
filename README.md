@@ -14,4 +14,6 @@ App is fully responsive and compatible with mobile devices.
 - [Yandex Maps API](https://tech.yandex.ru/maps/jsapi/) for showing houses on a map and reverse geocoding
 - [Dom.Mingkh](http://dom.mingkh.ru/) for information about houses
 
-![map pin](src/images/cover.png?raw=true) Image from [Icons8](https://icons8.com/ouch/illustration/abstract-location-access)
+![map pin](src/images/cover.png?raw=true)
+
+Image from [Icons8](https://icons8.com/ouch/illustration/abstract-location-access)

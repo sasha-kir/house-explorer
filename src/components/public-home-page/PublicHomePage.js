@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 
 import './PublicHomePage.sass';
 import cover from '../../images/cover.png';
+import coverSmall from '../../images/cover-small.png';
 
 const PublicHomePage = ({ history }) => {
     
@@ -29,7 +30,11 @@ const PublicHomePage = ({ history }) => {
                 </button>
             </div>
             <div className="cover-image-wrapper">
-                <img className="cover-image" alt="abstract location illustration" src={cover} />
+                <picture className="cover-image">
+                    <source srcSet={coverSmall} type="image/png" media="(max-width: 650px)" />
+                    <source srcSet={cover} type="image/png" />
+                    <img alt="abstract location illustration" src={cover} /> 
+                </picture>
                 <p className="cover-image-credit">&copy; &nbsp;
                     <a href="https://icons8.com/ouch/illustration/abstract-location-access" 
                        rel="noopener noreferrer" target="_blank">Icons 8</a> 

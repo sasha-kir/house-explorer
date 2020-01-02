@@ -10,10 +10,12 @@
     grid-template-rows: 16fr 1fr
 
 .cover-image
-    height: 400px
-    width: auto
     justify-self: center
-    margin-top: 10px
+    
+    img
+        height: 400px
+        width: auto
+        margin-top: 10px
     /* clip-path: polygon(10% 17%, 90% 12%, 91% 85%, 70% 86%, 22% 80%, 9% 59%) */
 
 .cover-image-credit
@@ -77,7 +79,7 @@
         justify-self: center
         align-self: center
     
-    .cover-image
+    .cover-image img
         margin-top: 0px
 
     .cover-image-credit
@@ -95,14 +97,14 @@
         font-size: 1.3em
         height: 50px
 
-    .cover-image
+    .cover-image img
         height: 350px
 
 @media screen and (max-width: 650px)
     .intro-heading
         font-size: 3.5em
 
-    .cover-image
+    .cover-image img
         height: 300px
 
 @media screen and (max-width: 550px)
@@ -130,16 +132,18 @@
         padding: 5px 40px
 
     .cover-image
-        height: 250px
         justify-self: start
-        margin-top: -10px
-        margin-left: -20px
+
+        img
+            height: 250px
+            margin-top: -10px
+            margin-left: -20px
 
 @media screen and (max-width: 450px)
-    .cover-image
+    .cover-image img
         height: 200px
         margin-top: 10px
 
 @media screen and (max-width: 350px)
-    .cover-image
+    .cover-image img
         margin-left: -40px
