@@ -107,7 +107,6 @@ class ExplorePage extends Component {
                 })
             });
             let data = await response.json();
-            
             return response.status === 200 ? data : [];
         } catch {
             console.log('could not fetch suggestions from server');
@@ -144,6 +143,7 @@ class ExplorePage extends Component {
             return response.status === 200 ? data : false;
         } catch {
             console.log('could not fetch house info from server');
+            return false;
         }
     }
 
@@ -184,22 +184,24 @@ class ExplorePage extends Component {
         const { savedInput } = this.state;
         if (savedInput) {
             this.setState({ 
-                            searchTerm: savedInput, 
-                            inputValue: savedInput,
-                            savedInput: "" 
+                searchTerm: savedInput, 
+                inputValue: savedInput,
+                savedInput: "",
             });
         }
     }
 
     handleCityChoiceOnMap = (event) => {
         const selectedCity = event.get("target").data._data;
-        const { nameRus, country } = cityList.filter(city => city.location === selectedCity.center)[0];
+        const { nameRus, country, isoCode } = cityList.filter(city => {
+            return city.location === selectedCity.center;
+        })[0];
         this.setState({ 
-                        mapCoords: selectedCity.center,
-                        mapPinAddress: `${nameRus}, ${country}`,
-                        locationInEnglish: [selectedCity.content, ""],
-                        locationInRussian: [nameRus, country]
-                    });
+            mapCoords: selectedCity.center,
+            mapPinAddress: `${nameRus}, ${country}`,
+            locationInEnglish: [selectedCity.content, isoCode],
+            locationInRussian: [nameRus, country],
+        });
     }
 
     render() {

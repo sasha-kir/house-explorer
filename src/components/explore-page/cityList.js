@@ -34,5 +34,14 @@ export const cityList = [
         country: "Россия", 
         isoCode: "RU-SVE",
         location: [56.838011, 60.597465]
-    }
+    },
+    {
+        id: 5,
+        name: "Kaliningrad", 
+        nameRus: "Калининград", 
+        region: "Калининградская",
+        country: "Россия", 
+        isoCode: "RU-KGD",
+        location: [54.710454, 20.512733]
+    },
 ]
