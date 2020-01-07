@@ -23,6 +23,11 @@
         width: $mainMapWidth
         height: $mainMapHeight
 
+    .map-error
+        color: $primaryDarkColor
+        font-size: 20px
+        text-align: center
+
     .balloon
         color: $primaryDarkColor
         font-size: 15px
@@ -53,9 +58,13 @@
         height: 300px
         margin-top: 40px
 
-
     .map-content
         padding: 0 20px
 
         .map
             height: 300px
+
+
+@media (max-width: 450px)
+    .map-content .map-error
+        font-size: 18px

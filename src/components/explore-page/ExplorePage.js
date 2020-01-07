@@ -32,26 +32,49 @@ class ExplorePage extends Component {
         this.yandexAPIKey = process.env.REACT_APP_YANDEX_API_KEY;
     }
 
-    async componentDidMount() {
-        // get user ip and coordinates
-        try {
-            let response = await fetch(process.env.REACT_APP_SERVER_URL + "/user_location");
-            let data = await response.json();
-            if (response.status === 200) {
-                const { lat, lon, city, country, isoCode } = data;
-                this.setState({ 
-                    mapCoords: [lat, lon],
-                    locationInRussian: [city, country],
-                    mapPinAddress: `${city}, ${country}`,
-                    locationInEnglish: ["", isoCode]
-                });
-            } else {
-                // stay with default (Moscow)
-                console.log('dadata could not determine user location');
+    getUserLocation = async (ymaps) => {
+        const geoLocation = await ymaps.geolocation.get(
+            { 
+                provider: "yandex", 
+                mapStateAutoApply: true 
             }
-        } catch {
+        );
+        const coordinates = geoLocation.geoObjects.position;
+        const result = await ymaps.geocode(coordinates);
+        const geoObjectEnglish = result.geoObjects.get(0);
+        const cityInEnglish = geoObjectEnglish.getLocalities();
+        const geoObjectRussian = await this.reverseGeocodeHandler(coordinates, 'locality');
+        if (geoObjectRussian) {
+            const { name, description } = geoObjectRussian;
+            this.setState({ 
+                mapCoords: coordinates,
+                locationInRussian: [name, description],
+                mapPinAddress: `${name}, ${description}`,
+                locationInEnglish: [cityInEnglish, ""]
+            });
+        } else {
             // stay with default (Moscow)
-            console.log('could not fetch user location from server');
+            console.log('could not determine user location');
+        }
+    };
+
+    reverseGeocodeHandler = async (coords, kind) => {
+        let geoUrl = new URL("https://geocode-maps.yandex.ru/1.x");
+        let params = {
+            geocode: `${coords[1]}, ${coords[0]}`,
+            kind: kind,
+            format: "json",
+            apikey: this.yandexAPIKey,
+            results: 1
+        };
+        Object.keys(params).forEach(key => geoUrl.searchParams.append(key, params[key]))
+        let geocodeResult = await fetch(geoUrl);
+        let data = await geocodeResult.json();
+        try {
+            const location = data.response.GeoObjectCollection.featureMember[0].GeoObject;
+            return location;
+        } catch (TypeError) {
+            return null;
         }
     }
 
@@ -88,6 +111,7 @@ class ExplorePage extends Component {
             return response.status === 200 ? data : [];
         } catch {
             console.log('could not fetch suggestions from server');
+            return [];
         }
     }
 
@@ -213,6 +237,8 @@ class ExplorePage extends Component {
                                 cityList={cityList}
                                 locationInEnglish={this.state.locationInEnglish}
                                 handleCityChoice={this.handleCityChoiceOnMap}
+                                getUserLocation={this.getUserLocation}
+                                reverseGeocodeHandler={this.reverseGeocodeHandler}
                             />
                     </React.Suspense>
                 </div>
