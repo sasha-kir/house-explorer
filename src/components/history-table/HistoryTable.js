@@ -4,7 +4,11 @@ import { Icon, Button, Popup, Table, Pagination } from "semantic-ui-react";
 import './HistoryTable.sass';
 
 const HistoryTable = ({ activePage, history, handlePageChange, deleteEntry }) => {
-
+    const handleDeleteEnter = (event, index) => {
+        if (event.key === "Enter") {
+            deleteEntry(index);
+        }
+    }
     const constructTableRows = () => {
         let pageStart = history.length - (1 + 5 * (activePage -1));
         let pageEnd = history.length - 5 * activePage;
@@ -34,7 +38,13 @@ const HistoryTable = ({ activePage, history, handlePageChange, deleteEntry }) =>
                     </Table.Cell>
                     <Table.Cell>
                         <Popup
-                            trigger={<Icon link onClick={() => deleteEntry(i)} size="large" name="trash alternate outline" />}
+                            trigger={
+                                <Icon   link size="large" name="trash alternate outline" 
+                                        onClick={() => deleteEntry(i)} 
+                                        onKeyDown={(e) => handleDeleteEnter(e, i)}
+                                        tabIndex="0" 
+                                />
+                            }
                             content='Delete'
                             size='small'
                             position='top center'

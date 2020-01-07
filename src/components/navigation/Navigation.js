@@ -47,6 +47,11 @@ class Navigation extends Component {
         this.props.history.push("/");
     }
 
+    handleUserpicKeyDown = (event) => {
+        if (event.key === "Enter") {
+            this.handleUserpicClick();
+        }
+    }
     handleUserpicClick = () => {
         this.props.history.push("/profile");
     }
@@ -64,7 +69,10 @@ class Navigation extends Component {
             return [leftLinks, rightNav];
         } else {
             let hamburgerButton = (
-                <button className="hamburger-button" onClick={this.toggleHamburger}>
+                <button  className="hamburger-button" 
+                         aria-label="navigation menu" 
+                         onClick={this.toggleHamburger}
+                >
                     {this.state.isHamburgerOpen
                         ? <i className="fas fa-times"></i>
                         : <i className="fas fa-bars"></i>
@@ -134,8 +142,9 @@ class Navigation extends Component {
             if (!this.state.isMobile) {
                 return [
                     historyLink,
-                    <img className="user-pic" alt="userpic" src={this.state.userPic} 
-                             onClick={this.handleUserpicClick}
+                    <img className="user-pic" tabIndex="0" alt="userpic" src={this.state.userPic} 
+                            onClick={this.handleUserpicClick}
+                            onKeyDown={this.handleUserpicKeyDown}
                     />,
                     logoutLink
                 ];

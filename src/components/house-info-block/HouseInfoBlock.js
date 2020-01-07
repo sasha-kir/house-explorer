@@ -29,6 +29,12 @@ class HouseInfoBlock extends Component {
         setTimeout(() => { this.setState({ showHistoryAlert: false }) }, 3000);
     }
 
+    handleBookmarkKeyDown = (event) => {
+        if (event.key === "Enter") {
+            this.handleBookmarkClick();
+        }
+    }
+
     handleBookmarkClick = async () => {
         try {
             let response = await fetch(process.env.REACT_APP_SERVER_URL + "/save_house", {
@@ -84,12 +90,17 @@ class HouseInfoBlock extends Component {
                         <span className="header-highlight"> about this house</span>
                     </div>
                     <img    className="bookmark-icon"
+                            tabIndex="0"
                             src={this.images["bookmark"]} 
                             alt="bookmark" 
                             title="Add house to history"
+                            onKeyDown={this.handleBookmarkKeyDown}
                             onClick={this.handleBookmarkClick}
                     />
-                    <button className="bookmark-button" onClick={this.handleBookmarkClick}>
+                    <button className="bookmark-button" 
+                            onClick={this.handleBookmarkClick}
+                            onKeyDown={this.handleBookmarkKeyDown}
+                    >
                         add to history
                     </button>
                 </div>
