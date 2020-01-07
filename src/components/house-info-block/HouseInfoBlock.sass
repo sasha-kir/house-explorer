@@ -44,13 +44,22 @@ $infoHeaderHeight: 50px
         margin-right: 30px
         width: fit-content
 
-    img
+    .bookmark-icon
         cursor: pointer
         align-self: start
         margin-top: -10px
         justify-self: center
         height: 40px
         width: auto
+
+    .bookmark-button
+        @extend %button-with-border
+        color: $explorePrimaryColor
+        background-color: $primaryDarkColor
+        font-size: 18px
+        margin-top: 15px
+        padding: 6px 0
+        display: none
 
 .house-info-start-header,
 .house-info-error-header
@@ -105,9 +114,9 @@ $infoHeaderHeight: 50px
             color: inherit
 
             &:hover
-                border-bottom: none
-                box-shadow: none
-                transition: 0.3s ease-in-out
+                border-color: transparent
+                box-shadow: 0 -3px 0 transparent inset
+                transition: 0.2s ease-in-out
             
 
 .house-info-block
@@ -151,16 +160,36 @@ $infoHeaderHeight: 50px
 
     .house-info-content-header
         justify-self: center
-        
+        grid-template-columns: 1fr
+
+        .content-header
+            margin-right: 0
+            justify-self: center
+
+        .bookmark-icon
+            display: none
+
+        .bookmark-button
+            display: block
+
     .house-info-house-content
+        grid-template-rows: 1fr 1fr 1fr
         grid-gap: 10px
         height: auto
+        margin-top: 35px
+        max-width: 250px
+        justify-self: center
 
         .house-info-block
             grid-template-columns: 1fr
             
-            &.address
+            &.address, &.walls
                 display: none
+
+            .value
+                max-width: 150px
+                overflow: hidden
+                text-overflow: ellipsis
 
         img
             display: none
@@ -170,19 +199,6 @@ $infoHeaderHeight: 50px
     .house-info-error-content
         p
             font-size: 16px
-
-    .house-info-content-header
-        grid-template-columns: 1fr
-
-        .content-header
-            justify-self: center
-
-        img
-            display: none
-
-    .house-info-house-content
-        .alert
-            display: none
 
 @media screen and (max-width: 450px)
     .house-info-start-content,
@@ -197,5 +213,3 @@ $infoHeaderHeight: 50px
 
     .house-info-header
         font-size: 25px
-
-        

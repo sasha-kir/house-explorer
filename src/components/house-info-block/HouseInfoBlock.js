@@ -83,11 +83,15 @@ class HouseInfoBlock extends Component {
                     <div className="content-header">
                         <span className="header-highlight"> about this house</span>
                     </div>
-                    <img    src={this.images["bookmark"]} 
+                    <img    className="bookmark-icon"
+                            src={this.images["bookmark"]} 
                             alt="bookmark" 
                             title="Add house to history"
                             onClick={this.handleBookmarkClick}
                     />
+                    <button className="bookmark-button" onClick={this.handleBookmarkClick}>
+                        add to history
+                    </button>
                 </div>
                 <div className="house-info-house-content">
                     <Alert  show={this.state.showHistoryAlert} 
@@ -106,7 +110,7 @@ class HouseInfoBlock extends Component {
                         />
                         <p>{infoBlock.address}</p>
                     </div>
-                    <div className="house-info-block">
+                    <div className="house-info-block year">
                         <img 
                             src={this.images["crane"]} 
                             alt="crane" 
@@ -114,10 +118,10 @@ class HouseInfoBlock extends Component {
                         />
                         <p className="double-row">
                             <span className="key">built in:</span>
-                            <span>{infoBlock.yearBuilt}</span>
+                            <span className="value">{infoBlock.yearBuilt}</span>
                         </p>
                     </div>
-                    <div className="house-info-block">
+                    <div className="house-info-block house-type">
                         <img 
                             src={this.images["design"]} 
                             alt="paper and ruler" 
@@ -127,17 +131,17 @@ class HouseInfoBlock extends Component {
                             <span className="key">house type:</span>
                             { 
                                 infoBlock.houseTypeLink
-                                  ? <a  href={infoBlock.houseTypeLink} 
+                                  ? <a  className="value" href={infoBlock.houseTypeLink} 
                                         rel="noopener noreferrer" 
                                         target="_blank"
                                     >
                                         {infoBlock.houseType}
                                     </a>
-                                  : <span>{infoBlock.houseType}</span>
+                                  : <span className="value">{infoBlock.houseType}</span>
                             }
                         </p>
                     </div>
-                    <div className="house-info-block">
+                    <div className="house-info-block floors">
                         <img 
                             src={this.images["skyscraper"]} 
                             alt="two tall houses" 
@@ -145,10 +149,10 @@ class HouseInfoBlock extends Component {
                         />
                         <p className="double-row">
                             <span className="key">floor count:</span>
-                            <span>{infoBlock.floorCount}</span>
+                            <span className="value">{infoBlock.floorCount}</span>
                         </p>
                     </div>
-                    <div className="house-info-block">
+                    <div className="house-info-block walls">
                         <img 
                             src={this.images["wall"]} 
                             alt="brick wall" 
@@ -156,7 +160,7 @@ class HouseInfoBlock extends Component {
                         />
                         <p className="double-row">
                             <span className="key">walls:</span>
-                            <span>{infoBlock.wallsMaterial}</span>
+                            <span className="value">{infoBlock.wallsMaterial}</span>
                         </p>
                     </div>
                 </div>
