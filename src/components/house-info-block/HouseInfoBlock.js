@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
-import searchHouse from '../../images/search-house.png';
-import searchError from '../../images/search-error.png';
-
+import { File } from 'react-kawaii';
 import Alert from '../css-alert/Alert';
 
 import './HouseInfoBlock.sass';
@@ -63,11 +61,7 @@ class HouseInfoBlock extends Component {
                     <span className="header-highlight">start exploring</span>
                 </div>
                 <div className="house-info-start-content">
-                    <img 
-                        src={searchHouse}
-                        alt="magnifying glass over paper with house on it"
-                        title="Icon made by IYIKON from pngtree.com"
-                    />
+                    <File className="illustration" size={180} mood="happy" color="#AAC6FC" />
                     <p> 
                         Start entering an address and choose from the suggestions 
                         to get the full info about the house. <br/><br/>
@@ -186,11 +180,7 @@ class HouseInfoBlock extends Component {
                     <span className="header-highlight">error: house not found</span>
                 </div>
                 <div className="house-info-error-content">
-                    <img 
-                        src={searchError}
-                        alt="exclamation point inside magnifying glass"
-                        title="Icon made by syedhassan from pngtree.com"
-                    />
+                    <File className="illustration" size={180} mood="ko" color="#AAC6FC" />
                     <p> 
                         Please check the address and try again. <br/><br/>
                         <span className="help-text">
