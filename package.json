@@ -9,7 +9,7 @@
     "datejs": "1.0.0-rc3",
     "node-sass": "4.14.1",
     "react": "16.13.1",
-    "react-autosuggest": "9.4.3",
+    "react-autosuggest": "10.0.2",
     "react-click-outside": "github:tj/react-click-outside",
     "react-dom": "16.13.1",
     "react-helmet-async": "1.0.6",
