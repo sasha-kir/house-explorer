@@ -12,7 +12,7 @@
     "react-autosuggest": "9.4.3",
     "react-click-outside": "github:tj/react-click-outside",
     "react-dom": "16.13.1",
-    "react-helmet-async": "1.0.4",
+    "react-helmet-async": "1.0.6",
     "react-kawaii": "0.14.4",
     "react-router-dom": "5.1.2",
     "react-scripts": "3.4.1",
