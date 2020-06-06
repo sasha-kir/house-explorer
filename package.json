@@ -16,7 +16,7 @@
     "react-kawaii": "0.16.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
-    "react-yandex-maps": "4.2.0",
+    "react-yandex-maps": "4.4.0",
     "semantic-ui-react": "0.88.2"
   },
   "scripts": {
