@@ -53,7 +53,7 @@ class App extends Component {
               <Route exact path="/register" 
                     render={() => <RegisterPage handleLogIn={this.handleLogIn} />} />
 
-              <Route exact path="/explore" component={withAuth(ExplorePage)} />
+              <Route exact path="/explore" component={ExplorePage} />
               <Route exact path="/profile" component={withAuth(ProfilePage)} />
               <Route exact path="/history" component={withAuth(HistoryPage)} />
 

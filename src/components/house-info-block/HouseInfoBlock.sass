@@ -75,7 +75,7 @@ $infoHeaderHeight: 50px
     align-items: center
     grid-template-rows: 1.5fr 1fr
     height: $infoWrapperHeight - $infoHeaderHeight
-    
+
     p
         padding: 0 110px
         text-align: center
@@ -113,7 +113,6 @@ $infoHeaderHeight: 50px
                 border-color: transparent
                 box-shadow: 0 -3px 0 transparent inset
                 transition: 0.2s ease-in-out
-            
 
 .house-info-block
     display: grid
@@ -140,7 +139,7 @@ $infoHeaderHeight: 50px
         max-width: 950px
         min-width: 200px
         height: 200px
-    
+
     .house-info-wrapper
         height: 200px
 
@@ -178,7 +177,7 @@ $infoHeaderHeight: 50px
 
         .house-info-block
             grid-template-columns: 1fr
-            
+
             &.address, &.walls
                 display: none
 
@@ -186,6 +185,7 @@ $infoHeaderHeight: 50px
                 max-width: 150px
                 overflow: hidden
                 text-overflow: ellipsis
+                white-space: nowrap
 
         img
             display: none
@@ -199,7 +199,7 @@ $infoHeaderHeight: 50px
 @media screen and (max-width: 450px)
     .house-info-start-content,
     .house-info-error-content
-        
+
         p
             padding: 0 20px
             align-self: center

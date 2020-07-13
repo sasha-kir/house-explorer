@@ -11,6 +11,7 @@ class HouseInfoBlock extends Component {
         this.images = this.importAll(require.context('../../images/house-info-icons', false, /.*\.svg$/));
         this.state = {
             showHistoryAlert: false,
+            token: localStorage.getItem("userToken"),
             alertType: ""
         }
     }
@@ -39,7 +40,7 @@ class HouseInfoBlock extends Component {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                token: localStorage.getItem("userToken"),
+                token: this.state.token,
                 houseInfo: this.props.infoBlock,
                 mapCoords: this.props.mapCoords
             })
@@ -83,20 +84,24 @@ class HouseInfoBlock extends Component {
                     <div className="content-header">
                         <span className="header-highlight"> about this house</span>
                     </div>
-                    <img    className="bookmark-icon"
-                            tabIndex="0"
-                            src={this.images["bookmark"]} 
-                            alt="bookmark" 
-                            title="Add house to history"
-                            onKeyDown={this.handleBookmarkKeyDown}
-                            onClick={this.handleBookmarkClick}
-                    />
-                    <button className="bookmark-button" 
-                            onClick={this.handleBookmarkClick}
-                            onKeyDown={this.handleBookmarkKeyDown}
-                    >
-                        add to history
-                    </button>
+                    {Boolean(this.state.token) && (
+                        <>
+                            <img    className="bookmark-icon"
+                                    tabIndex="0"
+                                    src={this.images["bookmark"]} 
+                                    alt="bookmark" 
+                                    title="Add house to history"
+                                    onKeyDown={this.handleBookmarkKeyDown}
+                                    onClick={this.handleBookmarkClick}
+                            />
+                            <button className="bookmark-button"
+                                    onClick={this.handleBookmarkClick}
+                                    onKeyDown={this.handleBookmarkKeyDown}
+                            >
+                                add to history
+                            </button>
+                        </>
+                    )}
                 </div>
                 <div className="house-info-house-content">
                     <Alert  show={this.state.showHistoryAlert} 

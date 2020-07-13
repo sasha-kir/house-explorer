@@ -7,6 +7,7 @@ import './ExplorePage.sass';
 
 import SearchBar from '../search-bar/SearchBar';
 import HouseInfoBlock from '../house-info-block/HouseInfoBlock';
+import { getUserLocation, reverseGeocodeHandler } from './location';
 
 const YandexMap = React.lazy(() => 
     import ('../yandex-map/YandexMap')
@@ -33,48 +34,15 @@ class ExplorePage extends Component {
     }
 
     getUserLocation = async (ymaps) => {
-        const geoLocation = await ymaps.geolocation.get(
-            { 
-                provider: "yandex", 
-                mapStateAutoApply: true 
-            }
-        );
-        const coordinates = geoLocation.geoObjects.position;
-        const result = await ymaps.geocode(coordinates);
-        const geoObjectEnglish = result.geoObjects.get(0);
-        const cityInEnglish = geoObjectEnglish.getLocalities();
-        const geoObjectRussian = await this.reverseGeocodeHandler(coordinates, 'locality');
-        if (geoObjectRussian) {
-            const { name, description } = geoObjectRussian;
-            this.setState({ 
+        const locationResult = await getUserLocation(ymaps);
+        if (locationResult !== null) {
+            const { coordinates, localityName, localityDescription } = locationResult;
+            this.setState({
                 mapCoords: coordinates,
-                locationInRussian: [name, description],
-                mapPinAddress: `${name}, ${description}`,
-                locationInEnglish: [cityInEnglish, ""]
+                locationInRussian: [localityName, localityDescription],
+                mapPinAddress: `${localityName}, ${localityDescription}`,
+                locationInEnglish: [locationResult.cityInEnglish, '']
             });
-        } else {
-            // stay with default (Moscow)
-            console.log('could not determine user location');
-        }
-    };
-
-    reverseGeocodeHandler = async (coords, kind) => {
-        let geoUrl = new URL("https://geocode-maps.yandex.ru/1.x");
-        let params = {
-            geocode: `${coords[1]}, ${coords[0]}`,
-            kind: kind,
-            format: "json",
-            apikey: this.yandexAPIKey,
-            results: 1
-        };
-        Object.keys(params).forEach(key => geoUrl.searchParams.append(key, params[key]))
-        let geocodeResult = await fetch(geoUrl);
-        let data = await geocodeResult.json();
-        try {
-            const location = data.response.GeoObjectCollection.featureMember[0].GeoObject;
-            return location;
-        } catch (TypeError) {
-            return null;
         }
     }
 
@@ -193,9 +161,9 @@ class ExplorePage extends Component {
 
     handleCityChoiceOnMap = (event) => {
         const selectedCity = event.get("target").data._data;
-        const { nameRus, country, isoCode } = cityList.filter(city => {
+        const { nameRus, country, isoCode } = cityList.find(city => {
             return city.location === selectedCity.center;
-        })[0];
+        });
         this.setState({ 
             mapCoords: selectedCity.center,
             mapPinAddress: `${nameRus}, ${country}`,
@@ -221,7 +189,7 @@ class ExplorePage extends Component {
                             renderSuggestions={this.renderSuggestions}
                             clearSuggestions={this.clearSuggestions}
                             saveInitialInput={this.saveInitialInput}
-                            initialInput={this.state.savedInput}
+                            // initialInput={this.state.savedInput}
                             fillInitialInput={this.fillInitialInput}
                         />
                         <HouseInfoBlock 
@@ -240,7 +208,7 @@ class ExplorePage extends Component {
                                 locationInEnglish={this.state.locationInEnglish}
                                 handleCityChoice={this.handleCityChoiceOnMap}
                                 getUserLocation={this.getUserLocation}
-                                reverseGeocodeHandler={this.reverseGeocodeHandler}
+                                reverseGeocodeHandler={reverseGeocodeHandler}
                             />
                     </React.Suspense>
                 </div>
