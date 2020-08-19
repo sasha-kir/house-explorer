@@ -17,7 +17,7 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.3",
     "react-yandex-maps": "4.4.0",
-    "semantic-ui-react": "1.2.0"
+    "semantic-ui-react": "1.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
