@@ -11,7 +11,7 @@
 
 .cover-image
     justify-self: center
-    
+
     img
         height: 400px
         width: auto
@@ -78,7 +78,7 @@
         padding: 5px 65px
         justify-self: center
         align-self: center
-    
+
     .cover-image img
         margin-top: 0px
 
@@ -110,6 +110,8 @@
 @media screen and (max-width: 550px)
     .public-home-main-div
         grid-template-rows: 1fr
+        overflow-x: hidden
+        height: fit-content
 
         br
             display: inline-block
@@ -135,15 +137,12 @@
         justify-self: start
 
         img
-            height: 250px
-            margin-top: -10px
-            margin-left: -20px
+            height: 350px
+            margin-top: 10px
+            width: 135%
+            margin-left: -100px
 
 @media screen and (max-width: 450px)
     .cover-image img
-        height: 200px
-        margin-top: 10px
-
-@media screen and (max-width: 350px)
-    .cover-image img
-        margin-left: -40px
+        height: 300px
+        margin-top: 30px
