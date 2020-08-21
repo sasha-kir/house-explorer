@@ -4,7 +4,7 @@
   "homepage": "https://132.59.212.153/house-explorer",
   "private": true,
   "dependencies": {
-    "async-wait-until": "1.2.4",
+    "async-wait-until": "1.2.6",
     "autosuggest-highlight": "3.1.1",
     "datejs": "1.0.0-rc3",
     "node-sass": "4.14.1",
@@ -15,9 +15,9 @@
     "react-helmet-async": "1.0.6",
     "react-kawaii": "0.16.0",
     "react-router-dom": "5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "3.4.3",
     "react-yandex-maps": "4.4.0",
-    "semantic-ui-react": "0.88.2"
+    "semantic-ui-react": "1.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -43,11 +43,11 @@
   },
   "devDependencies": {
     "enzyme": "3.11.0",
-    "enzyme-adapter-react-16": "1.15.2",
+    "enzyme-adapter-react-16": "1.15.3",
     "enzyme-to-json": "3.5.0",
-    "nock": "13.0.2",
-    "react-lorem-ipsum": "1.4.4",
-    "source-map-explorer": "2.4.2"
+    "nock": "13.0.4",
+    "react-lorem-ipsum": "1.4.5",
+    "source-map-explorer": "2.5.0"
   },
   "jest": {
     "snapshotSerializers": [
