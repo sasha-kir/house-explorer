@@ -26,6 +26,9 @@ const SearchBar = ({
 
     const onInputChange = (event, { newValue, method }) => {
         switch (method) {
+            case 'click':
+                handleSubmit();
+                break;
             case 'type':
                 if (newValue.match(/^[\w.,\-\s]+$/) !== null) {
                     let cyrInput = toCyrillic(newValue);

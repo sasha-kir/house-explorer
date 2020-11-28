@@ -19,7 +19,7 @@ class HouseInfoBlock extends Component {
     importAll = (req) => {
         let images = {};
         req.keys().forEach(key => {
-            images[key.slice(2, -4)] = req(key);
+            images[key.slice(2, -4)] = req(key).default;
         });
         return images;
     };
