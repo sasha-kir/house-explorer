@@ -47,7 +47,7 @@
     "enzyme-to-json": "3.6.1",
     "nock": "13.0.5",
     "react-lorem-ipsum": "1.4.7",
-    "source-map-explorer": "2.5.0"
+    "source-map-explorer": "2.5.1"
   },
   "jest": {
     "snapshotSerializers": [
