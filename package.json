@@ -46,7 +46,7 @@
     "enzyme-adapter-react-16": "1.15.5",
     "enzyme-to-json": "3.6.1",
     "nock": "13.0.5",
-    "react-lorem-ipsum": "1.4.8",
+    "react-lorem-ipsum": "1.4.9",
     "source-map-explorer": "2.5.1"
   },
   "jest": {
