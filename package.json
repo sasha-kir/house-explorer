@@ -4,7 +4,7 @@
   "homepage": "https://132.59.212.153/house-explorer",
   "private": true,
   "dependencies": {
-    "async-wait-until": "2.0.4",
+    "async-wait-until": "2.0.5",
     "autosuggest-highlight": "3.1.1",
     "datejs": "1.0.0-rc3",
     "node-sass": "4.14.1",
