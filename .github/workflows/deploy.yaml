@@ -28,7 +28,7 @@ jobs:
     if: always()
     steps:
       - uses: technote-space/workflow-conclusion-action@gh-actions
-      - uses: dawidd6/action-send-mail@v2
+      - uses: dawidd6/action-send-mail@v3
         if: env.WORKFLOW_CONCLUSION == 'failure' # notify only if failure
         with:
           # status: ${{ env.WORKFLOW_CONCLUSION }} # neutral, success, cancelled, timed_out, failure
