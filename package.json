@@ -1,13 +1,13 @@
 {
   "name": "house-explorer",
   "version": "0.1.0",
-  "homepage": "https://132.59.212.153/house-explorer",
+  "homepage": "https://sasha-kir.com/house-explorer",
   "private": true,
   "dependencies": {
     "async-wait-until": "1.2.6",
     "autosuggest-highlight": "3.1.1",
     "datejs": "1.0.0-rc3",
-    "node-sass": "4.14.1",
+    "node-sass": "^4.14.1",
     "react": "17.0.1",
     "react-autosuggest": "10.0.4",
     "react-click-outside": "github:tj/react-click-outside",
